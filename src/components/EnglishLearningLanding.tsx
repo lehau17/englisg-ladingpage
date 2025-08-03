@@ -97,6 +97,10 @@ export default function EnglishLearningLanding() {
                                 Tính năng
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
                             </a>
+                            <a href="#about" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group">
+                                Về chúng tôi
+                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
+                            </a>
                             <a href="#classes" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group">
                                 Lớp học
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
@@ -226,6 +230,228 @@ export default function EnglishLearningLanding() {
                                 </p>
                             </div>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* About Us Section */}
+            <section id="about" className="py-20 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Main About Content */}
+                    <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+                        <div className="space-y-8">
+                            <div>
+                                <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+                                    Về <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">EngliMaster</span>
+                                </h2>
+                                <div className="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mb-8"></div>
+                                <p className="text-xl text-gray-600 leading-relaxed mb-6">
+                                    Được thành lập năm 2018, EngliMaster là trung tâm dạy tiếng Anh hàng đầu tại Việt Nam với hơn
+                                    <span className="font-bold text-indigo-600"> 50,000 học viên</span> đã tin tưởng và đạt được mục tiêu học tập.
+                                </p>
+                                <p className="text-lg text-gray-600 leading-relaxed">
+                                    Chúng tôi tự hào mang đến phương pháp học tiếng Anh hiện đại, kết hợp giữa công nghệ AI tiên tiến
+                                    và đội ngũ giáo viên bản ngữ giàu kinh nghiệm từ Mỹ, Anh, Australia.
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl">
+                                    <div className="text-3xl font-bold text-indigo-600 mb-2">6+</div>
+                                    <div className="text-gray-700 font-medium">Năm kinh nghiệm</div>
+                                </div>
+                                <div className="text-center p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl">
+                                    <div className="text-3xl font-bold text-green-600 mb-2">95%</div>
+                                    <div className="text-gray-700 font-medium">Tỷ lệ đậu thi cử</div>
+                                </div>
+                                <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl">
+                                    <div className="text-3xl font-bold text-purple-600 mb-2">20+</div>
+                                    <div className="text-gray-700 font-medium">Giáo viên bản ngữ</div>
+                                </div>
+                                <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl">
+                                    <div className="text-3xl font-bold text-orange-600 mb-2">4.8/5</div>
+                                    <div className="text-gray-700 font-medium">Đánh giá học viên</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="relative">
+                            <div className="bg-gradient-to-br from-indigo-100 to-purple-100 rounded-3xl p-8 shadow-2xl">
+                                <img
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' fill='none'%3E%3Crect width='400' height='300' fill='%23f8fafc'/%3E%3Ccircle cx='200' cy='150' r='80' fill='%236366f1' opacity='0.1'/%3E%3Cpath d='M120 120h160v60H120z' fill='%236366f1' opacity='0.2'/%3E%3Ccircle cx='160' cy='140' r='20' fill='%236366f1'/%3E%3Ccircle cx='240' cy='140' r='20' fill='%238b5cf6'/%3E%3Ctext x='200' y='220' text-anchor='middle' fill='%23374151' font-family='Arial' font-size='14'%3EEngliMaster Team%3C/text%3E%3C/svg%3E"
+                                    alt="EngliMaster Team"
+                                    className="w-full h-80 object-cover rounded-2xl"
+                                />
+                                <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-4 shadow-xl">
+                                    <div className="flex items-center space-x-2">
+                                        <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                        <span className="text-sm font-medium text-gray-700">Online 24/7</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Mission & Vision */}
+                    <div className="grid md:grid-cols-2 gap-12 mb-20">
+                        <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-3xl p-8 shadow-lg">
+                            <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl mb-6">
+                                🎯
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-4">Sứ mệnh</h3>
+                            <p className="text-gray-700 leading-relaxed">
+                                Làm cho việc học tiếng Anh trở nên dễ dàng, thú vị và hiệu quả cho mọi người Việt Nam.
+                                Chúng tôi tin rằng ngôn ngữ là cầu nối để mở ra những cơ hội mới trong cuộc sống và sự nghiệp.
+                            </p>
+                        </div>
+
+                        <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-8 shadow-lg">
+                            <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white text-2xl mb-6">
+                                🌟
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-4">Tầm nhìn</h3>
+                            <p className="text-gray-700 leading-relaxed">
+                                Trở thành trung tâm dạy tiếng Anh số 1 Việt Nam, nơi mọi học viên đều có thể tự tin giao tiếp
+                                tiếng Anh trong môi trường quốc tế và đạt được ước mơ của mình.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Our Values */}
+                    <div className="text-center mb-12">
+                        <h3 className="text-3xl font-bold text-gray-900 mb-4">Giá trị cốt lõi</h3>
+                        <div className="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto rounded-full"></div>
+                    </div>
+
+                    <div className="grid md:grid-cols-4 gap-8 mb-20">
+                        {[
+                            {
+                                icon: "💡",
+                                title: "Sáng tạo",
+                                description: "Không ngừng đổi mới phương pháp giảng dạy, ứng dụng công nghệ hiện đại"
+                            },
+                            {
+                                icon: "🤝",
+                                title: "Tận tâm",
+                                description: "Đồng hành cùng học viên từ những bước đầu tiên đến khi đạt mục tiêu"
+                            },
+                            {
+                                icon: "🏆",
+                                title: "Chất lượng",
+                                description: "Cam kết mang đến chất lượng giảng dạy cao nhất với đội ngũ giáo viên xuất sắc"
+                            },
+                            {
+                                icon: "🌍",
+                                title: "Toàn cầu",
+                                description: "Kết nối học viên với cộng đồng quốc tế thông qua việc thành thạo tiếng Anh"
+                            }
+                        ].map((value, index) => (
+                            <div key={index} className="text-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                                <div className="text-4xl mb-4">{value.icon}</div>
+                                <h4 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h4>
+                                <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Our Team */}
+                    <div className="text-center mb-12">
+                        <h3 className="text-3xl font-bold text-gray-900 mb-4">Đội ngũ giáo viên</h3>
+                        <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                            Đội ngũ giáo viên bản ngữ và Việt Nam giàu kinh nghiệm, được đào tạo chuyên nghiệp
+                        </p>
+                        <div className="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto rounded-full mt-6"></div>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8 mb-16">
+                        {[
+                            {
+                                name: "Ms. Sarah Johnson",
+                                role: "Giám đốc học thuật",
+                                flag: "🇺🇸",
+                                experience: "8 năm kinh nghiệm",
+                                education: "Thạc sĩ TESOL - Stanford University",
+                                specialty: "Chuyên về phương pháp giao tiếp và phát âm",
+                                avatar: "SJ"
+                            },
+                            {
+                                name: "Mr. David Smith",
+                                role: "Trưởng khoa Intermediate",
+                                flag: "🇬🇧",
+                                experience: "6 năm kinh nghiệm",
+                                education: "Cử nhân Ngôn ngữ Anh - Cambridge",
+                                specialty: "Chuyên về ngữ pháp và luyện thi IELTS",
+                                avatar: "DS"
+                            },
+                            {
+                                name: "Ms. Emma Wilson",
+                                role: "Chuyên gia Advanced",
+                                flag: "🇦🇺",
+                                experience: "10 năm kinh nghiệm",
+                                education: "Thạc sĩ Giáo dục - Melbourne University",
+                                specialty: "Chuyên về Business English và Academic Writing",
+                                avatar: "EW"
+                            }
+                        ].map((teacher, index) => (
+                            <div key={index} className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-indigo-500">
+                                <div className="text-center mb-6">
+                                    <div className="w-20 h-20 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
+                                        {teacher.avatar}
+                                    </div>
+                                    <h4 className="text-xl font-bold text-gray-900 mb-1">
+                                        {teacher.flag} {teacher.name}
+                                    </h4>
+                                    <p className="text-indigo-600 font-semibold mb-2">{teacher.role}</p>
+                                    <p className="text-gray-600 text-sm">{teacher.experience}</p>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <div className="flex items-start">
+                                        <span className="w-2 h-2 bg-indigo-600 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                        <span className="text-gray-700 text-sm">{teacher.education}</span>
+                                    </div>
+                                    <div className="flex items-start">
+                                        <span className="w-2 h-2 bg-purple-600 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                        <span className="text-gray-700 text-sm">{teacher.specialty}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Awards & Certifications */}
+                    <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-12 text-white text-center">
+                        <h3 className="text-3xl font-bold mb-8">Chứng nhận & Giải thưởng</h3>
+                        <div className="grid md:grid-cols-4 gap-8">
+                            {[
+                                {
+                                    icon: "🏆",
+                                    title: "Top 10",
+                                    subtitle: "Trung tâm tiếng Anh uy tín 2023"
+                                },
+                                {
+                                    icon: "📜",
+                                    title: "Chứng nhận",
+                                    subtitle: "Cambridge English Teaching"
+                                },
+                                {
+                                    icon: "⭐",
+                                    title: "5 sao",
+                                    subtitle: "Đánh giá từ học viên"
+                                },
+                                {
+                                    icon: "🎖️",
+                                    title: "Giải thưởng",
+                                    subtitle: "Đổi mới sáng tạo giáo dục"
+                                }
+                            ].map((award, index) => (
+                                <div key={index} className="text-center">
+                                    <div className="text-4xl mb-3">{award.icon}</div>
+                                    <div className="text-xl font-bold mb-2">{award.title}</div>
+                                    <div className="text-white/90 text-sm">{award.subtitle}</div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
