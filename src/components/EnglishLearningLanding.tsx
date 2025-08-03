@@ -1,4 +1,5 @@
 
+// Server Component - không cần 'use client'
 export default function EnglishLearningLanding() {
     // Data tĩnh cho server component
     const features = [
@@ -274,6 +275,208 @@ export default function EnglishLearningLanding() {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Contact Section */}
+            <section id="contact" className="py-20 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                            Liên hệ với chúng tôi
+                        </h2>
+                        <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                            Bạn có câu hỏi về khóa học? Đội ngũ tư vấn của chúng tôi luôn sẵn sàng hỗ trợ bạn 24/7
+                        </p>
+                        <div className="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto rounded-full mt-6"></div>
+                    </div>
+
+                    <div className="grid lg:grid-cols-2 gap-16 items-start">
+                        {/* Contact Form */}
+                        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl p-8 shadow-xl">
+                            <h3 className="text-2xl font-bold text-gray-900 mb-6">Gửi tin nhắn cho chúng tôi</h3>
+                            <form className="space-y-6">
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Họ tên *</label>
+                                        <input
+                                            type="text"
+                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 bg-white"
+                                            placeholder="Nhập họ tên của bạn"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Số điện thoại *</label>
+                                        <input
+                                            type="tel"
+                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 bg-white"
+                                            placeholder="Nhập số điện thoại"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+                                    <input
+                                        type="email"
+                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 bg-white"
+                                        placeholder="Nhập địa chỉ email"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Trình độ hiện tại</label>
+                                    <select className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 bg-white">
+                                        <option>Chọn trình độ của bạn</option>
+                                        <option>Mới bắt đầu (Beginner)</option>
+                                        <option>Cơ bản (Elementary)</option>
+                                        <option>Trung cấp (Intermediate)</option>
+                                        <option>Khá (Upper-Intermediate)</option>
+                                        <option>Thành thạo (Advanced)</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Mục tiêu học tập</label>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        {[
+                                            "Giao tiếp hàng ngày",
+                                            "Công việc/Kinh doanh",
+                                            "Thi IELTS/TOEIC",
+                                            "Du học",
+                                            "Du lịch",
+                                            "Khác"
+                                        ].map((goal, index) => (
+                                            <label key={index} className="flex items-center space-x-2 cursor-pointer">
+                                                <input type="checkbox" className="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500" />
+                                                <span className="text-sm text-gray-700">{goal}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Tin nhắn</label>
+                                    <textarea
+                                        rows={4}
+                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 bg-white resize-none"
+                                        placeholder="Chia sẻ thêm về mong muốn học tập của bạn..."
+                                    ></textarea>
+                                </div>
+
+                                <button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                    Gửi tin nhắn 📨
+                                </button>
+                            </form>
+                        </div>
+
+                        {/* Contact Info */}
+                        <div className="space-y-8">
+                            <div className="bg-white rounded-3xl p-8 shadow-xl border-l-4 border-indigo-500">
+                                <div className="flex items-center mb-4">
+                                    <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-xl mr-4">
+                                        📞
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-gray-900 text-lg">Hotline tư vấn</h4>
+                                        <p className="text-gray-600">Liên hệ ngay để được tư vấn miễn phí</p>
+                                    </div>
+                                </div>
+                                <div className="space-y-2 ml-16">
+                                    <p className="text-2xl font-bold text-indigo-600">1900-1234</p>
+                                    <p className="text-gray-600">Miễn phí từ 8:00 - 22:00 hàng ngày</p>
+                                </div>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-8 shadow-xl border-l-4 border-purple-500">
+                                <div className="flex items-center mb-4">
+                                    <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white text-xl mr-4">
+                                        ✉️
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-gray-900 text-lg">Email hỗ trợ</h4>
+                                        <p className="text-gray-600">Gửi email cho chúng tôi</p>
+                                    </div>
+                                </div>
+                                <div className="space-y-2 ml-16">
+                                    <p className="text-lg font-semibold text-purple-600">support@englimaster.com</p>
+                                    <p className="text-gray-600">Phản hồi trong vòng 2 giờ</p>
+                                </div>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-8 shadow-xl border-l-4 border-green-500">
+                                <div className="flex items-center mb-4">
+                                    <div className="w-12 h-12 bg-gradient-to-r from-green-600 to-teal-600 rounded-full flex items-center justify-center text-white text-xl mr-4">
+                                        📍
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-gray-900 text-lg">Địa chỉ văn phòng</h4>
+                                        <p className="text-gray-600">Ghé thăm chúng tôi</p>
+                                    </div>
+                                </div>
+                                <div className="space-y-2 ml-16">
+                                    <p className="font-semibold text-gray-900">Tầng 15, Tòa nhà ABC</p>
+                                    <p className="text-gray-600">123 Đường Nguyễn Huệ, Quận 1</p>
+                                    <p className="text-gray-600">TP. Hồ Chí Minh, Việt Nam</p>
+                                </div>
+                            </div>
+
+                            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-8 text-white">
+                                <h4 className="font-bold text-xl mb-4">🎁 Ưu đãi đặc biệt</h4>
+                                <p className="mb-4">Đăng ký tư vấn ngay hôm nay để nhận:</p>
+                                <ul className="space-y-2">
+                                    <li className="flex items-center">
+                                        <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                                        Khóa học thử miễn phí 7 ngày
+                                    </li>
+                                    <li className="flex items-center">
+                                        <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                                        Bài test trình độ miễn phí
+                                    </li>
+                                    <li className="flex items-center">
+                                        <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                                        Tài liệu học tập độc quyền
+                                    </li>
+                                    <li className="flex items-center">
+                                        <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                                        Giảm 30% học phí khóa đầu tiên
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* FAQ Section */}
+                    <div className="mt-20">
+                        <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">
+                            Câu hỏi thường gặp
+                        </h3>
+                        <div className="grid md:grid-cols-2 gap-8">
+                            {[
+                                {
+                                    question: "Tôi có thể học thử miễn phí không?",
+                                    answer: "Có! Chúng tôi cung cấp khóa học thử miễn phí 7 ngày với đầy đủ tính năng để bạn trải nghiệm phương pháp học của EngliMaster."
+                                },
+                                {
+                                    question: "Thời gian học như thế nào?",
+                                    answer: "Bạn có thể học mọi lúc mọi nơi với ứng dụng của chúng tôi. Mỗi bài học chỉ 15-30 phút, phù hợp với lịch trình bận rộn."
+                                },
+                                {
+                                    question: "Có giáo viên bản ngữ không?",
+                                    answer: "Có! Đội ngũ giáo viên bản ngữ từ Mỹ, Anh, Australia sẽ hướng dẫn bạn trong các lớp học trực tuyến và phản hồi bài tập."
+                                },
+                                {
+                                    question: "Học phí như thế nào?",
+                                    answer: "Chúng tôi có nhiều gói học phù hợp với ngân sách của bạn, từ 299k/tháng. Liên hệ để được tư vấn gói học phù hợp nhất."
+                                }
+                            ].map((faq, index) => (
+                                <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                                    <h4 className="font-bold text-gray-900 mb-3 text-lg">{faq.question}</h4>
+                                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
