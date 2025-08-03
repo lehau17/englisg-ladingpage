@@ -97,8 +97,8 @@ export default function EnglishLearningLanding() {
                                 Tính năng
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
                             </a>
-                            <a href="#courses" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group">
-                                Khóa học
+                            <a href="#classes" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group">
+                                Lớp học
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
                             </a>
                             <a href="#testimonials" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group">
@@ -244,6 +244,264 @@ export default function EnglishLearningLanding() {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Classes Section */}
+            <section id="classes" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                            Lớp học theo trình độ
+                        </h2>
+                        <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                            Chọn lớp học phù hợp với trình độ của bạn. Mỗi lớp có tối đa 12 học viên để đảm bảo chất lượng học tập tốt nhất
+                        </p>
+                        <div className="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto rounded-full mt-6"></div>
+                    </div>
+
+                    <div className="grid lg:grid-cols-3 gap-8 mb-16">
+                        {[
+                            {
+                                level: "Beginner",
+                                levelVi: "Cơ bản",
+                                color: "from-green-500 to-emerald-600",
+                                bgColor: "from-green-50 to-emerald-50",
+                                borderColor: "border-green-500",
+                                description: "Dành cho người mới bắt đầu học tiếng Anh",
+                                duration: "3 tháng",
+                                schedule: "Thứ 2, 4, 6 - 19:00-21:00",
+                                students: "8/12 học viên",
+                                teacher: "Ms. Sarah Johnson",
+                                teacherFlag: "🇺🇸",
+                                price: "1.200.000đ",
+                                features: [
+                                    "Học bảng chữ cái và phát âm cơ bản",
+                                    "Từ vựng thiết yếu hàng ngày (500 từ)",
+                                    "Ngữ pháp cơ bản (hiện tại đơn, quá khứ đơn)",
+                                    "Giao tiếp cơ bản: chào hỏi, giới thiệu bản thân",
+                                    "Luyện nghe với audio đơn giản"
+                                ],
+                                nextClass: "Ngày 15/01/2025"
+                            },
+                            {
+                                level: "Intermediate",
+                                levelVi: "Trung cấp",
+                                color: "from-blue-500 to-indigo-600",
+                                bgColor: "from-blue-50 to-indigo-50",
+                                borderColor: "border-blue-500",
+                                description: "Cho học viên đã có kiến thức cơ bản",
+                                duration: "4 tháng",
+                                schedule: "Thứ 3, 5, 7 - 19:30-21:30",
+                                students: "10/12 học viên",
+                                teacher: "Mr. David Smith",
+                                teacherFlag: "🇬🇧",
+                                price: "1.500.000đ",
+                                features: [
+                                    "Mở rộng từ vựng (1500+ từ theo chủ đề)",
+                                    "Ngữ pháp nâng cao (thì hoàn thành, câu điều kiện)",
+                                    "Luyện speaking với chủ đề đa dạng",
+                                    "Đọc hiểu văn bản trung bình",
+                                    "Viết email và thư từ đơn giản"
+                                ],
+                                nextClass: "Ngày 22/01/2025",
+                                popular: true
+                            },
+                            {
+                                level: "Advanced",
+                                levelVi: "Nâng cao",
+                                color: "from-purple-500 to-pink-600",
+                                bgColor: "from-purple-50 to-pink-50",
+                                borderColor: "border-purple-500",
+                                description: "Hoàn thiện kỹ năng và chuẩn bị thi cử",
+                                duration: "6 tháng",
+                                schedule: "Thứ 2, 4, 6 - 18:00-20:00",
+                                students: "6/12 học viên",
+                                teacher: "Ms. Emma Wilson",
+                                teacherFlag: "🇦🇺",
+                                price: "2.000.000đ",
+                                features: [
+                                    "Từ vựng chuyên ngành và thành ngữ",
+                                    "Ngữ pháp phức tạp và cấu trúc câu nâng cao",
+                                    "Thảo luận và tranh luận bằng tiếng Anh",
+                                    "Đọc hiểu văn bản phức tạp, báo chí",
+                                    "Viết essay, báo cáo chuyên nghiệp"
+                                ],
+                                nextClass: "Ngày 29/01/2025"
+                            }
+                        ].map((classInfo, index) => (
+                            <div key={index} className={`relative bg-gradient-to-br ${classInfo.bgColor} rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 ${classInfo.borderColor}`}>
+                                {classInfo.popular && (
+                                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                                        <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-6 py-2 rounded-full text-sm font-bold shadow-lg">
+                                            🔥 Phổ biến nhất
+                                        </span>
+                                    </div>
+                                )}
+
+                                <div className="text-center mb-6">
+                                    <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${classInfo.color} rounded-full text-white text-2xl font-bold mb-4`}>
+                                        {classInfo.level[0]}
+                                    </div>
+                                    <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                                        {classInfo.levelVi}
+                                    </h3>
+                                    <p className="text-gray-600">{classInfo.description}</p>
+                                </div>
+
+                                <div className="space-y-4 mb-6">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">⏱️ Thời lượng:</span>
+                                        <span className="font-semibold text-gray-900">{classInfo.duration}</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">📅 Lịch học:</span>
+                                        <span className="font-semibold text-gray-900 text-sm">{classInfo.schedule}</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">👥 Sĩ số:</span>
+                                        <span className="font-semibold text-gray-900">{classInfo.students}</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">👨‍🏫 Giáo viên:</span>
+                                        <span className="font-semibold text-gray-900 text-sm">
+                                            {classInfo.teacherFlag} {classInfo.teacher}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-600">🗓️ Khai giảng:</span>
+                                        <span className="font-semibold text-green-600">{classInfo.nextClass}</span>
+                                    </div>
+                                </div>
+
+                                <div className="mb-6">
+                                    <h4 className="font-bold text-gray-900 mb-3">Nội dung học:</h4>
+                                    <ul className="space-y-2">
+                                        {classInfo.features.map((feature, featureIndex) => (
+                                            <li key={featureIndex} className="flex items-start">
+                                                <span className="w-2 h-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                                <span className="text-gray-700 text-sm leading-relaxed">{feature}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="border-t pt-6">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <span className="text-2xl font-bold text-gray-900">{classInfo.price}</span>
+                                        <span className="text-gray-600">/3 tháng</span>
+                                    </div>
+                                    <button className={`w-full bg-gradient-to-r ${classInfo.color} text-white py-3 px-6 rounded-xl font-bold hover:shadow-lg hover:-translate-y-1 transition-all duration-300`}>
+                                        Đăng ký lớp học
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Class Schedule */}
+                    <div className="bg-white rounded-3xl p-8 shadow-xl">
+                        <h3 className="text-3xl font-bold text-gray-900 text-center mb-8">
+                            Lịch học trong tuần
+                        </h3>
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="border-b-2 border-gray-200">
+                                        <th className="text-left py-4 px-4 font-bold text-gray-900">Thời gian</th>
+                                        <th className="text-center py-4 px-4 font-bold text-gray-900">Thứ 2</th>
+                                        <th className="text-center py-4 px-4 font-bold text-gray-900">Thứ 3</th>
+                                        <th className="text-center py-4 px-4 font-bold text-gray-900">Thứ 4</th>
+                                        <th className="text-center py-4 px-4 font-bold text-gray-900">Thứ 5</th>
+                                        <th className="text-center py-4 px-4 font-bold text-gray-900">Thứ 6</th>
+                                        <th className="text-center py-4 px-4 font-bold text-gray-900">Thứ 7</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr className="border-b border-gray-100">
+                                        <td className="py-4 px-4 font-semibold text-gray-700">18:00-20:00</td>
+                                        <td className="py-4 px-4 text-center">
+                                            <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                                                Advanced<br />
+                                                <span className="text-xs opacity-90">Ms. Emma</span>
+                                            </div>
+                                        </td>
+                                        <td className="py-4 px-4 text-center">-</td>
+                                        <td className="py-4 px-4 text-center">
+                                            <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                                                Advanced<br />
+                                                <span className="text-xs opacity-90">Ms. Emma</span>
+                                            </div>
+                                        </td>
+                                        <td className="py-4 px-4 text-center">-</td>
+                                        <td className="py-4 px-4 text-center">
+                                            <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                                                Advanced<br />
+                                                <span className="text-xs opacity-90">Ms. Emma</span>
+                                            </div>
+                                        </td>
+                                        <td className="py-4 px-4 text-center">-</td>
+                                    </tr>
+                                    <tr className="border-b border-gray-100">
+                                        <td className="py-4 px-4 font-semibold text-gray-700">19:00-21:00</td>
+                                        <td className="py-4 px-4 text-center">
+                                            <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                                                Beginner<br />
+                                                <span className="text-xs opacity-90">Ms. Sarah</span>
+                                            </div>
+                                        </td>
+                                        <td className="py-4 px-4 text-center">-</td>
+                                        <td className="py-4 px-4 text-center">
+                                            <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                                                Beginner<br />
+                                                <span className="text-xs opacity-90">Ms. Sarah</span>
+                                            </div>
+                                        </td>
+                                        <td className="py-4 px-4 text-center">-</td>
+                                        <td className="py-4 px-4 text-center">
+                                            <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                                                Beginner<br />
+                                                <span className="text-xs opacity-90">Ms. Sarah</span>
+                                            </div>
+                                        </td>
+                                        <td className="py-4 px-4 text-center">-</td>
+                                    </tr>
+                                    <tr className="border-b border-gray-100">
+                                        <td className="py-4 px-4 font-semibold text-gray-700">19:30-21:30</td>
+                                        <td className="py-4 px-4 text-center">-</td>
+                                        <td className="py-4 px-4 text-center">
+                                            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                                                Intermediate<br />
+                                                <span className="text-xs opacity-90">Mr. David</span>
+                                            </div>
+                                        </td>
+                                        <td className="py-4 px-4 text-center">-</td>
+                                        <td className="py-4 px-4 text-center">
+                                            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                                                Intermediate<br />
+                                                <span className="text-xs opacity-90">Mr. David</span>
+                                            </div>
+                                        </td>
+                                        <td className="py-4 px-4 text-center">-</td>
+                                        <td className="py-4 px-4 text-center">
+                                            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                                                Intermediate<br />
+                                                <span className="text-xs opacity-90">Mr. David</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="mt-6 text-center">
+                            <p className="text-gray-600 mb-4">
+                                💡 <strong>Lưu ý:</strong> Có thể sắp xếp lịch học linh hoạt theo yêu cầu của nhóm
+                            </p>
+                            <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                                Tư vấn lịch học phù hợp
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
