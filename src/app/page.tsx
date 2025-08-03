@@ -261,7 +261,7 @@ export default function EnglishLearningLanding() {
                         {testimonials.map((testimonial, index) => (
                             <div key={index} className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300">
                                 <div className="text-gray-600 italic text-lg mb-6 leading-relaxed">
-                                    "{testimonial.text}"
+                                    {testimonial.text}
                                 </div>
                                 <div className="flex items-center">
                                     <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold mr-4">
