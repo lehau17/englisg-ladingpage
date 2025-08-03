@@ -13,7 +13,7 @@ export const metadata: Metadata = {
         siteName: 'EngliMaster',
         images: [
             {
-                url: '/og-image.jpg', // bạn nên đặt file này trong public/
+                url: '/logo.png', // bạn nên đặt file này trong public/
                 width: 1200,
                 height: 630,
                 alt: 'EngliMaster Landing Page',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: 'EngliMaster - Học tiếng Anh hiệu quả',
         description: 'Học tiếng Anh với giáo viên bản ngữ, AI và gamification',
-        images: ['/og-image.jpg'],
+        images: ['/logo.png'],
     },
     metadataBase: new URL('https://englisg-ladingpage.vercel.app'),
 };
