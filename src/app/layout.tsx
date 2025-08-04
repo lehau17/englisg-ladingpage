@@ -13,6 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+    icons: {
+        icon: "/favicon.png",
+    },
     title: "EngliMaster – Học Tiếng Anh Hiệu Quả",
     description:
         "EngliMaster là nền tảng học tiếng Anh hiện đại, cá nhân hóa theo mục tiêu và trình độ. Trải nghiệm học tập thú vị, tương tác cao và đạt kết quả nhanh chóng.",
