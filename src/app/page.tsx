@@ -1,5 +1,8 @@
 // app/page.tsx
 import EnglishLearningLanding from '@/components/EnglishLearningLanding';
+import AIConsultantWidget from '@/components/AIConsultantWidget';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import StructuredData from '@/components/StructuredData';
 import { getLandingPageData } from '@/lib/api';
 import type { Metadata } from 'next';
 
@@ -36,5 +39,11 @@ export default async function HomePage() {
     // Fetch data from API on server-side
     const data = await getLandingPageData();
 
-    return <EnglishLearningLanding data={data} />;
+    return (
+        <ErrorBoundary>
+            <StructuredData data={data} />
+            <EnglishLearningLanding data={data} />
+            <AIConsultantWidget />
+        </ErrorBoundary>
+    );
 }
