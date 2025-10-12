@@ -1,0 +1,13 @@
+# robots.txt for EngliMaster Landing Page
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /payment/return
+
+# Sitemap
+Sitemap: https://english-master.haudev.io.vn/sitemap.xml
+
+# Crawl-delay (optional)
+Crawl-delay: 1
+
