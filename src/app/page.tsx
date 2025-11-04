@@ -1,5 +1,6 @@
 // app/page.tsx
 import EnglishLearningLanding from '@/components/EnglishLearningLanding';
+import { getLandingPageData } from '@/lib/api';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -31,6 +32,9 @@ export const metadata: Metadata = {
     metadataBase: new URL('https://englisg-ladingpage.vercel.app'),
 };
 
-export default function HomePage() {
-    return <EnglishLearningLanding />;
+export default async function HomePage() {
+    // Fetch data from API on server-side
+    const data = await getLandingPageData();
+
+    return <EnglishLearningLanding data={data} />;
 }
