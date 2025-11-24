@@ -1,9 +1,9 @@
 'use client';
 
+import { BookOpen, Calendar, CalendarDays, CreditCard, GraduationCap, UserCircle, Users } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
-import { BookOpen, Calendar, GraduationCap, Users, CalendarDays, UserCircle, CreditCard } from 'lucide-react';
 import PaymentModal from '../../components/PaymentModal';
 import { getClassroomsByCourse, getCourses, type Classroom, type Course } from '../../lib/api';
 
