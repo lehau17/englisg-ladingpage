@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
+import { BookOpen, Calendar, GraduationCap, Users, CalendarDays, UserCircle, CreditCard } from 'lucide-react';
 import PaymentModal from '../../components/PaymentModal';
 import { getClassroomsByCourse, getCourses, type Classroom, type Course } from '../../lib/api';
 
@@ -154,7 +155,7 @@ function EnrollPageContent() {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                <span className="text-2xl mr-2">📚</span>
+                <BookOpen className="w-6 h-6 mr-2 text-indigo-600" />
                 Chọn Khóa Học
               </h2>
 
@@ -189,8 +190,9 @@ function EnrollPageContent() {
                         {course.description}
                       </p>
                       <div className="flex justify-between items-center text-xs">
-                        <span className="text-gray-500">
-                          📅 {course.duration}
+                        <span className="text-gray-500 flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {course.duration}
                         </span>
                         <span className="font-semibold text-indigo-600">
                           {formatPrice(course.price)}
@@ -207,7 +209,7 @@ function EnrollPageContent() {
           <div className="lg:col-span-2">
             {!selectedCourse ? (
               <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-                <div className="text-6xl mb-4">🎓</div>
+                <GraduationCap className="w-20 h-20 mx-auto mb-4 text-indigo-600" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Chọn Khóa Học Để Xem Lớp
                 </h3>
@@ -236,7 +238,7 @@ function EnrollPageContent() {
                   </div>
                 ) : classrooms.length === 0 ? (
                   <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-                    <div className="text-6xl mb-4">📅</div>
+                    <CalendarDays className="w-20 h-20 mx-auto mb-4 text-gray-400" />
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Chưa Có Lớp Nào
                     </h3>
@@ -277,28 +279,28 @@ function EnrollPageContent() {
 
                           <div className="grid md:grid-cols-2 gap-4 mb-4">
                             <div className="flex items-center text-gray-700">
-                              <span className="mr-2">📅</span>
+                              <Calendar className="w-5 h-5 mr-2 text-indigo-600" />
                               <div>
                                 <div className="text-sm text-gray-500">Thời gian</div>
                                 <div className="font-medium">{classroom.schedule}</div>
                               </div>
                             </div>
                             <div className="flex items-center text-gray-700">
-                              <span className="mr-2">👨‍🏫</span>
+                              <UserCircle className="w-5 h-5 mr-2 text-indigo-600" />
                               <div>
                                 <div className="text-sm text-gray-500">Giáo viên</div>
                                 <div className="font-medium">{classroom.teacher}</div>
                               </div>
                             </div>
                             <div className="flex items-center text-gray-700">
-                              <span className="mr-2">🗓️</span>
+                              <CalendarDays className="w-5 h-5 mr-2 text-indigo-600" />
                               <div>
                                 <div className="text-sm text-gray-500">Ngày khai giảng</div>
                                 <div className="font-medium">{formatDate(classroom.startDate)}</div>
                               </div>
                             </div>
                             <div className="flex items-center text-gray-700">
-                              <span className="mr-2">👥</span>
+                              <Users className="w-5 h-5 mr-2 text-indigo-600" />
                               <div>
                                 <div className="text-sm text-gray-500">Số chỗ</div>
                                 <div className="font-medium">
@@ -311,12 +313,19 @@ function EnrollPageContent() {
                           <button
                             onClick={() => handleEnroll(classroom)}
                             disabled={!isAvailable}
-                            className={`w-full py-3 px-6 rounded-lg font-semibold transition-all ${isAvailable
+                            className={`w-full py-3 px-6 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${isAvailable
                               ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:-translate-y-0.5'
                               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                               }`}
                           >
-                            {isAvailable ? '💳 Đăng Ký & Thanh Toán' : 'Không Thể Đăng Ký'}
+                            {isAvailable ? (
+                              <>
+                                <CreditCard className="w-5 h-5" />
+                                Đăng Ký & Thanh Toán
+                              </>
+                            ) : (
+                              'Không Thể Đăng Ký'
+                            )}
                           </button>
                         </div>
                       );

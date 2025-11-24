@@ -12,6 +12,10 @@ interface Message {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.haudev.io.vn/api';
 
+// LocalStorage keys
+const GUEST_SESSION_KEY = 'guestChatSessionId';
+const CONVERSATION_ID_KEY = 'guestConversationId';
+
 export default function AIConsultantWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -23,8 +27,60 @@ export default function AIConsultantWidget() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [guestSessionId, setGuestSessionId] = useState<string | null>(null);
+  const [conversationId, setConversationId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Load guest session and conversation history on mount
+  useEffect(() => {
+    const loadGuestSession = async () => {
+      let sessionId = localStorage.getItem(GUEST_SESSION_KEY);
+
+      if (sessionId) {
+        setGuestSessionId(sessionId);
+
+        // Try to load conversation history
+        try {
+          const response = await fetch(`${API_BASE_URL}/public/v1/ai/guest-chat/history`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ guestSessionId: sessionId }),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            const data = result.data || result; // Handle wrapper response
+
+            if (data.conversations && data.conversations.length > 0) {
+              // Get latest conversation
+              const latestConv = data.conversations[0];
+              setConversationId(latestConv.id);
+              localStorage.setItem(CONVERSATION_ID_KEY, latestConv.id);
+
+              // Load messages
+              if (latestConv.messages && latestConv.messages.length > 0) {
+                const loadedMessages = latestConv.messages.map((msg: any) => ({
+                  role: msg.role,
+                  content: msg.content,
+                  timestamp: new Date(msg.createdAt),
+                }));
+
+                setMessages([
+                  messages[0], // Keep welcome message
+                  ...loadedMessages,
+                ]);
+              }
+            }
+          }
+        } catch (error) {
+          console.error('Failed to load chat history:', error);
+        }
+      }
+    };
+
+    loadGuestSession();
+  }, []);
 
   useEffect(() => {
     if (isOpen && messagesEndRef.current) {
@@ -54,113 +110,125 @@ export default function AIConsultantWidget() {
     setMessages((prev) => [...prev, newUserMessage]);
 
     try {
-      // Try streaming first
-      const streamUrl = `${API_BASE_URL}/public/v1/ai/consultant/stream?question=${encodeURIComponent(userMessage)}`;
-      const eventSource = new EventSource(streamUrl);
-
-      let assistantResponse = '';
-
-      eventSource.onmessage = (event) => {
-        if (event.data === '[DONE]') {
-          eventSource.close();
-          setIsLoading(false);
-          return;
+      if (!conversationId) {
+        // First message: create conversation
+        const body: Record<string, any> = { question: userMessage };
+        // Only add guestSessionId if it's a valid UUID
+        if (guestSessionId && guestSessionId !== 'undefined' && guestSessionId !== 'null') {
+          body.guestSessionId = guestSessionId;
         }
 
-        try {
-          const chunk = JSON.parse(event.data);
+        const response = await fetch(`${API_BASE_URL}/public/v1/ai/guest-chat/create`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
 
-          if (chunk.type === 'error') {
-            throw new Error(chunk.content || 'Có lỗi xảy ra');
-          }
+        if (!response.ok) throw new Error('Failed to create chat');
 
-          if (chunk.output) {
-            assistantResponse += chunk.output;
+        const result = await response.json();
+        const data = result.data || result; // Handle wrapper response
 
-            // Update or create assistant message
-            setMessages((prev) => {
-              const lastMsg = prev[prev.length - 1];
-              if (lastMsg && lastMsg.role === 'assistant') {
-                // Update existing assistant message
-                return prev.map((msg, idx) =>
-                  idx === prev.length - 1
-                    ? { ...msg, content: assistantResponse }
-                    : msg
-                );
-              } else {
-                // Create new assistant message
-                return [
-                  ...prev,
-                  {
-                    role: 'assistant' as const,
-                    content: assistantResponse,
-                    timestamp: new Date(),
-                  },
-                ];
-              }
-            });
-          }
-        } catch (e) {
-          if (process.env.NODE_ENV === 'development') {
-            console.error('Error parsing SSE chunk:', e);
-          }
-        }
-      };
+        // Save IDs
+        setGuestSessionId(data.guestSessionId);
+        setConversationId(data.conversationId);
+        localStorage.setItem(GUEST_SESSION_KEY, data.guestSessionId);
+        localStorage.setItem(CONVERSATION_ID_KEY, data.conversationId);
 
-      eventSource.onerror = (error) => {
-        if (process.env.NODE_ENV === 'development') {
-          console.error('SSE error:', error);
-        }
-        eventSource.close();
+        // Add assistant response
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: data.answer,
+            timestamp: new Date(),
+          },
+        ]);
+
         setIsLoading(false);
-        // Fallback to non-streaming
-        handleNonStreamingQuery(userMessage);
-      };
+      } else {
+        // Continue conversation with streaming
+        const streamUrl = `${API_BASE_URL}/public/v1/ai/guest-chat/${conversationId}/stream`;
+        const response = await fetch(streamUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            conversationId,
+            question: userMessage,
+          }),
+        });
+
+        if (!response.ok) throw new Error('Failed to stream chat');
+
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error('No response body');
+
+        const decoder = new TextDecoder();
+        let assistantResponse = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const data = line.slice(6);
+
+              if (data === '[DONE]') {
+                setIsLoading(false);
+                break;
+              }
+
+              try {
+                const parsed = JSON.parse(data);
+
+                if (parsed.type === 'error') {
+                  throw new Error(parsed.content || 'Có lỗi xảy ra');
+                }
+
+                if (parsed.output) {
+                  assistantResponse += parsed.output;
+
+                  setMessages((prev) => {
+                    const lastMsg = prev[prev.length - 1];
+                    if (lastMsg && lastMsg.role === 'assistant') {
+                      return prev.map((msg, idx) =>
+                        idx === prev.length - 1
+                          ? { ...msg, content: assistantResponse }
+                          : msg
+                      );
+                    } else {
+                      return [
+                        ...prev,
+                        {
+                          role: 'assistant' as const,
+                          content: assistantResponse,
+                          timestamp: new Date(),
+                        },
+                      ];
+                    }
+                  });
+                }
+              } catch (e) {
+                // Ignore parse errors
+              }
+            }
+          }
+        }
+      }
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Streaming error, falling back to non-streaming:', error);
-      }
-      handleNonStreamingQuery(userMessage);
-    }
-  };
-
-  const handleNonStreamingQuery = async (question: string) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/public/v1/ai/consultant/query`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ question }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-
+      console.error('Error sending message:', error);
       setMessages((prev) => [
         ...prev,
         {
           role: 'assistant',
-          content: result.answer || 'Xin lỗi, tôi không thể trả lời câu hỏi này.',
+          content: 'Xin lỗi, đã xảy ra lỗi khi kết nối với trợ lý AI. Vui lòng thử lại sau.',
           timestamp: new Date(),
         },
       ]);
-    } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Error querying AI:', error);
-      }
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: 'Xin lỗi, đã xảy ra lỗi khi kết nối với trợ lý AI. Vui lòng thử lại sau hoặc liên hệ với chúng tôi qua form liên hệ.',
-          timestamp: new Date(),
-        },
-      ]);
-    } finally {
       setIsLoading(false);
     }
   };
