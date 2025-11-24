@@ -1,11 +1,7 @@
 // API configuration for landing page
-// Prefer Next.js public env var, but fall back to other common names so the
-// landing page can run in different environments (Vite-based dev, monorepo
-// scripts, or when CLIENT_API_PORT is set in the backend .env).
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  process.env.VITE_API_URL ||
-  `http://localhost:${process.env.CLIENT_API_PORT ?? 3000}/api`;
+// Use NEXT_PUBLIC_API_URL from environment variables
+// For production, this is set in .env.local or Vercel environment variables
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.haudev.io.vn/api';
 
 export interface LandingPageFeature {
   icon: string;
@@ -50,11 +46,28 @@ export interface LandingPageFooterSection {
   links: string[];
 }
 
+export interface LandingPageScheduleRow {
+  time: string;
+  days: Record<string, string>;
+}
+
+export interface LandingPageTeacher {
+  name: string;
+  role: string;
+  flag: string;
+  experience?: string;
+  specialty?: string;
+  education?: string;
+  bio?: string;
+}
+
 export interface LandingPageData {
   features: LandingPageFeature[];
   stats: LandingPageStat[];
   testimonials: LandingPageTestimonial[];
   classes: LandingPageClass[];
+  classSchedule: LandingPageScheduleRow[];
+  teachers: LandingPageTeacher[];
   footerSections: LandingPageFooterSection[];
 }
 
@@ -77,11 +90,11 @@ export async function getLandingPageData(): Promise<LandingPageData> {
   try {
     // During build time or when no API is available, use fallback data
     if (typeof window === 'undefined' && !process.env.NEXT_PUBLIC_API_URL) {
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Using fallback data for build/prerendering');
-      }
+      console.log('[Landing Page] Using fallback data for build/prerendering');
       return getFallbackData();
     }
+
+    console.log('[Landing Page] Fetching data from API:', `${API_BASE_URL}/public/v1/landing-page`);
 
     const response = await fetch(`${API_BASE_URL}/public/v1/landing-page`, {
       method: 'GET',
@@ -93,15 +106,31 @@ export async function getLandingPageData(): Promise<LandingPageData> {
     });
 
     if (!response.ok) {
+      console.error('[Landing Page] API returned error status:', response.status, response.statusText);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
+    const result = await response.json();
+    console.log('[Landing Page] Raw response:', result);
+
+    // Backend returns { statusCode, message, data }
+    const actualData = result.data || result;
+
+    // Log to check if we're getting real data or fallback
+    const hasRealData = actualData.classes && actualData.classes.length > 0 &&
+                        actualData.classes.some((c: any) => c.courseId || c.classroomId);
+    console.log('[Landing Page] Data received:', {
+      classesCount: actualData.classes?.length || 0,
+      teachersCount: actualData.teachers?.length || 0,
+      scheduleCount: actualData.classSchedule?.length || 0,
+      hasRealData,
+      firstClassHasCourseId: actualData.classes?.[0]?.courseId ? 'YES' : 'NO',
+      firstTeacher: actualData.teachers?.[0]?.name || 'N/A',
+    });
+
+    return actualData;
   } catch (error) {
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Error fetching landing page data:', error);
-    }
+    console.error('[Landing Page] Error fetching data, using fallback:', error);
     // Return fallback data if API fails
     return getFallbackData();
   }
@@ -192,8 +221,8 @@ export async function getCourses(): Promise<Course[]> {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const result: CourseListResponse = await response.json();
-    return result.data.courses || [];
+    const result = await response.json();
+    return result.data.data.courses || [];
   } catch (error) {
     if (process.env.NODE_ENV === 'development') {
       console.error('Error fetching courses:', error);
@@ -217,8 +246,8 @@ export async function getClassroomsByCourse(courseId: string): Promise<Classroom
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const result: ClassroomListResponse = await response.json();
-    return result.data.classrooms || [];
+    const result = await response.json();
+    return result.data.data.classrooms || [];
   } catch (error) {
     if (process.env.NODE_ENV === 'development') {
       console.error('Error fetching classrooms:', error);
@@ -512,6 +541,46 @@ function getFallbackData(): LandingPageData {
           "Viết essay, báo cáo chuyên nghiệp"
         ],
         nextClass: "Ngày 29/01/2025"
+      }
+    ],
+    classSchedule: [
+      {
+        time: '18:00-20:00',
+        days: { mon: 'Advanced', wed: 'Advanced', fri: 'Advanced' }
+      },
+      {
+        time: '19:00-21:00',
+        days: { mon: 'Beginner', wed: 'Beginner', fri: 'Beginner' }
+      },
+      {
+        time: '19:30-21:30',
+        days: { tue: 'Intermediate', thu: 'Intermediate', sat: 'Intermediate' }
+      }
+    ],
+    teachers: [
+      {
+        name: 'Ms. Sarah Johnson',
+        role: 'Giám đốc học thuật',
+        flag: '🇺🇸',
+        experience: '8 năm kinh nghiệm',
+        specialty: 'Phương pháp giao tiếp & phát âm',
+        education: 'Thạc sĩ TESOL - Stanford University',
+      },
+      {
+        name: 'Mr. David Smith',
+        role: 'Trưởng khoa Intermediate',
+        flag: '🇬🇧',
+        experience: '6 năm kinh nghiệm',
+        specialty: 'Ngữ pháp và luyện thi IELTS',
+        education: 'Cử nhân Ngôn ngữ Anh - Cambridge',
+      },
+      {
+        name: 'Ms. Emma Wilson',
+        role: 'Chuyên gia Advanced',
+        flag: '🇦🇺',
+        experience: '10 năm kinh nghiệm',
+        specialty: 'Business English & Academic Writing',
+        education: 'Thạc sĩ Giáo dục - Melbourne University',
       }
     ],
     footerSections: [

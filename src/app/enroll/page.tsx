@@ -1,11 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getCourses, getClassroomsByCourse, type Course, type Classroom } from '../../lib/api';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 import PaymentModal from '../../components/PaymentModal';
+import { getClassroomsByCourse, getCourses, type Classroom, type Course } from '../../lib/api';
 
-export default function EnrollPage() {
+function EnrollPageContent() {
+  const searchParams = useSearchParams();
+  const courseIdFromUrl = searchParams.get('courseId');
+
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [classrooms, setClassrooms] = useState<Classroom[]>([]);
@@ -39,11 +43,22 @@ export default function EnrollPage() {
     setIsLoadingCourses(true);
     try {
       const data = await getCourses();
+      console.log('📚 Courses loaded:', data);
       setCourses(data);
-    } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Error loading courses:', error);
+
+      // Auto-select course if courseId is in URL
+      if (courseIdFromUrl && data.length > 0) {
+        console.log('🔍 Looking for courseId:', courseIdFromUrl);
+        const courseToSelect = data.find(c => c.id === courseIdFromUrl);
+        if (courseToSelect) {
+          console.log('✅ Course found and selected:', courseToSelect);
+          setSelectedCourse(courseToSelect);
+        } else {
+          console.warn('⚠️ Course not found with ID:', courseIdFromUrl);
+        }
       }
+    } catch (error) {
+      console.error('❌ Error loading courses:', error);
     } finally {
       setIsLoadingCourses(false);
     }
@@ -52,7 +67,9 @@ export default function EnrollPage() {
   const loadClassrooms = async (courseId: string) => {
     setIsLoadingClassrooms(true);
     try {
+      console.log('🏫 Loading classrooms for course:', courseId);
       const data = await getClassroomsByCourse(courseId);
+      console.log('✅ Classrooms loaded:', data);
       setClassrooms(data);
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
@@ -156,8 +173,8 @@ export default function EnrollPage() {
                       key={course.id}
                       onClick={() => setSelectedCourse(course)}
                       className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedCourse?.id === course.id
-                          ? 'border-indigo-600 bg-indigo-50'
-                          : 'border-gray-200 hover:border-indigo-300 bg-white'
+                        ? 'border-indigo-600 bg-indigo-50'
+                        : 'border-gray-200 hover:border-indigo-300 bg-white'
                         }`}
                     >
                       <div className="flex justify-between items-start mb-2">
@@ -295,8 +312,8 @@ export default function EnrollPage() {
                             onClick={() => handleEnroll(classroom)}
                             disabled={!isAvailable}
                             className={`w-full py-3 px-6 rounded-lg font-semibold transition-all ${isAvailable
-                                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:-translate-y-0.5'
-                                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                              ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:-translate-y-0.5'
+                              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                               }`}
                           >
                             {isAvailable ? '💳 Đăng Ký & Thanh Toán' : 'Không Thể Đăng Ký'}
@@ -412,5 +429,20 @@ export default function EnrollPage() {
         />
       )}
     </div>
+  );
+}
+
+export default function EnrollPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Đang tải...</p>
+        </div>
+      </div>
+    }>
+      <EnrollPageContent />
+    </Suspense>
   );
 }

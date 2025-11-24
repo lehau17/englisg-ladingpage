@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { ChatBubbleLeftRightIcon, XMarkIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { ChatBubbleLeftRightIcon, PaperAirplaneIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useEffect, useRef, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -9,10 +10,7 @@ interface Message {
   timestamp: Date;
 }
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  process.env.VITE_API_URL ||
-  `http://localhost:${process.env.CLIENT_API_PORT ?? 3000}/api`;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.haudev.io.vn/api';
 
 export default function AIConsultantWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -225,13 +223,35 @@ export default function AIConsultantWidget() {
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
-                    message.role === 'user'
-                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white'
-                      : 'bg-white text-gray-900 shadow-md border border-gray-200'
-                  }`}
+                  className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${message.role === 'user'
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white'
+                    : 'bg-white text-gray-900 shadow-md border border-gray-200'
+                    }`}
                 >
-                  <div className="whitespace-pre-wrap break-words">{message.content}</div>
+                  {message.role === 'assistant' ? (
+                    <ReactMarkdown
+                      className="prose prose-sm max-w-none"
+                      components={{
+                        a: ({ node, ...props }) => (
+                          <a
+                            {...props}
+                            className="text-indigo-600 hover:text-indigo-800 underline font-medium"
+                            target={props.href?.startsWith('http') ? '_blank' : undefined}
+                            rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                          />
+                        ),
+                        p: ({ node, ...props }) => <p {...props} className="mb-2 last:mb-0" />,
+                        ul: ({ node, ...props }) => <ul {...props} className="list-disc ml-4 mb-2" />,
+                        ol: ({ node, ...props }) => <ol {...props} className="list-decimal ml-4 mb-2" />,
+                        li: ({ node, ...props }) => <li {...props} className="mb-1" />,
+                        strong: ({ node, ...props }) => <strong {...props} className="font-semibold" />,
+                      }}
+                    >
+                      {message.content}
+                    </ReactMarkdown>
+                  ) : (
+                    <div className="whitespace-pre-wrap break-words">{message.content}</div>
+                  )}
                 </div>
               </div>
             ))}

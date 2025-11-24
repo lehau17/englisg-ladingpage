@@ -1,8 +1,8 @@
 
 import { LandingPageData } from '@/lib/api';
-import ContactForm from './ContactForm';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
+import ContactForm from './ContactForm';
 
 interface EnglishLearningLandingProps {
   data: LandingPageData;
@@ -16,6 +16,8 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
     stats = [],
     testimonials = [],
     classes = [],
+    classSchedule = [],
+    teachers = [],
     footerSections = []
   } = data || {};
 
@@ -315,59 +317,100 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {[
-              {
-                name: "Ms. Sarah Johnson",
-                role: "Giám đốc học thuật",
-                flag: "🇺🇸",
-                experience: "8 năm kinh nghiệm",
-                education: "Thạc sĩ TESOL - Stanford University",
-                specialty: "Chuyên về phương pháp giao tiếp và phát âm",
-                avatar: "SJ"
-              },
-              {
-                name: "Mr. David Smith",
-                role: "Trưởng khoa Intermediate",
-                flag: "🇬🇧",
-                experience: "6 năm kinh nghiệm",
-                education: "Cử nhân Ngôn ngữ Anh - Cambridge",
-                specialty: "Chuyên về ngữ pháp và luyện thi IELTS",
-                avatar: "DS"
-              },
-              {
-                name: "Ms. Emma Wilson",
-                role: "Chuyên gia Advanced",
-                flag: "🇦🇺",
-                experience: "10 năm kinh nghiệm",
-                education: "Thạc sĩ Giáo dục - Melbourne University",
-                specialty: "Chuyên về Business English và Academic Writing",
-                avatar: "EW"
-              }
-            ].map((teacher, index) => (
-              <div key={index} className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-indigo-500">
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
-                    {teacher.avatar}
-                  </div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-1">
-                    {teacher.flag} {teacher.name}
-                  </h4>
-                  <p className="text-indigo-600 font-semibold mb-2">{teacher.role}</p>
-                  <p className="text-gray-600 text-sm">{teacher.experience}</p>
-                </div>
+            {teachers.length > 0 ? teachers.map((teacher, index) => {
+              // Generate avatar from name
+              const nameParts = teacher.name.split(' ');
+              const avatar = nameParts.length >= 2
+                ? nameParts[0][0] + nameParts[nameParts.length - 1][0]
+                : nameParts[0].substring(0, 2);
 
-                <div className="space-y-3">
-                  <div className="flex items-start">
-                    <span className="w-2 h-2 bg-indigo-600 rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                    <span className="text-gray-700 text-sm">{teacher.education}</span>
+              return (
+                <div key={index} className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-indigo-500">
+                  <div className="text-center mb-6">
+                    <div className="w-20 h-20 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
+                      {avatar.toUpperCase()}
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-900 mb-1">
+                      {teacher.flag} {teacher.name}
+                    </h4>
+                    <p className="text-indigo-600 font-semibold mb-2">{teacher.role}</p>
+                    {teacher.experience && (
+                      <p className="text-gray-600 text-sm">{teacher.experience}</p>
+                    )}
                   </div>
-                  <div className="flex items-start">
-                    <span className="w-2 h-2 bg-purple-600 rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                    <span className="text-gray-700 text-sm">{teacher.specialty}</span>
+
+                  <div className="space-y-3">
+                    {teacher.education && (
+                      <div className="flex items-start">
+                        <span className="w-2 h-2 bg-indigo-600 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                        <span className="text-gray-700 text-sm">{teacher.education}</span>
+                      </div>
+                    )}
+                    {teacher.specialty && (
+                      <div className="flex items-start">
+                        <span className="w-2 h-2 bg-purple-600 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                        <span className="text-gray-700 text-sm">{teacher.specialty}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            }) : (
+              // Fallback if no teachers from API
+              [
+                {
+                  name: "Ms. Sarah Johnson",
+                  role: "Giám đốc học thuật",
+                  flag: "🇺🇸",
+                  experience: "8 năm kinh nghiệm",
+                  education: "Thạc sĩ TESOL - Stanford University",
+                  specialty: "Chuyên về phương pháp giao tiếp và phát âm",
+                  avatar: "SJ"
+                },
+                {
+                  name: "Mr. David Smith",
+                  role: "Trưởng khoa Intermediate",
+                  flag: "🇬🇧",
+                  experience: "6 năm kinh nghiệm",
+                  education: "Cử nhân Ngôn ngữ Anh - Cambridge",
+                  specialty: "Chuyên về ngữ pháp và luyện thi IELTS",
+                  avatar: "DS"
+                },
+                {
+                  name: "Ms. Emma Wilson",
+                  role: "Chuyên gia Advanced",
+                  flag: "🇦🇺",
+                  experience: "10 năm kinh nghiệm",
+                  education: "Thạc sĩ Giáo dục - Melbourne University",
+                  specialty: "Chuyên về Business English và Academic Writing",
+                  avatar: "EW"
+                }
+              ].map((teacher, index) => (
+                <div key={index} className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-indigo-500">
+                  <div className="text-center mb-6">
+                    <div className="w-20 h-20 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
+                      {teacher.avatar}
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-900 mb-1">
+                      {teacher.flag} {teacher.name}
+                    </h4>
+                    <p className="text-indigo-600 font-semibold mb-2">{teacher.role}</p>
+                    <p className="text-gray-600 text-sm">{teacher.experience}</p>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex items-start">
+                      <span className="w-2 h-2 bg-indigo-600 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      <span className="text-gray-700 text-sm">{teacher.education}</span>
+                    </div>
+                    <div className="flex items-start">
+                      <span className="w-2 h-2 bg-purple-600 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      <span className="text-gray-700 text-sm">{teacher.specialty}</span>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
 
           {/* Awards & Certifications */}
@@ -531,78 +574,98 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-gray-100">
-                    <td className="py-4 px-4 font-semibold text-gray-700">18:00-20:00</td>
-                    <td className="py-4 px-4 text-center">
-                      <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Advanced<br />
-                        <span className="text-xs opacity-90">Ms. Emma</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-center">-</td>
-                    <td className="py-4 px-4 text-center">
-                      <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Advanced<br />
-                        <span className="text-xs opacity-90">Ms. Emma</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-center">-</td>
-                    <td className="py-4 px-4 text-center">
-                      <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Advanced<br />
-                        <span className="text-xs opacity-90">Ms. Emma</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-center">-</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="py-4 px-4 font-semibold text-gray-700">19:00-21:00</td>
-                    <td className="py-4 px-4 text-center">
-                      <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Beginner<br />
-                        <span className="text-xs opacity-90">Ms. Sarah</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-center">-</td>
-                    <td className="py-4 px-4 text-center">
-                      <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Beginner<br />
-                        <span className="text-xs opacity-90">Ms. Sarah</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-center">-</td>
-                    <td className="py-4 px-4 text-center">
-                      <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Beginner<br />
-                        <span className="text-xs opacity-90">Ms. Sarah</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-center">-</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="py-4 px-4 font-semibold text-gray-700">19:30-21:30</td>
-                    <td className="py-4 px-4 text-center">-</td>
-                    <td className="py-4 px-4 text-center">
-                      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Intermediate<br />
-                        <span className="text-xs opacity-90">Mr. David</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-center">-</td>
-                    <td className="py-4 px-4 text-center">
-                      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Intermediate<br />
-                        <span className="text-xs opacity-90">Mr. David</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-center">-</td>
-                    <td className="py-4 px-4 text-center">
-                      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Intermediate<br />
-                        <span className="text-xs opacity-90">Mr. David</span>
-                      </div>
-                    </td>
-                  </tr>
+                  {classSchedule.length > 0 ? classSchedule.map((row, index) => (
+                    <tr key={index} className="border-b border-gray-100">
+                      <td className="py-4 px-4 font-semibold text-gray-700">{row.time}</td>
+                      {['mon', 'tue', 'wed', 'thu', 'fri', 'sat'].map((day) => (
+                        <td key={day} className="py-4 px-4 text-center">
+                          {row.days[day] ? (
+                            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                              {row.days[day]}
+                            </div>
+                          ) : (
+                            '-'
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  )) : (
+                    // Fallback schedule if no data from API
+                    <>
+                      <tr className="border-b border-gray-100">
+                        <td className="py-4 px-4 font-semibold text-gray-700">18:00-20:00</td>
+                        <td className="py-4 px-4 text-center">
+                          <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                            Advanced<br />
+                            <span className="text-xs opacity-90">Ms. Emma</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-center">-</td>
+                        <td className="py-4 px-4 text-center">
+                          <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                            Advanced<br />
+                            <span className="text-xs opacity-90">Ms. Emma</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-center">-</td>
+                        <td className="py-4 px-4 text-center">
+                          <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                            Advanced<br />
+                            <span className="text-xs opacity-90">Ms. Emma</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-center">-</td>
+                      </tr>
+                      <tr className="border-b border-gray-100">
+                        <td className="py-4 px-4 font-semibold text-gray-700">19:00-21:00</td>
+                        <td className="py-4 px-4 text-center">
+                          <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                            Beginner<br />
+                            <span className="text-xs opacity-90">Ms. Sarah</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-center">-</td>
+                        <td className="py-4 px-4 text-center">
+                          <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                            Beginner<br />
+                            <span className="text-xs opacity-90">Ms. Sarah</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-center">-</td>
+                        <td className="py-4 px-4 text-center">
+                          <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                            Beginner<br />
+                            <span className="text-xs opacity-90">Ms. Sarah</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-center">-</td>
+                      </tr>
+                      <tr className="border-b border-gray-100">
+                        <td className="py-4 px-4 font-semibold text-gray-700">19:30-21:30</td>
+                        <td className="py-4 px-4 text-center">-</td>
+                        <td className="py-4 px-4 text-center">
+                          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                            Intermediate<br />
+                            <span className="text-xs opacity-90">Mr. David</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-center">-</td>
+                        <td className="py-4 px-4 text-center">
+                          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                            Intermediate<br />
+                            <span className="text-xs opacity-90">Mr. David</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-center">-</td>
+                        <td className="py-4 px-4 text-center">
+                          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                            Intermediate<br />
+                            <span className="text-xs opacity-90">Mr. David</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </>
+                  )}
                 </tbody>
               </table>
             </div>
