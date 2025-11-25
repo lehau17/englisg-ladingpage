@@ -1,11 +1,14 @@
 'use client';
 
-import { BookOpen, Calendar, CalendarDays, CreditCard, GraduationCap, UserCircle, Users } from 'lucide-react';
+import { BookOpen, Calendar, CalendarDays, GraduationCap, UserCircle, Users } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
-import PaymentModal from '../../components/PaymentModal';
+import { toast } from 'sonner';
 import { getClassroomsByCourse, getCourses, type Classroom, type Course } from '../../lib/api';
+
+// API Base URL - use environment variable or fallback to production
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.haudev.io.vn/api';
 
 function EnrollPageContent() {
   const searchParams = useSearchParams();
@@ -17,10 +20,15 @@ function EnrollPageContent() {
   const [selectedClassroom, setSelectedClassroom] = useState<Classroom | null>(null);
   const [isLoadingCourses, setIsLoadingCourses] = useState(true);
   const [isLoadingClassrooms, setIsLoadingClassrooms] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-  // For payment modal
-  const [contactInfo, setContactInfo] = useState({
+  // For contact form
+  const [role, setRole] = useState<'student' | 'parent'>('student');
+  const [students, setStudents] = useState([{
+    name: '',
+    phone: '',
+    email: '',
+  }]);
+  const [parentInfo, setParentInfo] = useState({
     name: '',
     phone: '',
     email: '',
@@ -84,16 +92,111 @@ function EnrollPageContent() {
   const handleEnroll = (classroom: Classroom) => {
     setSelectedClassroom(classroom);
     setShowContactForm(true);
+    // Test toast to verify it's working
+    toast.info('Vui lòng điền thông tin đăng ký');
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleAddStudent = () => {
+    setStudents([...students, { name: '', phone: '', email: '' }]);
+  };
+
+  const handleRemoveStudent = (index: number) => {
+    if (students.length > 1) {
+      setStudents(students.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleStudentChange = (index: number, field: string, value: string) => {
+    const newStudents = [...students];
+    newStudents[index] = { ...newStudents[index], [field]: value };
+    setStudents(newStudents);
+  };
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactInfo.name || !contactInfo.phone || !contactInfo.email) {
-      alert('Vui lòng điền đầy đủ thông tin');
+
+    // Validate all students
+    for (const student of students) {
+      if (!student.name || !student.phone || !student.email) {
+        toast.error('Vui lòng điền đầy đủ thông tin cho tất cả học sinh');
+        return;
+      }
+    }
+
+    // Validate parent info if role is parent
+    if (role === 'parent' && (!parentInfo.name || !parentInfo.phone || !parentInfo.email)) {
+      toast.error('Vui lòng điền đầy đủ thông tin phụ huynh');
       return;
     }
-    setShowContactForm(false);
-    setShowPaymentModal(true);
+
+    // Parse student names into firstName and lastName
+    const parseStudents = students.map(s => {
+      const nameParts = s.name.trim().split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+      return {
+        firstName,
+        lastName,
+        email: s.email.trim(),
+        phone: s.phone.trim(),
+      };
+    });
+
+    let parseParent = undefined;
+    if (role === 'parent') {
+      const parentNameParts = parentInfo.name.trim().split(' ');
+      parseParent = {
+        firstName: parentNameParts[0] || '',
+        lastName: parentNameParts.slice(1).join(' ') || '',
+        email: parentInfo.email.trim(),
+        phone: parentInfo.phone.trim(),
+      };
+    }
+
+    // Call verify-enrollment-email API to send verification email
+    try {
+      toast.loading('Đang gửi email xác thực...');
+
+      const response = await fetch(`${API_BASE_URL}/public/v1/landing-page/verify-enrollment-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          role,
+          students: parseStudents,
+          parent: parseParent,
+          courseId: selectedClassroom!.courseId,
+          classroomId: selectedClassroom!.id,
+        }),
+      });
+
+      const result = await response.json();
+      toast.dismiss();
+
+      // Handle error response
+      if (!response.ok) {
+        const errorMessage = result.message || 'Có lỗi xảy ra';
+        toast.error(errorMessage);
+        return;
+      }
+
+      // Success - email sent
+      setShowContactForm(false);
+      toast.dismiss();
+
+      toast.success(
+        `Email xác thực đã được gửi đến ${parseStudents[0].email}`,
+        { duration: 6000 }
+      );
+
+      toast.info(
+        'Vui lòng kiểm tra hộp thư và click vào link để hoàn tất thanh toán. Link có hiệu lực trong 30 phút.',
+        { duration: 8000 }
+      );
+    } catch (error) {
+      toast.dismiss();
+      console.error('Verification error:', error);
+      toast.error('Có lỗi xảy ra khi gửi email xác thực. Vui lòng thử lại.');
+    }
   };
 
   const formatPrice = (price: number) => {
@@ -320,7 +423,7 @@ function EnrollPageContent() {
                           >
                             {isAvailable ? (
                               <>
-                                <CreditCard className="w-5 h-5" />
+                                <GraduationCap className="w-5 h-5" />
                                 Đăng Ký & Thanh Toán
                               </>
                             ) : (
@@ -340,8 +443,8 @@ function EnrollPageContent() {
 
       {/* Contact Info Modal */}
       {showContactForm && selectedClassroom && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-md w-full p-6">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
+          <div className="bg-white rounded-xl max-w-md w-full p-6 relative max-h-[90vh] overflow-y-auto">
             <h3 className="text-xl font-bold text-gray-900 mb-4">
               Thông Tin Liên Hệ
             </h3>
@@ -349,45 +452,165 @@ function EnrollPageContent() {
               Vui lòng cung cấp thông tin để chúng tôi liên hệ xác nhận đăng ký
             </p>
             <form onSubmit={handleContactSubmit} className="space-y-4">
+              {/* Role Selection */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Họ tên *
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  Bạn đăng ký với tư cách *
                 </label>
-                <input
-                  type="text"
-                  value={contactInfo.name}
-                  onChange={(e) => setContactInfo({ ...contactInfo, name: e.target.value })}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  placeholder="Nhập họ tên của bạn"
-                />
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setRole('student')}
+                    className={`px-4 py-3 rounded-lg border-2 transition-all ${role === 'student'
+                      ? 'border-indigo-600 bg-indigo-50 text-indigo-700'
+                      : 'border-gray-300 hover:border-indigo-300'
+                      }`}
+                  >
+                    <div className="text-center">
+                      <div className="text-2xl mb-1">🎓</div>
+                      <div className="font-semibold">Học sinh</div>
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRole('parent')}
+                    className={`px-4 py-3 rounded-lg border-2 transition-all ${role === 'parent'
+                      ? 'border-indigo-600 bg-indigo-50 text-indigo-700'
+                      : 'border-gray-300 hover:border-indigo-300'
+                      }`}
+                  >
+                    <div className="text-center">
+                      <div className="text-2xl mb-1">👨‍👩‍👧</div>
+                      <div className="font-semibold">Phụ huynh</div>
+                    </div>
+                  </button>
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Số điện thoại *
-                </label>
-                <input
-                  type="tel"
-                  value={contactInfo.phone}
-                  onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  placeholder="Nhập số điện thoại"
-                />
+
+              {/* Student Info */}
+              <div className={role === 'parent' ? 'bg-gray-50 p-4 rounded-lg' : ''}>
+                {role === 'parent' && (
+                  <div className="flex justify-between items-center mb-3">
+                    <h4 className="text-sm font-semibold text-gray-700">
+                      Thông tin học sinh ({students.length})
+                    </h4>
+                    <button
+                      type="button"
+                      onClick={handleAddStudent}
+                      className="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1"
+                    >
+                      <span>+</span> Thêm học sinh
+                    </button>
+                  </div>
+                )}
+
+                {students.map((student, index) => (
+                  <div key={index} className={`space-y-4 ${index > 0 ? 'mt-6 pt-6 border-t border-gray-200' : ''}`}>
+                    {students.length > 1 && (
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium text-gray-700">Học sinh {index + 1}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveStudent(index)}
+                          className="text-sm text-red-600 hover:text-red-700"
+                        >
+                          Xóa
+                        </button>
+                      </div>
+                    )}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Họ tên {role === 'parent' ? 'học sinh' : 'của bạn'} *
+                      </label>
+                      <input
+                        type="text"
+                        value={student.name}
+                        onChange={(e) => handleStudentChange(index, 'name', e.target.value)}
+                        required
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        placeholder={role === 'parent' ? 'Nhập họ tên học sinh' : 'Nhập họ tên của bạn'}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Số điện thoại {role === 'parent' ? 'học sinh' : ''} *
+                      </label>
+                      <input
+                        type="tel"
+                        value={student.phone}
+                        onChange={(e) => handleStudentChange(index, 'phone', e.target.value)}
+                        required
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        placeholder="Nhập số điện thoại"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Email {role === 'parent' ? 'học sinh' : ''} *
+                      </label>
+                      <input
+                        type="email"
+                        value={student.email}
+                        onChange={(e) => handleStudentChange(index, 'email', e.target.value)}
+                        required
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        placeholder="Nhập địa chỉ email"
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  value={contactInfo.email}
-                  onChange={(e) => setContactInfo({ ...contactInfo, email: e.target.value })}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  placeholder="Nhập địa chỉ email"
-                />
-              </div>
+
+              {/* Parent Info - Only show if role is parent */}
+              {role === 'parent' && (
+                <div className="bg-indigo-50 p-4 rounded-lg">
+                  <h4 className="text-sm font-semibold text-gray-700 mb-3">
+                    Thông tin phụ huynh
+                  </h4>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Họ tên phụ huynh *
+                      </label>
+                      <input
+                        type="text"
+                        value={parentInfo.name}
+                        onChange={(e) => setParentInfo({ ...parentInfo, name: e.target.value })}
+                        required={role === 'parent'}
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        placeholder="Nhập họ tên phụ huynh"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Số điện thoại phụ huynh *
+                      </label>
+                      <input
+                        type="tel"
+                        value={parentInfo.phone}
+                        onChange={(e) => setParentInfo({ ...parentInfo, phone: e.target.value })}
+                        required={role === 'parent'}
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        placeholder="Nhập số điện thoại"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Email phụ huynh *
+                      </label>
+                      <input
+                        type="email"
+                        value={parentInfo.email}
+                        onChange={(e) => setParentInfo({ ...parentInfo, email: e.target.value })}
+                        required={role === 'parent'}
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        placeholder="Nhập địa chỉ email"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="flex space-x-3 pt-4">
                 <button
                   type="button"
@@ -406,36 +629,6 @@ function EnrollPageContent() {
             </form>
           </div>
         </div>
-      )}
-
-      {/* Payment Modal */}
-      {selectedClassroom && (
-        <PaymentModal
-          isOpen={showPaymentModal}
-          onClose={() => {
-            setShowPaymentModal(false);
-            setShowContactForm(false);
-          }}
-          selectedClass={{
-            level: selectedClassroom.name,
-            levelVi: selectedClassroom.courseName,
-            color: 'from-indigo-500 to-purple-600',
-            bgColor: 'from-indigo-50 to-purple-50',
-            borderColor: 'border-indigo-500',
-            description: selectedCourse?.description || '',
-            duration: selectedCourse?.duration || '',
-            schedule: selectedClassroom.schedule,
-            students: `${selectedClassroom.currentStudents}/${selectedClassroom.maxStudents} học viên`,
-            teacher: selectedClassroom.teacher,
-            teacherFlag: '🇺🇸',
-            price: `${selectedClassroom.price}đ`,
-            features: [],
-            nextClass: formatDate(selectedClassroom.startDate),
-            courseId: selectedClassroom.courseId,
-            classroomId: selectedClassroom.id,
-          }}
-          contactInfo={contactInfo}
-        />
       )}
     </div>
   );

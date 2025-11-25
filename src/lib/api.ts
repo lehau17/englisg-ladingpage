@@ -314,13 +314,13 @@ export interface GuestEnrollmentData {
   role: 'student' | 'parent';
   courseId: string;
   classroomId: string;
-  student: {
+  students: Array<{
     firstName?: string;
     lastName?: string;
     displayName?: string;
     email: string;
     phone?: string;
-  };
+  }>;
   parent?: {
     firstName?: string;
     lastName?: string;
@@ -404,7 +404,9 @@ export async function createGuestEnrollment(
       throw new Error(error.message || `HTTP error! status: ${response.status}`);
     }
 
-    return await response.json();
+    const result = await response.json();
+    // Backend wraps response in { statusCode, message, data }
+    return result.data || result;
   } catch (error) {
     if (process.env.NODE_ENV === 'development') {
       console.error('Error creating guest enrollment:', error);

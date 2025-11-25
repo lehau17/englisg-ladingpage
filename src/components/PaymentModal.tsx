@@ -1,14 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import { createGuestEnrollment, type GuestEnrollmentData } from '../lib/api';
 import type { LandingPageClass } from '../lib/api';
+import { createGuestEnrollment, type GuestEnrollmentData } from '../lib/api';
 
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedClass: LandingPageClass | null;
-  contactInfo: {
+  role: 'student' | 'parent';
+  students: Array<{
+    name: string;
+    phone: string;
+    email: string;
+  }>;
+  parentInfo?: {
     name: string;
     phone: string;
     email: string;
@@ -19,7 +25,9 @@ export default function PaymentModal({
   isOpen,
   onClose,
   selectedClass,
-  contactInfo,
+  role,
+  students,
+  parentInfo,
 }: PaymentModalProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -40,32 +48,55 @@ export default function PaymentModal({
         throw new Error('Thiếu thông tin khóa học hoặc lớp học. Vui lòng thử lại.');
       }
 
-      if (!contactInfo.name || !contactInfo.email) {
-        throw new Error('Vui lòng điền đầy đủ thông tin liên hệ.');
+      if (!students || students.length === 0) {
+        throw new Error('Vui lòng điền thông tin ít nhất một học sinh.');
       }
 
-      // Parse name into firstName and lastName
-      const nameParts = contactInfo.name.trim().split(/\s+/);
-      const firstName = nameParts[0] || '';
-      const lastName = nameParts.slice(1).join(' ') || '';
+      // Parse students data
+      const studentsData = students.map(student => {
+        const nameParts = student.name.trim().split(/\s+/);
+        let firstName = '';
+        let lastName = '';
+
+        if (nameParts.length === 1) {
+          firstName = nameParts[0];
+          lastName = nameParts[0];
+        } else {
+          firstName = nameParts[0];
+          lastName = nameParts.slice(1).join(' ');
+        }
+
+        return {
+          firstName,
+          lastName,
+          displayName: student.name,
+          email: student.email,
+          phone: student.phone,
+        };
+      });
 
       // Prepare enrollment data
       const enrollmentData: GuestEnrollmentData = {
-        role: 'student',
+        role,
         courseId: selectedClass.courseId,
         classroomId: selectedClass.classroomId,
-        student: {
-          firstName,
-          lastName,
-          displayName: contactInfo.name,
-          email: contactInfo.email,
-          phone: contactInfo.phone,
-        },
+        students: studentsData,
+        ...(role === 'parent' && parentInfo ? {
+          parent: {
+            firstName: parentInfo.name.trim().split(/\s+/)[0] || parentInfo.name,
+            lastName: parentInfo.name.trim().split(/\s+/).length > 1
+              ? parentInfo.name.trim().split(/\s+/).slice(1).join(' ')
+              : parentInfo.name,
+            displayName: parentInfo.name,
+            email: parentInfo.email,
+            phone: parentInfo.phone,
+          }
+        } : {}),
         returnUrl: typeof window !== 'undefined'
           ? `${window.location.origin}/payment/return`
           : '/payment/return',
         source: 'landing-page',
-        note: `Đăng ký khóa học: ${selectedClass.levelVi}`,
+        note: `Đăng ký khóa học: ${selectedClass.levelVi} (${students.length} học sinh)`,
       };
 
       // Call Guest Enrollment API
@@ -96,12 +127,17 @@ export default function PaymentModal({
     return parseInt(priceStr.replace(/\D/g, ''), 10);
   };
 
-  const formatPrice = (price: string) => {
-    const amount = parsePrice(price);
+  const formatPrice = (price: string | number) => {
+    const amount = typeof price === 'string' ? parsePrice(price) : price;
     return new Intl.NumberFormat('vi-VN', {
       style: 'currency',
       currency: 'VND',
     }).format(amount);
+  };
+
+  const getTotalPrice = () => {
+    const basePrice = parsePrice(selectedClass.price);
+    return basePrice * students.length;
   };
 
   const getStepContent = () => {
@@ -114,17 +150,50 @@ export default function PaymentModal({
               <h3 className="font-semibold text-gray-900 mb-3">Thông tin đăng ký</h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Họ tên:</span>
-                  <span className="font-medium">{contactInfo.name}</span>
+                  <span className="text-gray-700">Vai trò:</span>
+                  <span className="font-medium text-gray-900">{role === 'student' ? '🎓 Học sinh' : '👨‍👩‍👧 Phụ huynh'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Số điện thoại:</span>
-                  <span className="font-medium">{contactInfo.phone}</span>
+                  <span className="text-gray-700">Số học sinh:</span>
+                  <span className="font-medium text-gray-900">{students.length} người</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Email:</span>
-                  <span className="font-medium">{contactInfo.email}</span>
-                </div>
+                {students.map((student, index) => (
+                  <div key={index} className={index > 0 ? 'pt-2 mt-2 border-t' : ''}>
+                    {students.length > 1 && (
+                      <div className="font-semibold text-gray-800 mb-1">Học sinh {index + 1}</div>
+                    )}
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Họ tên:</span>
+                      <span className="font-medium text-gray-900">{student.name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">SĐT:</span>
+                      <span className="font-medium text-gray-900">{student.phone}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Email:</span>
+                      <span className="font-medium text-gray-900">{student.email}</span>
+                    </div>
+                  </div>
+                ))}
+                {role === 'parent' && parentInfo && (
+                  <>
+                    <div className="border-t pt-2 mt-2"></div>
+                    <div className="font-semibold text-gray-800 mb-1">Thông tin phụ huynh</div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Phụ huynh:</span>
+                      <span className="font-medium text-gray-900">{parentInfo.name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">SĐT PH:</span>
+                      <span className="font-medium text-gray-900">{parentInfo.phone}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Email PH:</span>
+                      <span className="font-medium text-gray-900">{parentInfo.email}</span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
@@ -138,12 +207,29 @@ export default function PaymentModal({
                 <p>⏱️ Thời lượng: {selectedClass.duration}</p>
                 <p>📅 Lịch học: {selectedClass.schedule}</p>
                 <p>👨‍🏫 Giáo viên: {selectedClass.teacher} {selectedClass.teacherFlag}</p>
+                <p>👥 Số học sinh: {students.length}</p>
               </div>
-              <div className="flex justify-between items-center pt-3 border-t border-blue-200">
-                <span className="text-gray-600 font-medium">Học phí:</span>
-                <span className="text-2xl font-bold text-blue-600">
-                  {formatPrice(selectedClass.price)}
-                </span>
+              <div className="space-y-2 pt-3 border-t border-blue-200">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-600">Học phí (1 học sinh):</span>
+                  <span className="font-medium text-gray-900">
+                    {formatPrice(selectedClass.price)}
+                  </span>
+                </div>
+                {students.length > 1 && (
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-600">× {students.length} học sinh:</span>
+                    <span className="font-medium text-gray-900">
+                      {formatPrice(getTotalPrice())}
+                    </span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center pt-2 border-t border-blue-200">
+                  <span className="text-gray-900 font-semibold">Tổng thanh toán:</span>
+                  <span className="text-2xl font-bold text-blue-600">
+                    {formatPrice(getTotalPrice())}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -299,8 +385,8 @@ export default function PaymentModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
+      <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl relative">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b sticky top-0 bg-white">
           <h2 className="text-xl font-semibold text-gray-900">
