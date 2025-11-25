@@ -1,8 +1,7 @@
 'use client';
 
-import { ContactFormData, ContactFormResponse, submitContactForm, LandingPageClass } from '@/lib/api';
+import { ContactFormData, ContactFormResponse, LandingPageClass, submitContactForm } from '@/lib/api';
 import { useState } from 'react';
-import PaymentModal from './PaymentModal';
 
 interface ContactFormProps {
   classes?: LandingPageClass[];
@@ -246,7 +245,7 @@ export default function ContactForm({ classes = [] }: ContactFormProps) {
       </form>
 
       {/* Payment Modal */}
-      <PaymentModal
+      {/* <PaymentModal
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
         selectedClass={selectedClass}
@@ -255,7 +254,7 @@ export default function ContactForm({ classes = [] }: ContactFormProps) {
           phone: formData.phone,
           email: formData.email,
         }}
-      />
+      /> */}
     </div>
   );
 }
