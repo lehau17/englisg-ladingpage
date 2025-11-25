@@ -118,7 +118,7 @@ export async function getLandingPageData(): Promise<LandingPageData> {
 
     // Log to check if we're getting real data or fallback
     const hasRealData = actualData.classes && actualData.classes.length > 0 &&
-                        actualData.classes.some((c: any) => c.courseId || c.classroomId);
+                        actualData.classes.some((c: LandingPageClass) => c.courseId || c.classroomId);
     console.log('[Landing Page] Data received:', {
       classesCount: actualData.classes?.length || 0,
       teachersCount: actualData.teachers?.length || 0,

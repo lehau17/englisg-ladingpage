@@ -35,7 +35,7 @@ export default function AIConsultantWidget() {
   // Load guest session and conversation history on mount
   useEffect(() => {
     const loadGuestSession = async () => {
-      let sessionId = localStorage.getItem(GUEST_SESSION_KEY);
+      const sessionId = localStorage.getItem(GUEST_SESSION_KEY);
 
       if (sessionId) {
         setGuestSessionId(sessionId);
@@ -60,7 +60,7 @@ export default function AIConsultantWidget() {
 
               // Load messages
               if (latestConv.messages && latestConv.messages.length > 0) {
-                const loadedMessages = latestConv.messages.map((msg: any) => ({
+                const loadedMessages = latestConv.messages.map((msg: { role: 'user' | 'assistant'; content: string; createdAt: string }) => ({
                   role: msg.role,
                   content: msg.content,
                   timestamp: new Date(msg.createdAt),
@@ -80,6 +80,7 @@ export default function AIConsultantWidget() {
     };
 
     loadGuestSession();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -112,7 +113,7 @@ export default function AIConsultantWidget() {
     try {
       if (!conversationId) {
         // First message: create conversation
-        const body: Record<string, any> = { question: userMessage };
+        const body: Record<string, string> = { question: userMessage };
         // Only add guestSessionId if it's a valid UUID
         if (guestSessionId && guestSessionId !== 'undefined' && guestSessionId !== 'null') {
           body.guestSessionId = guestSessionId;
@@ -212,7 +213,7 @@ export default function AIConsultantWidget() {
                     }
                   });
                 }
-              } catch (e) {
+              } catch {
                 // Ignore parse errors
               }
             }
@@ -300,7 +301,7 @@ export default function AIConsultantWidget() {
                     <ReactMarkdown
                       className="prose prose-sm max-w-none"
                       components={{
-                        a: ({ node, ...props }) => (
+                        a: ({ ...props }) => (
                           <a
                             {...props}
                             className="text-indigo-600 hover:text-indigo-800 underline font-medium"
@@ -308,11 +309,11 @@ export default function AIConsultantWidget() {
                             rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                           />
                         ),
-                        p: ({ node, ...props }) => <p {...props} className="mb-2 last:mb-0" />,
-                        ul: ({ node, ...props }) => <ul {...props} className="list-disc ml-4 mb-2" />,
-                        ol: ({ node, ...props }) => <ol {...props} className="list-decimal ml-4 mb-2" />,
-                        li: ({ node, ...props }) => <li {...props} className="mb-1" />,
-                        strong: ({ node, ...props }) => <strong {...props} className="font-semibold" />,
+                        p: ({ ...props }) => <p {...props} className="mb-2 last:mb-0" />,
+                        ul: ({ ...props }) => <ul {...props} className="list-disc ml-4 mb-2" />,
+                        ol: ({ ...props }) => <ol {...props} className="list-decimal ml-4 mb-2" />,
+                        li: ({ ...props }) => <li {...props} className="mb-1" />,
+                        strong: ({ ...props }) => <strong {...props} className="font-semibold" />,
                       }}
                     >
                       {message.content}
