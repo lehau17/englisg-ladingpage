@@ -101,7 +101,7 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
             <div className="relative">
               <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
                 <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
-                  🎯 <span className="ml-2">Lesson Today</span>
+                   <span className="ml-2">Lesson Today</span>
                 </h3>
 
                 <div className="space-y-6">
@@ -249,7 +249,7 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
           <div className="grid md:grid-cols-2 gap-12 mb-20">
             <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-3xl p-8 shadow-lg">
               <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl mb-6">
-                🎯
+                
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Sứ mệnh</h3>
               <p className="text-gray-700 leading-relaxed">
@@ -279,7 +279,7 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
           <div className="grid md:grid-cols-4 gap-8 mb-20">
             {[
               {
-                icon: "💡",
+                icon: "",
                 title: "Sáng tạo",
                 description: "Không ngừng đổi mới phương pháp giảng dạy, ứng dụng công nghệ hiện đại"
               },
@@ -487,7 +487,7 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
                 {classInfo.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-                      🔥 Phổ biến nhất
+                       Phổ biến nhất
                     </span>
                   </div>
                 )}
@@ -671,7 +671,7 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
             </div>
             <div className="mt-6 text-center">
               <p className="text-gray-600 mb-4">
-                💡 <strong>Lưu ý:</strong> Có thể sắp xếp lịch học linh hoạt theo yêu cầu của nhóm
+                 <strong>Lưu ý:</strong> Có thể sắp xếp lịch học linh hoạt theo yêu cầu của nhóm
               </p>
               <button
                 className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
@@ -737,7 +737,7 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
               <div className="bg-white rounded-3xl p-8 shadow-xl border-l-4 border-indigo-500">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-xl mr-4">
-                    📞
+                    
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 text-lg">Hotline tư vấn</h4>
@@ -753,7 +753,7 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
               <div className="bg-white rounded-3xl p-8 shadow-xl border-l-4 border-purple-500">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white text-xl mr-4">
-                    ✉️
+                    
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 text-lg">Email hỗ trợ</h4>
@@ -769,7 +769,7 @@ export default function EnglishLearningLanding({ data }: EnglishLearningLandingP
               <div className="bg-white rounded-3xl p-8 shadow-xl border-l-4 border-green-500">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-green-600 to-teal-600 rounded-full flex items-center justify-center text-white text-xl mr-4">
-                    📍
+                    
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 text-lg">Địa chỉ văn phòng</h4>

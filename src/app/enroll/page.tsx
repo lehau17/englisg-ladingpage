@@ -52,7 +52,7 @@ function EnrollPageContent() {
     setIsLoadingCourses(true);
     try {
       const data = await getCourses();
-      console.log('📚 Courses loaded:', data);
+      console.log(' Courses loaded:', data);
       setCourses(data);
 
       // Auto-select course if courseId is in URL
@@ -60,14 +60,14 @@ function EnrollPageContent() {
         console.log('🔍 Looking for courseId:', courseIdFromUrl);
         const courseToSelect = data.find(c => c.id === courseIdFromUrl);
         if (courseToSelect) {
-          console.log('✅ Course found and selected:', courseToSelect);
+          console.log(' Course found and selected:', courseToSelect);
           setSelectedCourse(courseToSelect);
         } else {
-          console.warn('⚠️ Course not found with ID:', courseIdFromUrl);
+          console.warn(' Course not found with ID:', courseIdFromUrl);
         }
       }
     } catch (error) {
-      console.error('❌ Error loading courses:', error);
+      console.error(' Error loading courses:', error);
     } finally {
       setIsLoadingCourses(false);
     }
@@ -78,7 +78,7 @@ function EnrollPageContent() {
     try {
       console.log('🏫 Loading classrooms for course:', courseId);
       const data = await getClassroomsByCourse(courseId);
-      console.log('✅ Classrooms loaded:', data);
+      console.log(' Classrooms loaded:', data);
       setClassrooms(data);
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {

@@ -1,6 +1,6 @@
 # AGENTS – landing-page (Next.js)
 
-> Last updated: 2025-11-05 — Tóm tắt: Hướng dẫn dev và build cho landing-page Next.js (App Router).
+> Last updated: 2025-11-28 — Tóm tắt: Marketing website với Next.js App Router, React 19, Tailwind.
 
 Website marketing dùng Next.js (App Router), React 19, Tailwind.
 

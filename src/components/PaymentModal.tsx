@@ -203,7 +203,7 @@ export default function PaymentModal({
                 Khóa học: {selectedClass.levelVi}
               </h3>
               <div className="space-y-1 text-sm text-gray-600 mb-3">
-                <p>📚 {selectedClass.description}</p>
+                <p> {selectedClass.description}</p>
                 <p>⏱️ Thời lượng: {selectedClass.duration}</p>
                 <p>📅 Lịch học: {selectedClass.schedule}</p>
                 <p>👨‍🏫 Giáo viên: {selectedClass.teacher} {selectedClass.teacherFlag}</p>

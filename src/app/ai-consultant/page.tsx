@@ -302,7 +302,7 @@ export default function AIConsultantPage() {
               </button>
             </div>
             <p className="text-xs text-gray-500 mt-2 text-center">
-              💡 Tip: Bạn có thể hỏi về khóa học, học phí, lịch học, hoặc cách đăng ký
+               Tip: Bạn có thể hỏi về khóa học, học phí, lịch học, hoặc cách đăng ký
             </p>
           </div>
         </div>
