@@ -2,6 +2,7 @@
 
 import { ContactFormData, ContactFormResponse, LandingPageClass, submitContactForm } from '@/lib/api';
 import { useState } from 'react';
+import { CreditCard, Send } from 'lucide-react';
 
 interface ContactFormProps {
   classes?: LandingPageClass[];
@@ -207,8 +208,8 @@ export default function ContactForm({ classes = [] }: ContactFormProps) {
                 className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 mt-1"
               />
               <div className="flex-1">
-                <span className="font-semibold text-gray-900 block mb-1">
-                  💳 Tôi muốn thanh toán ngay
+                <span className="font-semibold text-gray-900 block mb-1 flex items-center gap-2">
+                  <CreditCard className="w-5 h-5" /> Tôi muốn thanh toán ngay
                 </span>
                 <span className="text-sm text-gray-600">
                   Thanh toán qua VNPay để xác nhận đăng ký khóa học <strong>{selectedClass.levelVi}</strong>
@@ -235,12 +236,13 @@ export default function ContactForm({ classes = [] }: ContactFormProps) {
           disabled={isSubmitting}
           className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting
-            ? 'Đang gửi...'
-            : wantsToPay && selectedClass
-              ? '💳 Tiếp tục thanh toán'
-              : 'Gửi tin nhắn 📨'
-          }
+          {isSubmitting ? (
+            'Đang gửi...'
+          ) : wantsToPay && selectedClass ? (
+            <span className="flex items-center justify-center gap-2"><CreditCard className="w-5 h-5" /> Tiếp tục thanh toán</span>
+          ) : (
+            <span className="flex items-center justify-center gap-2">Gửi tin nhắn <Send className="w-5 h-5" /></span>
+          )}
         </button>
       </form>
 

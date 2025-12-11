@@ -1,0 +1,4089 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DOCUMENTATION.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="t%C3%A0i-li%E1%BB%87u-chi-ti%E1%BA%BFt-landing-page---englimaster">Tài Liệu Chi Tiết Landing Page - EngliMaster</h1>
+<blockquote>
+<p><strong>Phiên bản:</strong> 1.0<br>
+<strong>Ngày cập nhật:</strong> 08/12/2025<br>
+<strong>Tác giả:</strong> Gemini AI Assistant</p>
+</blockquote>
+<hr>
+<h2 id="%F0%9F%93%91-m%E1%BB%A5c-l%E1%BB%A5c">📑 Mục Lục</h2>
+<ol>
+<li><a href="#1-t%E1%BB%95ng-quan-d%E1%BB%B1-%C3%A1n">Tổng Quan Dự Án</a></li>
+<li><a href="#2-c%C3%B4ng-ngh%E1%BB%87-s%E1%BB%AD-d%E1%BB%A5ng">Công Nghệ Sử Dụng</a></li>
+<li><a href="#3-c%E1%BA%A5u-tr%C3%BAc-th%C6%B0-m%E1%BB%A5c">Cấu Trúc Thư Mục</a></li>
+<li><a href="#4-server-component-vs-client-component">Server Component vs Client Component</a></li>
+<li><a href="#5-pages">Pages</a>
+<ul>
+<li><a href="#51-trang-ch%E1%BB%A7-home">5.1 Trang Chủ (Home)</a></li>
+<li><a href="#52-trang-%C4%91%C4%83ng-k%C3%BD-enroll">5.2 Trang Đăng Ký (Enroll)</a></li>
+<li><a href="#53-trang-ai-consultant">5.3 Trang AI Consultant</a></li>
+</ul>
+</li>
+<li><a href="#6-section-components">Section Components</a>
+<ul>
+<li><a href="#61-header">6.1 Header</a></li>
+<li><a href="#62-herosection">6.2 HeroSection</a></li>
+<li><a href="#63-featuressection">6.3 FeaturesSection</a></li>
+<li><a href="#64-aboutsection">6.4 AboutSection</a></li>
+<li><a href="#65-statssection">6.5 StatsSection</a></li>
+<li><a href="#66-classessection">6.6 ClassesSection</a></li>
+<li><a href="#67-testimonialssection">6.7 TestimonialsSection</a></li>
+<li><a href="#68-contactsection">6.8 ContactSection</a></li>
+<li><a href="#69-ctasection">6.9 CTASection</a></li>
+<li><a href="#610-footer">6.10 Footer</a></li>
+</ul>
+</li>
+<li><a href="#7-shared-components">Shared Components</a></li>
+<li><a href="#8-libapi">Lib/API</a></li>
+<li><a href="#9-b%E1%BA%A3ng-tailwind-classes-ph%E1%BB%95-bi%E1%BA%BFn">Bảng Tailwind Classes Phổ Biến</a></li>
+</ol>
+<hr>
+<h2 id="1-t%E1%BB%95ng-quan-d%E1%BB%B1-%C3%A1n">1. Tổng Quan Dự Án</h2>
+<p><strong>EngliMaster Landing Page</strong> là trang web giới thiệu nền tảng học tiếng Anh trực tuyến, được xây dựng với Next.js 15 App Router.</p>
+<h3 id="m%E1%BB%A5c-%C4%91%C3%ADch">Mục Đích</h3>
+<ul>
+<li>Giới thiệu dịch vụ học tiếng Anh</li>
+<li>Thu hút học viên đăng ký khóa học</li>
+<li>Cung cấp thông tin liên hệ và hỗ trợ</li>
+<li>Tích hợp AI Consultant chatbot</li>
+</ul>
+<h3 id="c%C3%A1ch-ch%E1%BA%A1y-d%E1%BB%B1-%C3%A1n">Cách Chạy Dự Án</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Di chuyển vào thư mục</span>
+<span class="hljs-built_in">cd</span> landing-page
+
+<span class="hljs-comment"># Cài đặt dependencies</span>
+npm install
+
+<span class="hljs-comment"># Chạy development server</span>
+npm run dev
+
+<span class="hljs-comment"># Build production</span>
+npm run build
+</div></code></pre>
+<hr>
+<h2 id="2-c%C3%B4ng-ngh%E1%BB%87-s%E1%BB%AD-d%E1%BB%A5ng">2. Công Nghệ Sử Dụng</h2>
+<table>
+<thead>
+<tr>
+<th>Công Nghệ</th>
+<th>Phiên Bản</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Next.js</strong></td>
+<td>15.4.5</td>
+<td>Framework React với SSR/SSG, App Router</td>
+</tr>
+<tr>
+<td><strong>React</strong></td>
+<td>19.1.0</td>
+<td>UI Library</td>
+</tr>
+<tr>
+<td><strong>TypeScript</strong></td>
+<td>^5</td>
+<td>Type-safe JavaScript</td>
+</tr>
+<tr>
+<td><strong>TailwindCSS</strong></td>
+<td>^4</td>
+<td>Utility-first CSS framework</td>
+</tr>
+<tr>
+<td><strong>lucide-react</strong></td>
+<td>^0.554.0</td>
+<td>Icon library chính</td>
+</tr>
+<tr>
+<td><strong>@heroicons/react</strong></td>
+<td>^2.2.0</td>
+<td>Icon library bổ sung</td>
+</tr>
+<tr>
+<td><strong>@tanstack/react-query</strong></td>
+<td>^5.59.16</td>
+<td>Data fetching và caching</td>
+</tr>
+<tr>
+<td><strong>sonner</strong></td>
+<td>^2.0.7</td>
+<td>Toast notifications</td>
+</tr>
+<tr>
+<td><strong>react-markdown</strong></td>
+<td>^9.0.1</td>
+<td>Render Markdown content</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-c%E1%BA%A5u-tr%C3%BAc-th%C6%B0-m%E1%BB%A5c">3. Cấu Trúc Thư Mục</h2>
+<pre class="hljs"><code><div>landing-page/
+├── src/
+│   ├── app/                          # Next.js App Router
+│   │   ├── page.tsx                  # Trang chủ (Home) - SERVER
+│   │   ├── layout.tsx                # Root layout - SERVER
+│   │   ├── globals.css               # Global styles
+│   │   ├── enroll/                   # Trang đăng ký - CLIENT
+│   │   │   └── page.tsx             
+│   │   ├── ai-consultant/            # Trang AI Consultant - CLIENT
+│   │   │   └── page.tsx
+│   │   └── payment/                  # Trang thanh toán
+│   │
+│   ├── components/                   # React Components
+│   │   ├── EnglishLearningLanding.tsx    # Compose sections - SERVER
+│   │   ├── AIConsultantWidget.tsx        # Chat widget - CLIENT
+│   │   ├── ContactForm.tsx               # Form liên hệ - CLIENT
+│   │   ├── PaymentModal.tsx              # Modal thanh toán - CLIENT
+│   │   ├── ErrorBoundary.tsx             # Error handling - CLIENT
+│   │   ├── StructuredData.tsx            # SEO JSON-LD - SERVER
+│   │   │
+│   │   └── landing/                  # Section Components
+│   │       ├── Header.tsx            # Navigation - CLIENT
+│   │       ├── HeroSection.tsx       # Banner - SERVER
+│   │       ├── FeaturesSection.tsx   # Tính năng - SERVER
+│   │       ├── AboutSection.tsx      # Giới thiệu - SERVER
+│   │       ├── StatsSection.tsx      # Thống kê - SERVER
+│   │       ├── ClassesSection.tsx    # Lớp học - SERVER
+│   │       ├── TestimonialsSection.tsx   # Đánh giá - SERVER
+│   │       ├── ContactSection.tsx    # Liên hệ - SERVER
+│   │       ├── CTASection.tsx        # Call-to-Action - SERVER
+│   │       ├── Footer.tsx            # Chân trang - SERVER
+│   │       └── index.ts              # Barrel export
+│   │
+│   └── lib/                          # Utilities
+│       ├── api.ts                    # API functions + Types
+│       └── payment.ts                # Payment utilities
+│
+├── docs/images/                      # Screenshots tài liệu
+├── public/                           # Static assets
+└── package.json
+</div></code></pre>
+<hr>
+<h2 id="4-server-component-vs-client-component">4. Server Component vs Client Component</h2>
+<h3 id="ph%C3%A2n-lo%E1%BA%A1i-t%E1%BB%95ng-quan">Phân Loại Tổng Quan</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Loại</th>
+<th>Dấu Hiệu</th>
+<th>Lý Do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>page.tsx</code> (Home)</td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Fetch data từ API, SEO metadata</td>
+</tr>
+<tr>
+<td><code>layout.tsx</code></td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Root layout, metadata</td>
+</tr>
+<tr>
+<td><code>Header.tsx</code></td>
+<td><strong>Client</strong></td>
+<td><code>'use client'</code></td>
+<td>Toggle mobile menu (useState)</td>
+</tr>
+<tr>
+<td><code>HeroSection.tsx</code></td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Static content, no interactivity</td>
+</tr>
+<tr>
+<td><code>FeaturesSection.tsx</code></td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Static rendering từ props</td>
+</tr>
+<tr>
+<td><code>AboutSection.tsx</code></td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Static content</td>
+</tr>
+<tr>
+<td><code>StatsSection.tsx</code></td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Static rendering</td>
+</tr>
+<tr>
+<td><code>ClassesSection.tsx</code></td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Static rendering</td>
+</tr>
+<tr>
+<td><code>TestimonialsSection.tsx</code></td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Static rendering</td>
+</tr>
+<tr>
+<td><code>ContactSection.tsx</code></td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Compose ContactForm</td>
+</tr>
+<tr>
+<td><code>CTASection.tsx</code></td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Static content</td>
+</tr>
+<tr>
+<td><code>Footer.tsx</code></td>
+<td><strong>Server</strong></td>
+<td>Không có <code>'use client'</code></td>
+<td>Static rendering</td>
+</tr>
+<tr>
+<td><code>ContactForm.tsx</code></td>
+<td><strong>Client</strong></td>
+<td><code>'use client'</code></td>
+<td>Form handling, useState, API call</td>
+</tr>
+<tr>
+<td><code>AIConsultantWidget.tsx</code></td>
+<td><strong>Client</strong></td>
+<td><code>'use client'</code></td>
+<td>Chat state, localStorage, SSE</td>
+</tr>
+<tr>
+<td><code>PaymentModal.tsx</code></td>
+<td><strong>Client</strong></td>
+<td><code>'use client'</code></td>
+<td>Modal state, payment flow</td>
+</tr>
+<tr>
+<td><code>enroll/page.tsx</code></td>
+<td><strong>Client</strong></td>
+<td><code>'use client'</code></td>
+<td>Complex form, multi-step</td>
+</tr>
+<tr>
+<td><code>ai-consultant/page.tsx</code></td>
+<td><strong>Client</strong></td>
+<td><code>'use client'</code></td>
+<td>Chat interface, real-time</td>
+</tr>
+</tbody>
+</table>
+<h3 id="khi-n%C3%A0o-d%C3%B9ng-server-component">Khi Nào Dùng Server Component?</h3>
+<p><strong>Server Component</strong> (mặc định trong Next.js 13+):</p>
+<ul>
+<li>SEO tốt hơn (HTML render sẵn trên server)</li>
+<li>Bundle size nhỏ hơn (không ship JavaScript xuống client)</li>
+<li>Fetch data trực tiếp từ server (không cần API endpoint)</li>
+<li>An toàn hơn (secrets, API keys không lộ client)</li>
+<li><strong>Dùng khi:</strong> Hiển thị static content, fetch data, không cần interactivity</li>
+</ul>
+<h3 id="khi-n%C3%A0o-d%C3%B9ng-client-component">Khi Nào Dùng Client Component?</h3>
+<p><strong>Client Component</strong> (<code>'use client'</code>):</p>
+<ul>
+<li>Có thể dùng hooks (useState, useEffect, useRef...)</li>
+<li>Event handlers (onClick, onChange, onSubmit...)</li>
+<li>Browser APIs (localStorage, window, navigator...)</li>
+<li>Real-time updates (SSE, WebSocket, polling...)</li>
+<li><strong>Dùng khi:</strong> Form, modal, chat, animation phức tạp, user interactions</li>
+</ul>
+<hr>
+<h2 id="5-pages">5. Pages</h2>
+<h3 id="51-trang-ch%E1%BB%A7-home">5.1 Trang Chủ (Home)</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/home_top_1765161933704.png" alt="Trang chủ EngliMaster"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Server Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/app/page.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>3,324 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>71 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="t%E1%BA%A1i-sao-ch%E1%BB%8Dn-server-component">Tại Sao Chọn Server Component?</h4>
+<ul>
+<li><strong>SEO Metadata:</strong> Export <code>metadata</code> object chỉ hoạt động trong Server Component</li>
+<li><strong>Data Fetching:</strong> <code>async</code> function gọi <code>getLandingPageData()</code> trực tiếp trên server</li>
+<li><strong>Performance:</strong> HTML render sẵn, tải trang nhanh hơn</li>
+</ul>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Trang chủ là entry point của landing page, bao gồm:</p>
+<ul>
+<li><strong>Metadata SEO:</strong> Title, description, Open Graph, Twitter Cards</li>
+<li><strong>Data fetching:</strong> Lấy dữ liệu từ API <code>getLandingPageData()</code></li>
+<li><strong>Compose components:</strong> ErrorBoundary, StructuredData, EnglishLearningLanding, AIConsultantWidget</li>
+</ul>
+<h4 id="chi-ti%E1%BA%BFt-code">Chi Tiết Code</h4>
+<pre class="hljs"><code><div>// Metadata SEO - chỉ export được trong Server Component
+export const metadata: Metadata = {
+    // title: Hiển thị trên tab trình duyệt và kết quả Google
+    title: 'EngliMaster - Học tiếng Anh hiệu quả',
+    
+    // description: Mô tả ngắn dưới tiêu đề khi tìm kiếm
+    description: 'Nền tảng học tiếng Anh trực tuyến cá nhân hóa...',
+    
+    // openGraph: Hiển thị khi share lên Facebook, Zalo, LinkedIn
+    openGraph: {
+        title: 'EngliMaster - Học tiếng Anh hiệu quả',
+        images: [{ url: '/logo.png', width: 1200, height: 630 }],
+        locale: 'vi_VN',
+        type: 'website',
+    },
+};
+
+// Async Server Component - fetch data trên server
+export default async function HomePage() {
+    // Gọi API trên server, client không thấy quá trình này
+    const data = await getLandingPageData();
+
+    return (
+        // ErrorBoundary: Bọc để catch errors, web không crash hoàn toàn
+        &lt;ErrorBoundary&gt;
+            {/* StructuredData: JSON-LD cho Google hiểu cấu trúc */}
+            &lt;StructuredData data={data} /&gt;
+            
+            {/* Component chính compose tất cả sections */}
+            &lt;EnglishLearningLanding data={data} /&gt;
+            
+            {/* Widget chat AI floating ở góc màn hình */}
+            &lt;AIConsultantWidget /&gt;
+        &lt;/ErrorBoundary&gt;
+    );
+}
+</div></code></pre>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<p><strong>Q1: Làm sao thêm một section mới vào trang chủ?</strong></p>
+<blockquote>
+<p><strong>A1:</strong> Tạo component mới trong <code>src/components/landing/</code>, sau đó import và thêm vào <code>EnglishLearningLanding.tsx</code>:</p>
+<pre class="hljs"><code><div>// 1. Tạo file NewSection.tsx trong landing/
+export default function NewSection() { ... }
+
+// 2. Export trong landing/index.ts
+export { default as NewSection } from './NewSection';
+
+// 3. Import và sử dụng trong EnglishLearningLanding.tsx
+import { NewSection } from './landing';
+// Thêm vào trong return: &lt;NewSection /&gt;
+</div></code></pre>
+</blockquote>
+<p><strong>Q2: Làm sao thay đổi tiêu đề SEO?</strong></p>
+<blockquote>
+<p><strong>A2:</strong> Sửa object <code>metadata</code> trong <code>src/app/page.tsx</code>:</p>
+<pre class="hljs"><code><div>export const metadata: Metadata = {
+    title: 'Tiêu đề mới của bạn',
+    description: 'Mô tả mới...',
+};
+</div></code></pre>
+</blockquote>
+<p><strong>Q3: Làm sao thêm nút CTA mới trong trang chủ?</strong></p>
+<blockquote>
+<p><strong>A3:</strong> Thêm button vào <code>HeroSection.tsx</code> trong phần CTA buttons:</p>
+<pre class="hljs"><code><div>&lt;div className=&quot;flex flex-col sm:flex-row gap-4&quot;&gt;
+    {/* Nút hiện có */}
+    {/* Thêm nút mới */}
+    &lt;Link href=&quot;/new-page&quot; className=&quot;bg-gradient-to-r from-green-400 to-blue-400 text-white px-8 py-4 rounded-full text-lg font-bold hover:shadow-xl transition-all duration-300&quot;&gt;
+        Nút Mới
+    &lt;/Link&gt;
+&lt;/div&gt;
+</div></code></pre>
+</blockquote>
+<hr>
+<h3 id="52-trang-%C4%91%C4%83ng-k%C3%BD-enroll">5.2 Trang Đăng Ký (Enroll)</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/enroll_page_1765162063132.png" alt="Trang đăng ký"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Client Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/app/enroll/page.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>28,040 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>651 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="t%E1%BA%A1i-sao-ch%E1%BB%8Dn-client-component">Tại Sao Chọn Client Component?</h4>
+<ul>
+<li><strong>Form State:</strong> Sử dụng <code>useState</code> để quản lý form data</li>
+<li><strong>Multi-step Flow:</strong> Cần track current step, validation state</li>
+<li><strong>API Calls:</strong> <code>getCourses()</code>, <code>getClassroomsByCourse()</code> được gọi từ client</li>
+<li><strong>User Interactions:</strong> onChange, onClick, form submit handlers</li>
+</ul>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Trang đăng ký khóa học với flow multi-step:</p>
+<ol>
+<li><strong>Chọn role:</strong> Student hoặc Parent</li>
+<li><strong>Chọn khóa học:</strong> Danh sách courses từ API</li>
+<li><strong>Chọn lớp học:</strong> Danh sách classrooms theo course</li>
+<li><strong>Điền thông tin:</strong> Form nhập họ tên, email, phone</li>
+<li><strong>Thanh toán:</strong> Redirect sang VNPay</li>
+</ol>
+<h4 id="c%C3%A1c-functions-ch%C3%ADnh">Các Functions Chính</h4>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>loadCourses()</code></td>
+<td>Fetch danh sách courses từ API</td>
+</tr>
+<tr>
+<td><code>loadClassrooms(courseId)</code></td>
+<td>Fetch classrooms theo course đã chọn</td>
+</tr>
+<tr>
+<td><code>handleEnroll(classroom)</code></td>
+<td>Xử lý khi user chọn lớp</td>
+</tr>
+<tr>
+<td><code>handleAddStudent()</code></td>
+<td>Thêm học viên (cho role parent)</td>
+</tr>
+<tr>
+<td><code>handleContactSubmit()</code></td>
+<td>Submit form đăng ký</td>
+</tr>
+<tr>
+<td><code>formatPrice(price)</code></td>
+<td>Format số tiền sang VND</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<p><strong>Q1: Làm sao thêm trường input mới vào form?</strong></p>
+<blockquote>
+<p><strong>A1:</strong> Thêm state và input trong component:</p>
+<pre class="hljs"><code><div>// 1. Thêm vào state
+const [newField, setNewField] = useState('');
+
+// 2. Thêm input vào form
+&lt;input
+    type=&quot;text&quot;
+    value={newField}
+    onChange={(e) =&gt; setNewField(e.target.value)}
+    placeholder=&quot;Trường mới&quot;
+    className=&quot;w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500&quot;
+/&gt;
+</div></code></pre>
+</blockquote>
+<p><strong>Q2: Làm sao thêm bước đăng ký mới?</strong></p>
+<blockquote>
+<p><strong>A2:</strong> Cập nhật logic step và thêm content:</p>
+<pre class="hljs"><code><div>// Tăng số step tối đa
+// Thêm case mới trong switch/if statement render step
+{step === 5 &amp;&amp; (
+    &lt;div&gt;Nội dung bước mới&lt;/div&gt;
+)}
+</div></code></pre>
+</blockquote>
+<p><strong>Q3: Làm sao tích hợp phương thức thanh toán mới?</strong></p>
+<blockquote>
+<p><strong>A3:</strong> Sửa function <code>handleContactSubmit()</code> và thêm option payment:</p>
+<pre class="hljs"><code><div>// Thêm state chọn payment method
+const [paymentMethod, setPaymentMethod] = useState&lt;'vnpay' | 'momo'&gt;('vnpay');
+
+// Trong handleContactSubmit, gọi API tương ứng
+if (paymentMethod === 'momo') {
+    // Gọi MoMo API
+}
+</div></code></pre>
+</blockquote>
+<hr>
+<h3 id="53-trang-ai-consultant">5.3 Trang AI Consultant</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/ai_consultant_page_1765162093593.png" alt="Trang AI Consultant"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Client Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/app/ai-consultant/page.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>12,063 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>327 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="t%E1%BA%A1i-sao-ch%E1%BB%8Dn-client-component">Tại Sao Chọn Client Component?</h4>
+<ul>
+<li><strong>Real-time Chat:</strong> SSE (Server-Sent Events) streaming responses</li>
+<li><strong>Browser APIs:</strong> <code>EventSource</code> cho SSE connection</li>
+<li><strong>State Management:</strong> Messages array, loading state, input value</li>
+<li><strong>Auto-scroll:</strong> <code>useRef</code> và <code>scrollIntoView</code> cho chat behavior</li>
+</ul>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Trang chat full-page với AI Consultant:</p>
+<ul>
+<li>Giao diện chat toàn màn hình</li>
+<li>SSE streaming để hiển thị response real-time</li>
+<li>Render Markdown trong responses</li>
+<li>Session persistence với localStorage</li>
+</ul>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<p><strong>Q1: Làm sao tùy chỉnh giao diện chat?</strong></p>
+<blockquote>
+<p><strong>A1:</strong> Sửa các Tailwind classes trong component:</p>
+<pre class="hljs"><code><div>// Thay đổi màu bubble user
+className=&quot;bg-indigo-600 text-white&quot; // -&gt; bg-blue-600
+
+// Thay đổi màu bubble assistant
+className=&quot;bg-gray-100 text-gray-800&quot; // -&gt; bg-green-100
+</div></code></pre>
+</blockquote>
+<p><strong>Q2: Làm sao thêm suggested questions?</strong></p>
+<blockquote>
+<p><strong>A2:</strong> Thêm mảng suggestions và render buttons:</p>
+<pre class="hljs"><code><div>const suggestions = [
+    &quot;Khóa học nào phù hợp với người mới bắt đầu?&quot;,
+    &quot;Học phí các khóa học là bao nhiêu?&quot;,
+    &quot;Lịch học như thế nào?&quot;,
+];
+
+{suggestions.map((q, i) =&gt; (
+    &lt;button key={i} onClick={() =&gt; setInput(q)} className=&quot;...&quot;&gt;
+        {q}
+    &lt;/button&gt;
+))}
+</div></code></pre>
+</blockquote>
+<p><strong>Q3: Làm sao thay đổi API endpoint?</strong></p>
+<blockquote>
+<p><strong>A3:</strong> Sửa constant <code>API_BASE_URL</code>:</p>
+<pre class="hljs"><code><div>const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://new-api.example.com';
+</div></code></pre>
+</blockquote>
+<hr>
+<h2 id="6-section-components">6. Section Components</h2>
+<h3 id="61-header">6.1 Header</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/home_top_1765161933704.png" alt="Header Navigation"></p>
+<blockquote>
+<p><em>Header nằm cố định ở phía trên cùng trang</em></p>
+</blockquote>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Client Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/landing/Header.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>9,006 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>140 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="t%E1%BA%A1i-sao-ch%E1%BB%8Dn-client-component">Tại Sao Chọn Client Component?</h4>
+<ul>
+<li><strong>Mobile Menu Toggle:</strong> Cần <code>useState</code> để đóng/mở menu</li>
+<li><strong>Scroll Effect:</strong> Có thể thêm <code>useEffect</code> để thay đổi style khi scroll</li>
+</ul>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Header navigation với thiết kế glassmorphism:</p>
+<ul>
+<li>Logo gradient text</li>
+<li>Navigation links với underline animation on hover</li>
+<li>CTA buttons: &quot;Tư vấn AI&quot; và &quot;Đăng ký khóa học&quot;</li>
+<li>Responsive: ẩn nav links trên mobile</li>
+</ul>
+<h4 id="chi-ti%E1%BA%BFt-code-quan-tr%E1%BB%8Dng">Chi Tiết Code Quan Trọng</h4>
+<pre class="hljs"><code><div>// ==================== HEADER WRAPPER ====================
+&lt;header className=&quot;fixed top-0 w-full bg-white/95 backdrop-blur-md shadow-lg z-50 transition-all duration-300&quot;&gt;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>CSS Value</th>
+<th>Mô Tả Tiếng Việt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fixed</code></td>
+<td><code>position: fixed</code></td>
+<td>Cố định, không cuộn theo trang</td>
+</tr>
+<tr>
+<td><code>top-0</code></td>
+<td><code>top: 0</code></td>
+<td>Dính sát cạnh trên</td>
+</tr>
+<tr>
+<td><code>w-full</code></td>
+<td><code>width: 100%</code></td>
+<td>Chiều rộng 100% viewport</td>
+</tr>
+<tr>
+<td><code>bg-white/95</code></td>
+<td><code>background: rgba(255,255,255,0.95)</code></td>
+<td>Nền trắng 95% opacity</td>
+</tr>
+<tr>
+<td><code>backdrop-blur-md</code></td>
+<td><code>backdrop-filter: blur(12px)</code></td>
+<td>Làm mờ nền phía sau (glassmorphism)</td>
+</tr>
+<tr>
+<td><code>shadow-lg</code></td>
+<td><code>box-shadow: 0 10px 15px...</code></td>
+<td>Bóng đổ lớn</td>
+</tr>
+<tr>
+<td><code>z-50</code></td>
+<td><code>z-index: 50</code></td>
+<td>Nằm trên mọi element khác</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div>// ==================== NAV LINK với UNDERLINE ANIMATION ====================
+&lt;a href=&quot;#home&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+    Trang chủ
+    {/* Underline animation */}
+    &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+&lt;/a&gt;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>CSS Value</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>relative</code></td>
+<td><code>position: relative</code></td>
+<td>Làm parent cho absolute child</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td>-</td>
+<td>Đánh dấu parent cho <code>group-hover</code></td>
+</tr>
+<tr>
+<td><code>absolute -bottom-1</code></td>
+<td><code>position: absolute; bottom: -4px</code></td>
+<td>Đặt underline dưới text</td>
+</tr>
+<tr>
+<td><code>w-0</code> → <code>group-hover:w-full</code></td>
+<td><code>width: 0</code> → <code>width: 100%</code></td>
+<td>Mở rộng từ 0 → 100% khi hover parent</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<hr>
+<p><strong>Q1: Làm sao thêm menu item mới vào navigation?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/Header.tsx</code> (dòng 58-105)</p>
+<p><strong><strong>Code CŨ</strong> (hiện tại có 6 menu items):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 58-105 trong Header.tsx */}
+&lt;div className=&quot;hidden md:flex space-x-8&quot;&gt;
+
+    &lt;a href=&quot;#home&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Trang chủ
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;a href=&quot;#features&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Tính năng
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;a href=&quot;#about&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Về chúng tôi
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;a href=&quot;#classes&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Lớp học
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;a href=&quot;#testimonials&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Đánh giá
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;a href=&quot;#contact&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Liên hệ
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm menu &quot;Bảng giá&quot;):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 58-115 trong Header.tsx - ĐÃ THÊM MENU MỚI */}
+&lt;div className=&quot;hidden md:flex space-x-8&quot;&gt;
+
+    &lt;a href=&quot;#home&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Trang chủ
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;a href=&quot;#features&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Tính năng
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;a href=&quot;#about&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Về chúng tôi
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;a href=&quot;#classes&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Lớp học
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    {/* ========== THÊM MỚI: Menu Bảng giá ========== */}
+    &lt;a href=&quot;#pricing&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Bảng giá
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+    {/* ========== KẾT THÚC THÊM MỚI ========== */}
+
+    &lt;a href=&quot;#testimonials&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Đánh giá
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;a href=&quot;#contact&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+        Liên hệ
+        &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Giải thích</strong>:</strong></p>
+<ul>
+<li><code>href=&quot;#pricing&quot;</code>: Link anchor đến section có <code>id=&quot;pricing&quot;</code> (cần tạo section tương ứng)</li>
+<li>Các classes giống hệt menu items khác để đảm bảo consistent styling</li>
+<li><code>&lt;span&gt;</code> bên trong tạo hiệu ứng underline animation khi hover</li>
+</ul>
+<hr>
+<p><strong>Q2: Làm sao thay đổi logo từ text sang hình ảnh?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/Header.tsx</code> (dòng 42-52)</p>
+<p><strong><strong>Code CŨ</strong> (logo dạng text với gradient):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 42-52 trong Header.tsx */}
+{/* ==================== LOGO ==================== */}
+{/* text-2xl: font-size 1.5rem (24px) */}
+{/* font-bold: font-weight 700 */}
+{/* bg-gradient-to-r: gradient từ trái sang phải */}
+{/* from-indigo-600: màu bắt đầu indigo (#4f46e5) */}
+{/* to-purple-600: màu kết thúc purple (#9333ea) */}
+{/* bg-clip-text: clip background theo text */}
+{/* text-transparent: làm text trong suốt để thấy gradient */}
+&lt;div className=&quot;text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent&quot;&gt;
+    EngliMaster
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (logo dạng hình ảnh):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 42-55 trong Header.tsx - ĐÃ ĐỔI SANG IMAGE LOGO */}
+{/* ========== THÊM IMPORT ở đầu file ========== */}
+import Image from 'next/image';
+
+{/* ========== THAY THẾ LOGO ========== */}
+{/* ==================== LOGO ==================== */}
+{/* Sử dụng Next.js Image component để tối ưu hình ảnh */}
+{/* width={120}: chiều rộng 120px */}
+{/* height={40}: chiều cao 40px */}
+{/* priority: load trước cho LCP (Largest Contentful Paint) */}
+&lt;Image 
+    src=&quot;/logo.png&quot;           // Đặt file logo.png vào thư mục public/
+    alt=&quot;EngliMaster Logo&quot; 
+    width={120} 
+    height={40}
+    priority                   // Tải trước vì logo là phần quan trọng
+    className=&quot;cursor-pointer hover:opacity-80 transition-opacity&quot;
+/&gt;
+</div></code></pre>
+<p><strong><strong>Giải thích</strong>:</strong></p>
+<ul>
+<li>Cần thêm <code>import Image from 'next/image'</code> ở đầu file</li>
+<li>Đặt file <code>logo.png</code> vào thư mục <code>public/</code></li>
+<li><code>priority</code>: Bật preload cho performance (logo nằm above-the-fold)</li>
+<li><code>width</code> và <code>height</code>: Bắt buộc với Next.js Image để tránh layout shift</li>
+</ul>
+<hr>
+<p><strong>Q3: Làm sao thêm dropdown menu cho &quot;Khóa học&quot;?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/Header.tsx</code> (dòng 91-94)</p>
+<p><strong><strong>Code CŨ</strong> (menu đơn giản):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 91-94 trong Header.tsx */}
+&lt;a href=&quot;#classes&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors relative group&quot;&gt;
+    Lớp học
+    &lt;span className=&quot;absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300&quot;&gt;&lt;/span&gt;
+&lt;/a&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (dropdown menu với danh sách khóa học):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 91-120 trong Header.tsx - ĐÃ THÊM DROPDOWN */}
+{/* ========== DROPDOWN MENU ========== */}
+{/* relative: làm parent cho dropdown absolute */}
+{/* group: đánh dấu để dùng group-hover */}
+&lt;div className=&quot;relative group&quot;&gt;
+
+    {/* ========== TRIGGER BUTTON ========== */}
+    &lt;a href=&quot;#classes&quot; className=&quot;text-gray-700 hover:text-indigo-600 font-medium transition-colors flex items-center gap-1&quot;&gt;
+        Lớp học
+        {/* ========== THÊM MỚI: Mũi tên dropdown ========== */}
+        &lt;svg className=&quot;w-4 h-4 transition-transform group-hover:rotate-180&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; viewBox=&quot;0 0 24 24&quot;&gt;
+            &lt;path strokeLinecap=&quot;round&quot; strokeLinejoin=&quot;round&quot; strokeWidth={2} d=&quot;M19 9l-7 7-7-7&quot; /&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
+    {/* ========== DROPDOWN CONTENT ========== */}
+    {/* absolute: vị trí tuyệt đối dưới trigger */}
+    {/* top-full: đặt ngay dưới parent */}
+    {/* left-0: căn trái với parent */}
+    {/* hidden group-hover:block: ẩn mặc định, hiện khi hover parent */}
+    {/* pt-2: padding-top để tạo khoảng trống (tránh mất hover) */}
+    &lt;div className=&quot;absolute top-full left-0 hidden group-hover:block pt-2&quot;&gt;
+        
+        {/* ========== DROPDOWN BOX ========== */}
+        {/* bg-white: nền trắng */}
+        {/* shadow-xl: bóng đổ lớn */}
+        {/* rounded-xl: bo góc 12px */}
+        {/* py-2: padding dọc 8px */}
+        {/* min-w-48: chiều rộng tối thiểu 192px */}
+        {/* border: viền xám nhạt */}
+        &lt;div className=&quot;bg-white shadow-xl rounded-xl py-2 min-w-48 border border-gray-100&quot;&gt;
+            
+            {/* ========== DROPDOWN ITEMS ========== */}
+            &lt;a href=&quot;#beginner&quot; className=&quot;block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors&quot;&gt;
+                🌱 Khóa Beginner
+            &lt;/a&gt;
+            &lt;a href=&quot;#intermediate&quot; className=&quot;block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors&quot;&gt;
+                📚 Khóa Intermediate
+            &lt;/a&gt;
+            &lt;a href=&quot;#advanced&quot; className=&quot;block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors&quot;&gt;
+                🎓 Khóa Advanced
+            &lt;/a&gt;
+            &lt;a href=&quot;#ielts&quot; className=&quot;block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors&quot;&gt;
+                📝 Luyện thi IELTS
+            &lt;/a&gt;
+            &lt;a href=&quot;#toeic&quot; className=&quot;block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors&quot;&gt;
+                💼 Luyện thi TOEIC
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Giải thích</strong> classes dropdown:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>relative</code></td>
+<td>Tạo context cho <code>absolute</code> child</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td>Đánh dấu parent để dùng <code>group-hover</code></td>
+</tr>
+<tr>
+<td><code>hidden group-hover:block</code></td>
+<td>Ẩn dropdown, hiện khi hover parent</td>
+</tr>
+<tr>
+<td><code>absolute top-full left-0</code></td>
+<td>Đặt ngay dưới trigger, căn trái</td>
+</tr>
+<tr>
+<td><code>pt-2</code></td>
+<td>Tạo khoảng trống để không mất hover khi di chuột xuống</td>
+</tr>
+<tr>
+<td><code>shadow-xl rounded-xl</code></td>
+<td>Bóng đổ và bo góc cho dropdown box</td>
+</tr>
+<tr>
+<td><code>hover:bg-indigo-50</code></td>
+<td>Highlight nền xanh nhạt khi hover item</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="62-herosection">6.2 HeroSection</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/home_top_1765161933704.png" alt="Hero Section"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Server Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/landing/HeroSection.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>12,905 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>201 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="t%E1%BA%A1i-sao-ch%E1%BB%8Dn-server-component">Tại Sao Chọn Server Component?</h4>
+<ul>
+<li><strong>Static Content:</strong> Tiêu đề, mô tả, buttons không cần state</li>
+<li><strong>SEO:</strong> Content render sẵn trên server giúp Google index tốt hơn</li>
+<li><strong>Performance:</strong> Không ship JavaScript không cần thiết</li>
+</ul>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Banner chính của landing page:</p>
+<ul>
+<li>Tiêu đề lớn với gradient text</li>
+<li>Mô tả ngắn gọn</li>
+<li>2 CTA buttons: &quot;Đăng ký khóa học&quot; và &quot;Tư vấn AI miễn phí&quot;</li>
+<li>Progress card glassmorphism với các skill bars</li>
+<li>Floating words animation</li>
+</ul>
+<h4 id="c%E1%BA%A5u-tr%C3%BAc-layout">Cấu Trúc Layout</h4>
+<pre class="hljs"><code><div>┌─────────────────────────────────────────┐
+│                HERO SECTION             │
+├───────────────────┬─────────────────────┤
+│   LEFT COLUMN     │   RIGHT COLUMN      │
+│   (Text Content)  │   (Progress Card)   │
+│                   │                     │
+│   - Heading       │   ┌──────────────┐  │
+│   - Description   │   │ Lesson Today │  │
+│   - CTA Buttons   │   │ Speaking 85% │  │
+│                   │   │ Vocab 92%    │  │
+│                   │   │ Grammar 78%  │  │
+│                   │   └──────────────┘  │
+└───────────────────┴─────────────────────┘
+</div></code></pre>
+<h4 id="chi-ti%E1%BA%BFt-code-quan-tr%E1%BB%8Dng">Chi Tiết Code Quan Trọng</h4>
+<pre class="hljs"><code><div>// ==================== GRID LAYOUT 2 CỘT ====================
+&lt;div className=&quot;grid lg:grid-cols-2 gap-12 items-center&quot;&gt;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>CSS Value</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>grid</code></td>
+<td><code>display: grid</code></td>
+<td>Bật grid layout</td>
+</tr>
+<tr>
+<td><code>lg:grid-cols-2</code></td>
+<td><code>grid-template-columns: repeat(2, 1fr)</code></td>
+<td>Từ 1024px: 2 cột bằng nhau</td>
+</tr>
+<tr>
+<td><code>gap-12</code></td>
+<td><code>gap: 3rem</code></td>
+<td>Khoảng cách 48px giữa 2 cột</td>
+</tr>
+<tr>
+<td><code>items-center</code></td>
+<td><code>align-items: center</code></td>
+<td>Căn giữa theo trục dọc</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div>// ==================== GRADIENT TEXT ====================
+&lt;span className=&quot;bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent&quot;&gt;
+    Hiệu Quả
+&lt;/span&gt;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>CSS Value</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bg-gradient-to-r</code></td>
+<td><code>background: linear-gradient(to right, ...)</code></td>
+<td>Gradient từ trái sang phải</td>
+</tr>
+<tr>
+<td><code>from-yellow-400</code></td>
+<td>-</td>
+<td>Màu bắt đầu: vàng (#facc15)</td>
+</tr>
+<tr>
+<td><code>to-orange-400</code></td>
+<td>-</td>
+<td>Màu kết thúc: cam (#fb923c)</td>
+</tr>
+<tr>
+<td><code>bg-clip-text</code></td>
+<td><code>background-clip: text</code></td>
+<td>Clip gradient theo hình dạng text</td>
+</tr>
+<tr>
+<td><code>text-transparent</code></td>
+<td><code>color: transparent</code></td>
+<td>Làm text trong suốt để thấy gradient</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div>// ==================== GLASSMORPHISM CARD ====================
+&lt;div className=&quot;bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl&quot;&gt;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>CSS Value</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bg-white/10</code></td>
+<td><code>background: rgba(255,255,255,0.1)</code></td>
+<td>Nền trắng 10% opacity</td>
+</tr>
+<tr>
+<td><code>backdrop-blur-lg</code></td>
+<td><code>backdrop-filter: blur(16px)</code></td>
+<td>Làm mờ background mạnh</td>
+</tr>
+<tr>
+<td><code>rounded-3xl</code></td>
+<td><code>border-radius: 1.5rem</code></td>
+<td>Bo góc 24px</td>
+</tr>
+<tr>
+<td><code>border border-white/20</code></td>
+<td><code>border: 1px solid rgba(255,255,255,0.2)</code></td>
+<td>Viền trắng mờ</td>
+</tr>
+<tr>
+<td><code>shadow-2xl</code></td>
+<td>-</td>
+<td>Bóng đổ rất lớn</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<hr>
+<p><strong>Q1: Làm sao thay đổi tiêu đề banner?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/HeroSection.tsx</code> (dòng 46-56)</p>
+<p><strong><strong>Code CŨ</strong>:</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 46-56 trong HeroSection.tsx */}
+&lt;h1 className=&quot;text-5xl lg:text-6xl font-bold leading-tight&quot;&gt;
+    Học Tiếng Anh{' '}
+    &lt;span className=&quot;bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent&quot;&gt;
+        Hiệu Quả
+    &lt;/span&gt;{' '}
+    Cùng EngliMaster
+&lt;/h1&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thay đổi tiêu đề):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 46-60 trong HeroSection.tsx - ĐÃ THAY ĐỔI NỘI DUNG */}
+&lt;h1 className=&quot;text-5xl lg:text-6xl font-bold leading-tight&quot;&gt;
+    {/* ========== THAY ĐỔI NỘI DUNG ========== */}
+    Chinh Phục{' '}
+    &lt;span className=&quot;bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent&quot;&gt;
+        Tiếng Anh
+    &lt;/span&gt;{' '}
+    Trong 6 Tháng
+    {/* ========== KẾT THÚC THAY ĐỔI ========== */}
+&lt;/h1&gt;
+</div></code></pre>
+<p><strong><strong>Giải thích</strong>:</strong></p>
+<ul>
+<li><code>&lt;span&gt;</code> với gradient classes tạo hiệu ứng chữ màu vàng-cam nổi bật</li>
+<li><code>{' '}</code> tạo khoảng trắng giữa các phần text</li>
+<li>Giữ nguyên classes <code>text-5xl lg:text-6xl font-bold leading-tight</code> để duy trì style</li>
+</ul>
+<hr>
+<p><strong>Q2: Làm sao thêm nút CTA mới?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/HeroSection.tsx</code> (dòng 72-99)</p>
+<p><strong><strong>Code CŨ</strong> (có 2 nút):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 72-99 trong HeroSection.tsx */}
+&lt;div className=&quot;flex flex-col sm:flex-row gap-4&quot;&gt;
+
+    {/* PRIMARY CTA - Nút vàng cam */}
+    &lt;Link href=&quot;/enroll&quot; className=&quot;bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-8 py-4 rounded-full text-lg font-bold hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center&quot;&gt;
+        Đăng ký khóa học ngay
+    &lt;/Link&gt;
+
+    {/* SECONDARY CTA - Nút viền trắng */}
+    &lt;Link href=&quot;/ai-consultant&quot; className=&quot;border-2 border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white hover:text-indigo-600 transition-all duration-300 text-center flex items-center justify-center gap-2&quot;&gt;
+        &lt;MessageCircle className=&quot;w-5 h-5&quot; /&gt; Tư vấn AI miễn phí
+    &lt;/Link&gt;
+
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm nút &quot;Xem lịch học&quot;):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 72-115 trong HeroSection.tsx - ĐÃ THÊM NÚT MỚI */}
+&lt;div className=&quot;flex flex-col sm:flex-row gap-4&quot;&gt;
+
+    {/* PRIMARY CTA - Nút vàng cam */}
+    &lt;Link href=&quot;/enroll&quot; className=&quot;bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-8 py-4 rounded-full text-lg font-bold hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center&quot;&gt;
+        Đăng ký khóa học ngay
+    &lt;/Link&gt;
+
+    {/* SECONDARY CTA - Nút viền trắng */}
+    &lt;Link href=&quot;/ai-consultant&quot; className=&quot;border-2 border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white hover:text-indigo-600 transition-all duration-300 text-center flex items-center justify-center gap-2&quot;&gt;
+        &lt;MessageCircle className=&quot;w-5 h-5&quot; /&gt; Tư vấn AI miễn phí
+    &lt;/Link&gt;
+
+    {/* ========== THÊM MỚI: Nút Xem lịch học ========== */}
+    &lt;Link 
+        href=&quot;#classes&quot; 
+        className=&quot;border-2 border-yellow-400 text-yellow-400 px-8 py-4 rounded-full text-lg font-bold hover:bg-yellow-400 hover:text-gray-900 transition-all duration-300 text-center flex items-center justify-center gap-2&quot;
+    &gt;
+        {/* Thêm icon Calendar từ lucide-react */}
+        &lt;Calendar className=&quot;w-5 h-5&quot; /&gt; Xem lịch học
+    &lt;/Link&gt;
+    {/* ========== KẾT THÚC THÊM MỚI ========== */}
+
+&lt;/div&gt;
+
+{/* ========== THÊM IMPORT ở đầu file ========== */}
+import { MessageCircle, Calendar } from 'lucide-react';
+</div></code></pre>
+<p><strong><strong>Giải thích</strong> classes nút mới:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>border-2 border-yellow-400</code></td>
+<td>Viền vàng 2px</td>
+</tr>
+<tr>
+<td><code>text-yellow-400</code></td>
+<td>Chữ màu vàng</td>
+</tr>
+<tr>
+<td><code>hover:bg-yellow-400</code></td>
+<td>Khi hover: nền chuyển sang vàng</td>
+</tr>
+<tr>
+<td><code>hover:text-gray-900</code></td>
+<td>Khi hover: chữ chuyển sang đen</td>
+</tr>
+<tr>
+<td><code>flex items-center justify-center gap-2</code></td>
+<td>Icon và text nằm ngang, căn giữa, cách 8px</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Q3: Làm sao thêm ảnh/video background?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/HeroSection.tsx</code> (dòng 11-20)</p>
+<p><strong><strong>Code CŨ</strong> (chỉ có gradient background từ parent):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 11-20 trong HeroSection.tsx */}
+export default function HeroSection() {
+    return (
+        &lt;section id=&quot;home&quot; className=&quot;relative pt-16 min-h-screen flex items-center overflow-hidden&quot;&gt;
+            {/* Content container */}
+            &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10&quot;&gt;
+                {/* ... content ... */}
+            &lt;/div&gt;
+            
+            {/* Floating words */}
+            &lt;div className=&quot;absolute inset-0 pointer-events-none&quot;&gt;
+                {/* ... floating elements ... */}
+            &lt;/div&gt;
+        &lt;/section&gt;
+    );
+}
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm video background):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 11-40 trong HeroSection.tsx - ĐÃ THÊM VIDEO BACKGROUND */}
+export default function HeroSection() {
+    return (
+        &lt;section id=&quot;home&quot; className=&quot;relative pt-16 min-h-screen flex items-center overflow-hidden&quot;&gt;
+            
+            {/* ========== THÊM MỚI: Video Background ========== */}
+            &lt;div className=&quot;absolute inset-0 z-0&quot;&gt;
+                {/* Video element */}
+                &lt;video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                    className=&quot;w-full h-full object-cover&quot;
+                &gt;
+                    &lt;source src=&quot;/videos/hero-bg.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+                &lt;/video&gt;
+                
+                {/* Overlay để làm tối video, giúp text dễ đọc */}
+                &lt;div className=&quot;absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-purple-900/80 to-blue-900/80&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            {/* ========== KẾT THÚC THÊM MỚI ========== */}
+            
+            {/* Content container - THÊM z-10 để nằm trên video */}
+            &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10&quot;&gt;
+                {/* ... content ... */}
+            &lt;/div&gt;
+            
+            {/* Floating words - cũng cần z-10 */}
+            &lt;div className=&quot;absolute inset-0 pointer-events-none z-10&quot;&gt;
+                {/* ... floating elements ... */}
+            &lt;/div&gt;
+        &lt;/section&gt;
+    );
+}
+</div></code></pre>
+<p><strong><strong>Hướng dẫn</strong>:</strong></p>
+<ol>
+<li>Đặt file video vào <code>public/videos/hero-bg.mp4</code></li>
+<li><code>autoPlay muted loop playsInline</code>: Video tự chạy, im lặng, lặp vô hạn</li>
+<li><code>object-cover</code>: Video phủ kín container</li>
+<li>Overlay gradient với opacity 80% (<code>/80</code>) để text vẫn dễ đọc</li>
+<li>Content cần <code>z-10</code> để nằm trên video (<code>z-0</code>)</li>
+</ol>
+<hr>
+<h3 id="63-featuressection">6.3 FeaturesSection</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/features_section_1765161944160.png" alt="Features Section"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Server Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/landing/FeaturesSection.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>5,800 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>120 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="t%E1%BA%A1i-sao-ch%E1%BB%8Dn-server-component">Tại Sao Chọn Server Component?</h4>
+<ul>
+<li><strong>Props-driven:</strong> Chỉ render data từ props, không có local state</li>
+<li><strong>Static UI:</strong> Hover effects chỉ dùng CSS, không cần JavaScript</li>
+<li><strong>SEO:</strong> Features content được index bởi search engines</li>
+</ul>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Section hiển thị các tính năng nổi bật của EngliMaster:</p>
+<ul>
+<li>Tiêu đề section với decorative underline</li>
+<li>Grid 3 cột (responsive: 1 → 2 → 3 cột)</li>
+<li>Feature cards với icon, title, description</li>
+<li>Hover effects: shadow tăng, nâng lên, icon phóng to</li>
+</ul>
+<h4 id="props-interface">Props Interface</h4>
+<pre class="hljs"><code><div>interface Feature {
+    icon: string;        // Emoji hoặc icon string
+    title: string;       // Tiêu đề tính năng
+    description: string; // Mô tả chi tiết
+}
+
+interface FeaturesSectionProps {
+    features: Feature[]; // Mảng features từ API
+}
+</div></code></pre>
+<h4 id="chi-ti%E1%BA%BFt-code-quan-tr%E1%BB%8Dng">Chi Tiết Code Quan Trọng</h4>
+<pre class="hljs"><code><div>// ==================== RESPONSIVE GRID ====================
+&lt;div className=&quot;grid md:grid-cols-2 lg:grid-cols-3 gap-8&quot;&gt;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Breakpoint</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>grid</code></td>
+<td>All</td>
+<td>Enable grid layout</td>
+</tr>
+<tr>
+<td>(default)</td>
+<td>&lt; 768px</td>
+<td>1 cột</td>
+</tr>
+<tr>
+<td><code>md:grid-cols-2</code></td>
+<td>≥ 768px</td>
+<td>2 cột</td>
+</tr>
+<tr>
+<td><code>lg:grid-cols-3</code></td>
+<td>≥ 1024px</td>
+<td>3 cột</td>
+</tr>
+<tr>
+<td><code>gap-8</code></td>
+<td>All</td>
+<td>Khoảng cách 32px</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div>// ==================== FEATURE CARD với HOVER EFFECTS ====================
+&lt;div className=&quot;bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-t-4 group&quot;&gt;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shadow-xl</code></td>
+<td>Bóng lớn ban đầu</td>
+</tr>
+<tr>
+<td><code>hover:shadow-2xl</code></td>
+<td>Bóng rất lớn khi hover</td>
+</tr>
+<tr>
+<td><code>hover:-translate-y-2</code></td>
+<td>Nâng lên 8px khi hover</td>
+</tr>
+<tr>
+<td><code>transition-all duration-300</code></td>
+<td>Animation mượt 300ms</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td>Parent cho group-hover trên icon</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div>// ==================== ICON với GROUP-HOVER ====================
+&lt;div className=&quot;text-5xl mb-6 group-hover:scale-110 transition-transform duration-300&quot;&gt;
+    {feature.icon}
+&lt;/div&gt;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text-5xl</code></td>
+<td>Font-size 48px (cho emoji/icon lớn)</td>
+</tr>
+<tr>
+<td><code>group-hover:scale-110</code></td>
+<td>Phóng to 110% khi hover card (parent có class <code>group</code>)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<hr>
+<p><strong>Q1: Làm sao thêm feature (tính năng) mới?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/lib/api.ts</code> (dòng 421-452 trong function <code>getFallbackData</code>)</p>
+<p><strong><strong>Code CŨ</strong> (hiện tại có 6 features):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 421-452 trong api.ts - getFallbackData() */}
+features: [
+    {
+        icon: &quot;🎯&quot;,
+        title: &quot;Học theo mục tiêu&quot;,
+        description: &quot;Chương trình học được cá nhân hóa theo mục tiêu và trình độ của từng học viên...&quot;
+    },
+    {
+        icon: &quot;🗣️&quot;,
+        title: &quot;Thực hành giao tiếp&quot;,
+        description: &quot;Môi trường thực hành tiếng Anh với giáo viên bản ngữ...&quot;
+    },
+    {
+        icon: &quot;📱&quot;,
+        title: &quot;Học mọi lúc mọi nơi&quot;,
+        description: &quot;Ứng dụng di động hiện đại cho phép bạn học tiếng Anh bất cứ lúc nào...&quot;
+    },
+    {
+        icon: &quot;🏆&quot;,
+        title: &quot;Chứng chỉ uy tín&quot;,
+        description: &quot;Nhận chứng chỉ được công nhận quốc tế sau khi hoàn thành khóa học...&quot;
+    },
+    {
+        icon: &quot;🎮&quot;,
+        title: &quot;Học qua trò chơi&quot;,
+        description: &quot;Phương pháp gamification thú vị giúp việc học trở nên vui nhộn...&quot;
+    },
+    {
+        icon: &quot;👥&quot;,
+        title: &quot;Cộng đồng học tập&quot;,
+        description: &quot;Tham gia cộng đồng học viên sôi động, chia sẻ kinh nghiệm...&quot;
+    }
+],
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm feature &quot;AI Tutor&quot;):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 421-460 trong api.ts - ĐÃ THÊM FEATURE MỚI */}
+features: [
+    {
+        icon: &quot;🎯&quot;,
+        title: &quot;Học theo mục tiêu&quot;,
+        description: &quot;Chương trình học được cá nhân hóa theo mục tiêu và trình độ của từng học viên...&quot;
+    },
+    {
+        icon: &quot;🗣️&quot;,
+        title: &quot;Thực hành giao tiếp&quot;,
+        description: &quot;Môi trường thực hành tiếng Anh với giáo viên bản ngữ...&quot;
+    },
+    {
+        icon: &quot;📱&quot;,
+        title: &quot;Học mọi lúc mọi nơi&quot;,
+        description: &quot;Ứng dụng di động hiện đại cho phép bạn học tiếng Anh bất cứ lúc nào...&quot;
+    },
+    {
+        icon: &quot;🏆&quot;,
+        title: &quot;Chứng chỉ uy tín&quot;,
+        description: &quot;Nhận chứng chỉ được công nhận quốc tế sau khi hoàn thành khóa học...&quot;
+    },
+    {
+        icon: &quot;🎮&quot;,
+        title: &quot;Học qua trò chơi&quot;,
+        description: &quot;Phương pháp gamification thú vị giúp việc học trở nên vui nhộn...&quot;
+    },
+    {
+        icon: &quot;👥&quot;,
+        title: &quot;Cộng đồng học tập&quot;,
+        description: &quot;Tham gia cộng đồng học viên sôi động, chia sẻ kinh nghiệm...&quot;
+    },
+    /* ========== THÊM MỚI: Feature AI Tutor ========== */
+    {
+        icon: &quot;🤖&quot;,                          // Emoji robot cho AI
+        title: &quot;AI Tutor 24/7&quot;,              // Tiêu đề tính năng
+        description: &quot;Trợ lý AI thông minh hỗ trợ bạn học mọi lúc, giải đáp thắc mắc và chấm bài tự động với phản hồi chi tiết.&quot;
+    }
+    /* ========== KẾT THÚC THÊM MỚI ========== */
+],
+</div></code></pre>
+<p><strong><strong>Lưu ý</strong>:</strong></p>
+<ul>
+<li>Icon có thể dùng emoji hoặc string tên icon (nếu component hỗ trợ)</li>
+<li>Description nên ngắn gọn, tối đa 2-3 dòng</li>
+<li>Nếu API backend hoạt động, cần thêm data tương ứng trong backend</li>
+</ul>
+<hr>
+<p><strong>Q2: Làm sao thay đổi số cột grid (ví dụ từ 3 cột lên 4 cột)?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/FeaturesSection.tsx</code> (dòng 71)</p>
+<p><strong><strong>Code CŨ</strong> (3 cột trên large screens):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 71 trong FeaturesSection.tsx */}
+{/* ==================== FEATURES GRID ==================== */}
+{/* grid: display grid */}
+{/* md:grid-cols-2: từ 768px, 2 cột */}
+{/* lg:grid-cols-3: từ 1024px, 3 cột */}
+{/* gap-8: khoảng cách 32px */}
+&lt;div className=&quot;grid md:grid-cols-2 lg:grid-cols-3 gap-8&quot;&gt;
+    {features.map((feature, index) =&gt; (
+        // ... feature cards
+    ))}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (4 cột trên large screens, responsive tốt hơn):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 71 trong FeaturesSection.tsx - ĐÃ THAY ĐỔI GRID */}
+{/* ==================== FEATURES GRID ==================== */}
+{/* ========== THAY ĐỔI: Responsive grid mới ========== */}
+{/* grid: display grid */}
+{/* sm:grid-cols-2: từ 640px, 2 cột */}
+{/* lg:grid-cols-3: từ 1024px, 3 cột */}
+{/* xl:grid-cols-4: từ 1280px, 4 cột (THÊM MỚI) */}
+{/* gap-6: giảm khoảng cách xuống 24px (để fit 4 cột) */}
+&lt;div className=&quot;grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6&quot;&gt;
+    {features.map((feature, index) =&gt; (
+        // ... feature cards
+    ))}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Giải thích</strong> thay đổi:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Thay Đổi</th>
+<th>Trước</th>
+<th>Sau</th>
+<th>Lý Do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small screens</td>
+<td><code>md:grid-cols-2</code> (768px)</td>
+<td><code>sm:grid-cols-2</code> (640px)</td>
+<td>2 cột sớm hơn</td>
+</tr>
+<tr>
+<td>Extra large</td>
+<td>Không có</td>
+<td><code>xl:grid-cols-4</code> (1280px)</td>
+<td>4 cột trên màn hình lớn</td>
+</tr>
+<tr>
+<td>Gap</td>
+<td><code>gap-8</code> (32px)</td>
+<td><code>gap-6</code> (24px)</td>
+<td>Giảm khoảng cách để fit 4 cột</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Q3: Làm sao thêm animation stagger (cards xuất hiện lần lượt) khi scroll?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/FeaturesSection.tsx</code> (dòng 80-95)</p>
+<p><strong><strong>Code CŨ</strong> (chỉ có hover animation):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 80-95 trong FeaturesSection.tsx */}
+{features.map((feature, index) =&gt; (
+    // ==================== FEATURE CARD ====================
+    // bg-white: nền trắng
+    // hover:shadow-2xl: bóng lớn khi hover
+    // hover:-translate-y-2: nâng lên khi hover
+    &lt;div 
+        key={index} 
+        className=&quot;bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-t-4 group&quot;
+    &gt;
+        {/* Icon */}
+        &lt;div className=&quot;text-5xl mb-6 group-hover:scale-110 transition-transform duration-300&quot;&gt;
+            {feature.icon}
+        &lt;/div&gt;
+        {/* Title &amp; Description */}
+        ...
+    &lt;/div&gt;
+))}
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm stagger animation với CSS):</strong></p>
+<p><strong>Bước 1: Sửa FeaturesSection.tsx</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 80-100 trong FeaturesSection.tsx - ĐÃ THÊM STAGGER ANIMATION */}
+{features.map((feature, index) =&gt; (
+    // ==================== FEATURE CARD ====================
+    // ========== THÊM MỚI: Animation classes ========== 
+    // animate-fadeInUp: animation xuất hiện từ dưới lên
+    // style với animationDelay: delay khác nhau cho mỗi card
+    &lt;div 
+        key={index} 
+        className=&quot;bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-t-4 group animate-fadeInUp&quot;
+        style={{
+            animationDelay: `${index * 100}ms`,  // Card 1: 0ms, Card 2: 100ms, Card 3: 200ms...
+            animationFillMode: 'both'             // Giữ trạng thái cuối animation
+        }}
+    &gt;
+        {/* Icon */}
+        &lt;div className=&quot;text-5xl mb-6 group-hover:scale-110 transition-transform duration-300&quot;&gt;
+            {feature.icon}
+        &lt;/div&gt;
+        {/* Title &amp; Description */}
+        ...
+    &lt;/div&gt;
+))}
+</div></code></pre>
+<p><strong>Bước 2: Thêm CSS animation vào <code>src/app/globals.css</code></strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">/* ========== THÊM MỚI: Stagger Fade In Up Animation ========== */</span>
+<span class="hljs-keyword">@keyframes</span> fadeInUp {
+    <span class="hljs-selector-tag">from</span> {
+        <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;
+        <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateY</span>(<span class="hljs-number">30px</span>);
+    }
+    <span class="hljs-selector-tag">to</span> {
+        <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;
+        <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateY</span>(<span class="hljs-number">0</span>);
+    }
+}
+
+<span class="hljs-selector-class">.animate-fadeInUp</span> {
+    <span class="hljs-attribute">animation</span>: fadeInUp <span class="hljs-number">0.6s</span> ease-out;
+}
+<span class="hljs-comment">/* ========== KẾT THÚC THÊM MỚI ========== */</span>
+</div></code></pre>
+<p><strong><strong>Giải thích</strong>:</strong></p>
+<ul>
+<li><code>animationDelay: ${index * 100}ms</code>: Mỗi card delay thêm 100ms so với card trước</li>
+<li><code>fadeInUp</code>: Animation từ dưới đi lên với fade in</li>
+<li><code>animationFillMode: 'both'</code>: Giữ trạng thái opacity: 0 trước khi animation bắt đầu</li>
+</ul>
+<hr>
+<h3 id="64-aboutsection">6.4 AboutSection</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/about_section_1765161953913.png" alt="About Section"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Server Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/landing/AboutSection.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>27,384 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>463 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Section giới thiệu về EngliMaster bao gồm:</p>
+<ul>
+<li>Thông tin tổng quan với số liệu nổi bật</li>
+<li>Sứ mệnh và Tầm nhìn</li>
+<li>Giá trị cốt lõi (4 items)</li>
+<li>Đội ngũ giáo viên (grid cards)</li>
+</ul>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<hr>
+<p><strong>Q1: Làm sao thêm giáo viên mới?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/lib/api.ts</code> (dòng 562-586 trong function <code>getFallbackData</code>)</p>
+<p><strong><strong>Code CŨ</strong> (hiện có 3 teachers):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 562-586 trong api.ts - getFallbackData() */}
+teachers: [
+    {
+        name: 'Ms. Sarah Johnson',
+        role: 'Giám đốc học thuật',
+        flag: '🇺🇸',
+        experience: '8 năm kinh nghiệm',
+        specialty: 'Phương pháp giao tiếp &amp; phát âm',
+        education: 'Thạc sĩ TESOL - Stanford University',
+    },
+    {
+        name: 'Mr. David Smith',
+        role: 'Trưởng khoa Intermediate',
+        flag: '🇬🇧',
+        experience: '6 năm kinh nghiệm',
+        specialty: 'Ngữ pháp và luyện thi IELTS',
+        education: 'Cử nhân Ngôn ngữ Anh - Cambridge',
+    },
+    {
+        name: 'Ms. Emma Wilson',
+        role: 'Chuyên gia Advanced',
+        flag: '🇦🇺',
+        experience: '10 năm kinh nghiệm',
+        specialty: 'Business English &amp; Academic Writing',
+        education: 'Thạc sĩ Giáo dục - Melbourne University',
+    }
+],
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm giáo viên Việt Nam):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 562-600 trong api.ts - ĐÃ THÊM TEACHER MỚI */}
+teachers: [
+    {
+        name: 'Ms. Sarah Johnson',
+        role: 'Giám đốc học thuật',
+        flag: '🇺🇸',
+        experience: '8 năm kinh nghiệm',
+        specialty: 'Phương pháp giao tiếp &amp; phát âm',
+        education: 'Thạc sĩ TESOL - Stanford University',
+    },
+    {
+        name: 'Mr. David Smith',
+        role: 'Trưởng khoa Intermediate',
+        flag: '🇬🇧',
+        experience: '6 năm kinh nghiệm',
+        specialty: 'Ngữ pháp và luyện thi IELTS',
+        education: 'Cử nhân Ngôn ngữ Anh - Cambridge',
+    },
+    {
+        name: 'Ms. Emma Wilson',
+        role: 'Chuyên gia Advanced',
+        flag: '🇦🇺',
+        experience: '10 năm kinh nghiệm',
+        specialty: 'Business English &amp; Academic Writing',
+        education: 'Thạc sĩ Giáo dục - Melbourne University',
+    },
+    /* ========== THÊM MỚI: Giáo viên Việt Nam ========== */
+    {
+        name: 'Cô Nguyễn Thu Hà',
+        role: 'Trưởng khoa Beginner',
+        flag: '🇻🇳',
+        experience: '5 năm kinh nghiệm',
+        specialty: 'Dạy tiếng Anh cho người mới bắt đầu',
+        education: 'Thạc sĩ Ngôn ngữ Anh - Đại học Hà Nội',
+    }
+    /* ========== KẾT THÚC THÊM MỚI ========== */
+],
+</div></code></pre>
+<p><strong><strong>Lưu ý</strong>:</strong></p>
+<ul>
+<li>Grid hiện tại là 3 cột (<code>md:grid-cols-3</code>), thêm 1 teacher sẽ thành 4 cards</li>
+<li>Nếu muốn đẹp hơn, đổi grid thành <code>md:grid-cols-4</code> hoặc <code>md:grid-cols-2 lg:grid-cols-4</code></li>
+</ul>
+<hr>
+<p><strong>Q2: Làm sao thêm core value (giá trị cốt lõi) mới?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/AboutSection.tsx</code> (dòng 85-106)</p>
+<p><strong><strong>Code CŨ</strong> (hiện có 4 core values):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 85-106 trong AboutSection.tsx */}
+const coreValues = [
+    {
+        icon: &lt;Handshake className=&quot;w-8 h-8&quot; /&gt;,
+        title: &quot;Sáng tạo&quot;,
+        description: &quot;Không ngừng đổi mới phương pháp giảng dạy...&quot;
+    },
+    {
+        icon: &lt;Handshake className=&quot;w-8 h-8&quot; /&gt;,
+        title: &quot;Tận tâm&quot;,
+        description: &quot;Đồng hành cùng học viên từ những bước đầu tiên...&quot;
+    },
+    {
+        icon: &lt;Trophy className=&quot;w-8 h-8&quot; /&gt;,
+        title: &quot;Chất lượng&quot;,
+        description: &quot;Cam kết mang đến chất lượng giảng dạy cao nhất...&quot;
+    },
+    {
+        icon: &lt;Globe className=&quot;w-8 h-8&quot; /&gt;,
+        title: &quot;Toàn cầu&quot;,
+        description: &quot;Kết nối học viên với cộng đồng quốc tế...&quot;
+    }
+];
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm core value &quot;Công nghệ&quot;):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 85-120 trong AboutSection.tsx - ĐÃ THÊM CORE VALUE */}
+{/* ========== THÊM IMPORT ở đầu file ========== */}
+import { Handshake, Trophy, Globe, Cpu } from 'lucide-react';  // Thêm Cpu
+
+const coreValues = [
+    {
+        icon: &lt;Handshake className=&quot;w-8 h-8&quot; /&gt;,
+        title: &quot;Sáng tạo&quot;,
+        description: &quot;Không ngừng đổi mới phương pháp giảng dạy...&quot;
+    },
+    {
+        icon: &lt;Handshake className=&quot;w-8 h-8&quot; /&gt;,
+        title: &quot;Tận tâm&quot;,
+        description: &quot;Đồng hành cùng học viên từ những bước đầu tiên...&quot;
+    },
+    {
+        icon: &lt;Trophy className=&quot;w-8 h-8&quot; /&gt;,
+        title: &quot;Chất lượng&quot;,
+        description: &quot;Cam kết mang đến chất lượng giảng dạy cao nhất...&quot;
+    },
+    {
+        icon: &lt;Globe className=&quot;w-8 h-8&quot; /&gt;,
+        title: &quot;Toàn cầu&quot;,
+        description: &quot;Kết nối học viên với cộng đồng quốc tế...&quot;
+    },
+    /* ========== THÊM MỚI: Core Value Công nghệ ========== */
+    {
+        icon: &lt;Cpu className=&quot;w-8 h-8&quot; /&gt;,      // Icon CPU đại diện cho công nghệ
+        title: &quot;Công nghệ&quot;,
+        description: &quot;Ứng dụng AI và công nghệ hiện đại nhất vào giảng dạy, mang đến trải nghiệm học tập thông minh.&quot;
+    }
+    /* ========== KẾT THÚC THÊM MỚI ========== */
+];
+</div></code></pre>
+<p><strong><strong>Lưu ý</strong>:</strong></p>
+<ul>
+<li>Cần import thêm icon từ <code>lucide-react</code></li>
+<li>Grid hiện tại là 4 cột (<code>md:grid-cols-4</code>), thêm 1 value sẽ thành 5 items → không đẹp</li>
+<li>Nên giữ số chẵn (4 hoặc 6) để grid đều</li>
+</ul>
+<hr>
+<p><strong>Q3: Làm sao thay đổi layout phần đội ngũ từ 3 cột thành 2 cột?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/AboutSection.tsx</code> (dòng 360)</p>
+<p><strong><strong>Code CŨ</strong> (3 cột):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 360 trong AboutSection.tsx */}
+{/* ==================== TEACHERS GRID ==================== */}
+{/* grid md:grid-cols-3: 3 cột từ 768px */}
+&lt;div className=&quot;grid md:grid-cols-3 gap-8 mb-16&quot;&gt;
+    {displayTeachers.map((teacher, index) =&gt; {
+        // ... teacher cards
+    })}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (2 cột với cards lớn hơn):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 360 trong AboutSection.tsx - ĐÃ ĐỔI THÀNH 2 CỘT */}
+{/* ==================== TEACHERS GRID ==================== */}
+{/* ========== THAY ĐỔI: Từ 3 cột thành 2 cột responsive ========== */}
+{/* grid-cols-1: 1 cột mobile */}
+{/* sm:grid-cols-2: 2 cột từ 640px */}
+{/* gap-12: tăng khoảng cách lên 48px (vì cards ít hơn) */}
+&lt;div className=&quot;grid grid-cols-1 sm:grid-cols-2 gap-12 mb-16&quot;&gt;
+    {displayTeachers.map((teacher, index) =&gt; {
+        // ... teacher cards
+    })}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Giải thích</strong> thay đổi:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Thay Đổi</th>
+<th>Trước</th>
+<th>Sau</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Breakpoint</td>
+<td><code>md:grid-cols-3</code> (768px)</td>
+<td><code>sm:grid-cols-2</code> (640px)</td>
+</tr>
+<tr>
+<td>Số cột max</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Gap</td>
+<td><code>gap-8</code> (32px)</td>
+<td><code>gap-12</code> (48px)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Kết quả:</strong> Cards to hơn, dễ đọc hơn trên tablet và desktop</p>
+<hr>
+<h3 id="65-statssection">6.5 StatsSection</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/stats_section_1765161976516.png" alt="Stats Section"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Server Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/landing/StatsSection.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>3,601 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>82 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Section hiển thị số liệu thống kê nổi bật:</p>
+<ul>
+<li>Nền gradient tím-xanh</li>
+<li>Grid 4 cột (2 cột mobile)</li>
+<li>Số liệu với gradient text vàng-cam</li>
+</ul>
+<h4 id="chi-ti%E1%BA%BFt-code">Chi Tiết Code</h4>
+<pre class="hljs"><code><div>// ==================== GRADIENT TEXT CHO SỐ ====================
+&lt;div className=&quot;text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent&quot;&gt;
+    {stat.number}
+&lt;/div&gt;
+</div></code></pre>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<hr>
+<p><strong>Q1: Làm sao thêm stat (số liệu thống kê) mới?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/lib/api.ts</code> (dòng 453-458 trong function <code>getFallbackData</code>)</p>
+<p><strong><strong>Code CŨ</strong> (hiện có 4 stats):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 453-458 trong api.ts */}
+stats: [
+    { number: &quot;50K+&quot;, label: &quot;Học viên đã tham gia&quot; },
+    { number: &quot;95%&quot;, label: &quot;Học viên hài lòng&quot; },
+    { number: &quot;500+&quot;, label: &quot;Bài học tương tác&quot; },
+    { number: &quot;24/7&quot;, label: &quot;Hỗ trợ liên tục&quot; }
+],
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm stat &quot;Giáo viên bản ngữ&quot;):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 453-462 trong api.ts - ĐÃ THÊM STAT MỚI */}
+stats: [
+    { number: &quot;50K+&quot;, label: &quot;Học viên đã tham gia&quot; },
+    { number: &quot;95%&quot;, label: &quot;Học viên hài lòng&quot; },
+    { number: &quot;500+&quot;, label: &quot;Bài học tương tác&quot; },
+    { number: &quot;24/7&quot;, label: &quot;Hỗ trợ liên tục&quot; },
+    /* ========== THÊM MỚI ========== */
+    { number: &quot;30+&quot;, label: &quot;Giáo viên bản ngữ&quot; }
+],
+</div></code></pre>
+<p><strong><strong>Lưu ý</strong>:</strong></p>
+<ul>
+<li>Grid hiện tại là 4 cột (<code>md:grid-cols-4</code>), thêm 1 stat sẽ thành 5 items</li>
+<li>Để đẹp hơn, nên đổi grid thành <code>md:grid-cols-5</code> hoặc giữ 4 stats</li>
+</ul>
+<hr>
+<p><strong>Q2: Làm sao thay đổi màu gradient của số?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/StatsSection.tsx</code> (dòng 65)</p>
+<p><strong><strong>Code CŨ</strong> (gradient vàng-cam):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 65 trong StatsSection.tsx */}
+&lt;div className=&quot;text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent&quot;&gt;
+    {stat.number}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (gradient xanh lá - xanh dương):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 65 trong StatsSection.tsx - ĐÃ ĐỔI MÀU GRADIENT */}
+{/* ========== THAY ĐỔI: Gradient từ vàng-cam thành xanh lá-xanh dương ========== */}
+&lt;div className=&quot;text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent&quot;&gt;
+    {stat.number}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong>Các tùy chọn màu gradient khác:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Gradient</th>
+<th>Classes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vàng → Cam (mặc định)</td>
+<td><code>from-yellow-400 to-orange-400</code></td>
+</tr>
+<tr>
+<td>Xanh lá → Xanh dương</td>
+<td><code>from-green-400 to-cyan-400</code></td>
+</tr>
+<tr>
+<td>Hồng → Tím</td>
+<td><code>from-pink-400 to-purple-400</code></td>
+</tr>
+<tr>
+<td>Đỏ → Cam</td>
+<td><code>from-red-400 to-orange-400</code></td>
+</tr>
+<tr>
+<td>Trắng đơn sắc</td>
+<td><code>text-white</code> (bỏ gradient classes)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Q3: Làm sao thêm animation counting (đếm số) khi scroll vào view?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/StatsSection.tsx</code></p>
+<p><strong><strong>Code CŨ</strong> (Server Component, không có animation):</strong></p>
+<pre class="hljs"><code><div>{/* StatsSection.tsx - Server Component */}
+// Không có 'use client'
+
+export default function StatsSection({ stats }: StatsSectionProps) {
+    return (
+        &lt;section className=&quot;py-20 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-700 text-white&quot;&gt;
+            &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8&quot;&gt;
+                &lt;div className=&quot;grid grid-cols-2 md:grid-cols-4 gap-8 text-center&quot;&gt;
+                    {stats.map((stat, index) =&gt; (
+                        &lt;div key={index} className=&quot;space-y-2&quot;&gt;
+                            &lt;div className=&quot;text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent&quot;&gt;
+                                {stat.number}
+                            &lt;/div&gt;
+                            &lt;div className=&quot;text-white/90 font-medium&quot;&gt;
+                                {stat.label}
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    ))}
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
+    );
+}
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (Client Component với counting animation):</strong></p>
+<p><strong>Bước 1: Cài đặt thư viện</strong></p>
+<pre class="hljs"><code><div>npm install react-countup react-intersection-observer
+</div></code></pre>
+<p><strong>Bước 2: Chuyển sang Client Component với animation</strong></p>
+<pre class="hljs"><code><div>{/* StatsSection.tsx - ĐÃ CHUYỂN THÀNH CLIENT COMPONENT */}
+'use client';  // ========== THÊM MỚI ==========
+
+import CountUp from 'react-countup';
+import { useInView } from 'react-intersection-observer';
+
+interface Stat {
+    number: string;
+    label: string;
+}
+
+interface StatsSectionProps {
+    stats: Stat[];
+}
+
+export default function StatsSection({ stats }: StatsSectionProps) {
+    // ========== THÊM MỚI: Hook để detect khi scroll vào view ==========
+    const { ref, inView } = useInView({
+        triggerOnce: true,    // Chỉ trigger 1 lần
+        threshold: 0.3        // Trigger khi 30% element visible
+    });
+
+    // ========== THÊM MỚI: Function parse number từ string ==========
+    const parseNumber = (numStr: string): number =&gt; {
+        // &quot;50K+&quot; -&gt; 50000, &quot;95%&quot; -&gt; 95, &quot;24/7&quot; -&gt; 24
+        const cleaned = numStr.replace(/[^0-9.]/g, '');
+        const num = parseFloat(cleaned);
+        if (numStr.includes('K')) return num * 1000;
+        return num;
+    };
+
+    // ========== THÊM MỚI: Function lấy suffix ==========
+    const getSuffix = (numStr: string): string =&gt; {
+        if (numStr.includes('K+')) return 'K+';
+        if (numStr.includes('%')) return '%';
+        if (numStr.includes('/7')) return '/7';
+        if (numStr.includes('+')) return '+';
+        return '';
+    };
+
+    return (
+        &lt;section ref={ref} className=&quot;py-20 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-700 text-white&quot;&gt;
+            &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8&quot;&gt;
+                &lt;div className=&quot;grid grid-cols-2 md:grid-cols-4 gap-8 text-center&quot;&gt;
+                    {stats.map((stat, index) =&gt; (
+                        &lt;div key={index} className=&quot;space-y-2&quot;&gt;
+                            &lt;div className=&quot;text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent&quot;&gt;
+                                {/* ========== THÊM MỚI: CountUp animation ========== */}
+                                {inView ? (
+                                    &lt;CountUp
+                                        end={parseNumber(stat.number)}
+                                        suffix={getSuffix(stat.number)}
+                                        duration={2.5}
+                                        separator=&quot;,&quot;
+                                    /&gt;
+                                ) : (
+                                    '0'  // Hiển thị 0 trước khi scroll vào view
+                                )}
+                            &lt;/div&gt;
+                            &lt;div className=&quot;text-white/90 font-medium&quot;&gt;
+                                {stat.label}
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    ))}
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
+    );
+}
+</div></code></pre>
+<p><strong><strong>Giải thích</strong>:</strong></p>
+<ul>
+<li><code>'use client'</code>: Chuyển thành Client Component để dùng hooks</li>
+<li><code>useInView</code>: Detect khi section scroll vào viewport</li>
+<li><code>CountUp</code>: Animate số đếm từ 0 đến giá trị cuối</li>
+<li><code>triggerOnce: true</code>: Chỉ animate 1 lần, không lặp lại khi scroll</li>
+</ul>
+<hr>
+<h3 id="66-classessection">6.6 ClassesSection</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/classes_section_1765161984313.png" alt="Classes Section"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Server Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/landing/ClassesSection.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>25,209 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>393 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Section hiển thị các lớp học:</p>
+<ul>
+<li>Grid 3 cards: Beginner, Intermediate, Advanced</li>
+<li>Mỗi card có badge &quot;Phổ biến nhất&quot; (nếu có)</li>
+<li>Chi tiết: thời lượng, lịch học, giáo viên, giá</li>
+<li>Bảng lịch học trong tuần</li>
+</ul>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<hr>
+<p><strong>Q1: Làm sao thêm lớp học mới (ví dụ lớp IELTS)?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/lib/api.ts</code> (dòng 479-546 trong function <code>getFallbackData</code>)</p>
+<p><strong><strong>Code CŨ</strong> (hiện có 3 classes):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 479-546 trong api.ts */}
+classes: [
+    {
+        level: &quot;Beginner&quot;,
+        levelVi: &quot;Cơ bản&quot;,
+        color: &quot;from-green-500 to-emerald-600&quot;,
+        bgColor: &quot;from-green-50 to-emerald-50&quot;,
+        borderColor: &quot;border-green-500&quot;,
+        description: &quot;Dành cho người mới bắt đầu học tiếng Anh&quot;,
+        duration: &quot;3 tháng&quot;,
+        schedule: &quot;Thứ 2, 4, 6 - 19:00-21:00&quot;,
+        students: &quot;8/12 học viên&quot;,
+        teacher: &quot;Ms. Sarah Johnson&quot;,
+        teacherFlag: &quot;🇺🇸&quot;,
+        price: &quot;1.200.000đ&quot;,
+        features: [...],
+        nextClass: &quot;Ngày 15/01/2025&quot;
+    },
+    { /* Intermediate... */ },
+    { /* Advanced... */ }
+],
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm lớp IELTS Preparation):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 479-570 trong api.ts - ĐÃ THÊM LỚP IELTS */}
+classes: [
+    { /* Beginner - giữ nguyên */ },
+    { /* Intermediate - giữ nguyên */ },
+    { /* Advanced - giữ nguyên */ },
+    /* ========== THÊM MỚI: Lớp IELTS Preparation ========== */
+    {
+        level: &quot;IELTS&quot;,
+        levelVi: &quot;Luyện thi IELTS&quot;,
+        color: &quot;from-red-500 to-rose-600&quot;,          // Gradient đỏ cho IELTS
+        bgColor: &quot;from-red-50 to-rose-50&quot;,
+        borderColor: &quot;border-red-500&quot;,
+        description: &quot;Luyện thi IELTS band 6.5+ với phương pháp chuyên sâu&quot;,
+        duration: &quot;4 tháng&quot;,
+        schedule: &quot;Thứ 2, 4, 6 - 18:00-20:00&quot;,
+        students: &quot;4/10 học viên&quot;,
+        teacher: &quot;Mr. James Brown&quot;,
+        teacherFlag: &quot;🇬🇧&quot;,
+        price: &quot;2.500.000đ&quot;,
+        features: [
+            &quot;Luyện 4 kỹ năng: Listening, Reading, Writing, Speaking&quot;,
+            &quot;Mock test hàng tuần với feedback chi tiết&quot;,
+            &quot;Tài liệu Cambridge IELTS chính hãng&quot;,
+            &quot;1-on-1 Speaking practice với giáo viên&quot;,
+            &quot;Cam kết đầu ra band 6.5+&quot;
+        ],
+        nextClass: &quot;Ngày 20/01/2025&quot;,
+        popular: false,
+        courseId: &quot;course-ielts&quot;,
+        classroomId: &quot;class-ielts-01&quot;
+    }
+    /* ========== KẾT THÚC THÊM MỚI ========== */
+],
+</div></code></pre>
+<p><strong><strong>Lưu ý</strong> về màu sắc:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Color Gradient</th>
+<th>Border</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Beginner</td>
+<td><code>from-green-500 to-emerald-600</code></td>
+<td><code>border-green-500</code></td>
+</tr>
+<tr>
+<td>Intermediate</td>
+<td><code>from-blue-500 to-indigo-600</code></td>
+<td><code>border-blue-500</code></td>
+</tr>
+<tr>
+<td>Advanced</td>
+<td><code>from-purple-500 to-pink-600</code></td>
+<td><code>border-purple-500</code></td>
+</tr>
+<tr>
+<td>IELTS</td>
+<td><code>from-red-500 to-rose-600</code></td>
+<td><code>border-red-500</code></td>
+</tr>
+<tr>
+<td>TOEIC</td>
+<td><code>from-orange-500 to-amber-600</code></td>
+<td><code>border-orange-500</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Q2: Làm sao thay đổi bảng lịch học trong tuần?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/lib/api.ts</code> (dòng 548-560)</p>
+<p><strong><strong>Code CŨ</strong>:</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 548-560 trong api.ts */}
+classSchedule: [
+    {
+        time: '18:00-20:00',
+        days: { mon: 'Advanced', wed: 'Advanced', fri: 'Advanced' }
+    },
+    {
+        time: '19:00-21:00',
+        days: { mon: 'Beginner', wed: 'Beginner', fri: 'Beginner' }
+    },
+    {
+        time: '19:30-21:30',
+        days: { tue: 'Intermediate', thu: 'Intermediate', sat: 'Intermediate' }
+    }
+],
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm slot IELTS vào cuối tuần):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 548-575 trong api.ts - ĐÃ THÊM LỊCH IELTS */}
+classSchedule: [
+    {
+        time: '18:00-20:00',
+        days: { mon: 'Advanced', wed: 'Advanced', fri: 'Advanced' }
+    },
+    {
+        time: '19:00-21:00',
+        days: { mon: 'Beginner', wed: 'Beginner', fri: 'Beginner' }
+    },
+    {
+        time: '19:30-21:30',
+        days: { tue: 'Intermediate', thu: 'Intermediate', sat: 'Intermediate' }
+    },
+    /* ========== THÊM MỚI: Lịch IELTS ========== */
+    {
+        time: '09:00-11:00',
+        days: { sat: 'IELTS', sun: 'IELTS' }  // Cuối tuần buổi sáng
+    }
+    /* ========== KẾT THÚC THÊM MỚI ========== */
+],
+</div></code></pre>
+<p><strong><strong>Cấu trúc</strong> object schedule:</strong></p>
+<ul>
+<li><code>time</code>: Khung giờ (ví dụ: '18:00-20:00')</li>
+<li><code>days</code>: Object với keys là viết tắt ngày (mon, tue, wed, thu, fri, sat, sun)</li>
+</ul>
+<hr>
+<p><strong>Q3: Làm sao tích hợp nút &quot;Đăng ký ngay&quot; mở form đăng ký?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/ClassesSection.tsx</code> (dòng ~280)</p>
+<p><strong><strong>Code CŨ</strong> (Link đến trang /enroll):</strong></p>
+<pre class="hljs"><code><div>{/* Trong ClassesSection.tsx - nút đăng ký */}
+&lt;Link 
+    href=&quot;/enroll&quot; 
+    className=&quot;block w-full text-center py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold hover:shadow-lg transition-all duration-300&quot;
+&gt;
+    Đăng ký ngay
+&lt;/Link&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (Link kèm query params để pre-fill form):</strong></p>
+<pre class="hljs"><code><div>{/* Trong ClassesSection.tsx - ĐÃ THÊM QUERY PARAMS */}
+{/* ========== THAY ĐỔI: Truyền courseId và classroomId qua URL ========== */}
+&lt;Link 
+    href={`/enroll?courseId=${classItem.courseId || ''}&amp;classroomId=${classItem.classroomId || ''}&amp;level=${classItem.level}`}
+    className=&quot;block w-full text-center py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold hover:shadow-lg transition-all duration-300&quot;
+&gt;
+    Đăng ký ngay - {classItem.price}
+&lt;/Link&gt;
+</div></code></pre>
+<p><strong><strong>Lưu ý</strong>:</strong></p>
+<ul>
+<li>URL sẽ là <code>/enroll?courseId=course-1&amp;classroomId=class-1&amp;level=Beginner</code></li>
+<li>Trang <code>/enroll</code> sẽ đọc query params và pre-fill dropdown chọn lớp</li>
+<li>Cần thêm <code>courseId</code> và <code>classroomId</code> vào API data</li>
+</ul>
+<hr>
+<h3 id="67-testimonialssection">6.7 TestimonialsSection</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/testimonials_section_1765162006349.png" alt="Testimonials Section"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Server Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/landing/TestimonialsSection.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>6,241 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>125 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Section đánh giá từ học viên:</p>
+<ul>
+<li>Grid 3 cột testimonial cards</li>
+<li>Avatar với initials (ví dụ: &quot;MT&quot; cho &quot;Minh Tuấn&quot;)</li>
+<li>Nội dung đánh giá in nghiêng</li>
+<li>Tên và nghề nghiệp người đánh giá</li>
+</ul>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<hr>
+<p><strong>Q1: Làm sao thêm testimonial (đánh giá) mới?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/lib/api.ts</code> (dòng 459-477 trong function <code>getFallbackData</code>)</p>
+<p><strong><strong>Code CŨ</strong> (hiện có 3 testimonials):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 459-477 trong api.ts */}
+testimonials: [
+    {
+        text: &quot;EngliMaster đã thay đổi hoàn toàn cách tôi học tiếng Anh...&quot;,
+        author: &quot;Anh Minh Tuấn&quot;,
+        role: &quot;Nhân viên kinh doanh&quot;,
+        avatar: &quot;MT&quot;
+    },
+    {
+        text: &quot;Chương trình học rất thú vị và hiệu quả. Tôi đã cải thiện điểm IELTS...&quot;,
+        author: &quot;Chị Thanh Hương&quot;,
+        role: &quot;Sinh viên&quot;,
+        avatar: &quot;TH&quot;
+    },
+    {
+        text: &quot;Phương pháp gamification thật sự thu hút. Con tôi rất thích học...&quot;,
+        author: &quot;Bà Minh Châu&quot;,
+        role: &quot;Phụ huynh&quot;,
+        avatar: &quot;MC&quot;
+    }
+],
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm testimonial từ doanh nghiệp):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 459-490 trong api.ts - ĐÃ THÊM TESTIMONIAL MỚI */}
+testimonials: [
+    {
+        text: &quot;EngliMaster đã thay đổi hoàn toàn cách tôi học tiếng Anh...&quot;,
+        author: &quot;Anh Minh Tuấn&quot;,
+        role: &quot;Nhân viên kinh doanh&quot;,
+        avatar: &quot;MT&quot;
+    },
+    {
+        text: &quot;Chương trình học rất thú vị và hiệu quả. Tôi đã cải thiện điểm IELTS...&quot;,
+        author: &quot;Chị Thanh Hương&quot;,
+        role: &quot;Sinh viên&quot;,
+        avatar: &quot;TH&quot;
+    },
+    {
+        text: &quot;Phương pháp gamification thật sự thu hút. Con tôi rất thích học...&quot;,
+        author: &quot;Bà Minh Châu&quot;,
+        role: &quot;Phụ huynh&quot;,
+        avatar: &quot;MC&quot;
+    },
+    /* ========== THÊM MỚI: Testimonial từ doanh nghiệp ========== */
+    {
+        text: &quot;Đội ngũ 50 nhân viên của chúng tôi đã được đào tạo tiếng Anh giao tiếp tại EngliMaster. Kết quả vượt ngoài mong đợi với 95% đạt chứng chỉ.&quot;,
+        author: &quot;Ông Nguyễn Văn Hùng&quot;,
+        role: &quot;CEO - Công ty ABC&quot;,
+        avatar: &quot;VH&quot;
+    }
+    /* ========== KẾT THÚC THÊM MỚI ========== */
+],
+</div></code></pre>
+<p><strong><strong>Tạo avatar</strong> từ tên:</strong></p>
+<ul>
+<li>&quot;Minh Tuấn&quot; → &quot;MT&quot; (lấy chữ cái đầu của từ đầu và cuối)</li>
+<li>&quot;Thanh Hương&quot; → &quot;TH&quot;</li>
+<li>&quot;Nguyễn Văn Hùng&quot; → &quot;VH&quot; (bỏ họ)</li>
+</ul>
+<hr>
+<p><strong>Q2: Làm sao thêm avatar ảnh thật thay vì initials?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/TestimonialsSection.tsx</code> (dòng 99-108)</p>
+<p><strong><strong>Code CŨ</strong> (chỉ hiển thị initials):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 99-108 trong TestimonialsSection.tsx */}
+{/* ==================== AVATAR ==================== */}
+&lt;div className=&quot;w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold mr-4&quot;&gt;
+    {testimonial.avatar}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (hỗ trợ ảnh thật + fallback initials):</strong></p>
+<p><strong>Bước 1: Cập nhật interface trong <code>TestimonialsSection.tsx</code></strong></p>
+<pre class="hljs"><code><div>{/* Dòng 17-23 trong TestimonialsSection.tsx - THÊM avatarUrl */}
+interface Testimonial {
+    text: string;
+    avatar: string;
+    author: string;
+    role: string;
+    avatarUrl?: string;  // ========== THÊM MỚI ==========
+}
+</div></code></pre>
+<p><strong>Bước 2: Sửa phần render avatar</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 99-118 trong TestimonialsSection.tsx - ĐÃ HỖ TRỢ ẢNH THẬT */}
+{/* ========== THÊM IMPORT ở đầu file ========== */}
+import Image from 'next/image';
+
+{/* ==================== AVATAR ==================== */}
+{/* ========== THAY ĐỔI: Conditional render ảnh hoặc initials ========== */}
+{testimonial.avatarUrl ? (
+    // Nếu có ảnh, hiển thị Next.js Image
+    &lt;Image 
+        src={testimonial.avatarUrl}
+        alt={testimonial.author}
+        width={48}
+        height={48}
+        className=&quot;w-12 h-12 rounded-full object-cover mr-4&quot;
+    /&gt;
+) : (
+    // Fallback: hiển thị initials với gradient
+    &lt;div className=&quot;w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold mr-4&quot;&gt;
+        {testimonial.avatar}
+    &lt;/div&gt;
+)}
+</div></code></pre>
+<p><strong>Bước 3: Thêm avatarUrl vào data (API hoặc fallback)</strong></p>
+<pre class="hljs"><code><div>{
+    text: &quot;EngliMaster đã thay đổi hoàn toàn cách tôi học...&quot;,
+    author: &quot;Anh Minh Tuấn&quot;,
+    role: &quot;Nhân viên kinh doanh&quot;,
+    avatar: &quot;MT&quot;,
+    avatarUrl: &quot;/images/testimonials/minh-tuan.jpg&quot;  // ========== THÊM MỚI ==========
+}
+</div></code></pre>
+<hr>
+<p><strong>Q3: Làm sao thêm star rating (đánh giá sao) cho mỗi testimonial?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/TestimonialsSection.tsx</code> (dòng 83-93)</p>
+<p><strong><strong>Code CŨ</strong> (không có star rating):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 83-93 trong TestimonialsSection.tsx */}
+&lt;div key={index} className=&quot;bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300&quot;&gt;
+    {/* ==================== TESTIMONIAL TEXT ==================== */}
+    &lt;div className=&quot;text-gray-600 italic text-lg mb-6 leading-relaxed&quot;&gt;
+        {testimonial.text}
+    &lt;/div&gt;
+    
+    {/* Author info... */}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm star rating 5 sao):</strong></p>
+<p><strong>Bước 1: Import Star icon và cập nhật interface</strong></p>
+<pre class="hljs"><code><div>{/* ========== THÊM IMPORT ========== */}
+import { Star } from 'lucide-react';
+
+interface Testimonial {
+    text: string;
+    avatar: string;
+    author: string;
+    role: string;
+    rating?: number;  // ========== THÊM MỚI: 1-5 sao ==========
+}
+</div></code></pre>
+<p><strong>Bước 2: Render stars trước testimonial text</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 83-105 trong TestimonialsSection.tsx - ĐÃ THÊM STAR RATING */}
+&lt;div key={index} className=&quot;bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300&quot;&gt;
+    
+    {/* ========== THÊM MỚI: Star Rating ========== */}
+    {testimonial.rating &amp;&amp; (
+        &lt;div className=&quot;flex gap-1 mb-4&quot;&gt;
+            {[...Array(5)].map((_, i) =&gt; (
+                &lt;Star 
+                    key={i} 
+                    className={`w-5 h-5 ${
+                        i &lt; testimonial.rating 
+                            ? 'text-yellow-400 fill-yellow-400'  // Sao đầy
+                            : 'text-gray-300'                    // Sao rỗng
+                    }`}
+                /&gt;
+            ))}
+        &lt;/div&gt;
+    )}
+    {/* ========== KẾT THÚC THÊM MỚI ========== */}
+    
+    {/* ==================== TESTIMONIAL TEXT ==================== */}
+    &lt;div className=&quot;text-gray-600 italic text-lg mb-6 leading-relaxed&quot;&gt;
+        &quot;{testimonial.text}&quot;
+    &lt;/div&gt;
+    
+    {/* Author info... */}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Thêm rating</strong> vào data:</strong></p>
+<pre class="hljs"><code><div>{
+    text: &quot;EngliMaster đã thay đổi hoàn toàn cách tôi học...&quot;,
+    author: &quot;Anh Minh Tuấn&quot;,
+    role: &quot;Nhân viên kinh doanh&quot;,
+    avatar: &quot;MT&quot;,
+    rating: 5  // ========== THÊM MỚI: 5 sao ==========
+}
+</div></code></pre>
+<hr>
+<h3 id="68-contactsection">6.8 ContactSection</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/contact_section_1765162015177.png" alt="Contact Section"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Server Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/landing/ContactSection.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>16,541 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>288 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Section liên hệ bao gồm:</p>
+<ul>
+<li>Form liên hệ (import ContactForm - Client Component)</li>
+<li>Thông tin liên hệ: hotline, email, địa chỉ</li>
+<li>Ưu đãi đặc biệt</li>
+<li>FAQ accordion</li>
+</ul>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<hr>
+<p><strong>Q1: Làm sao thêm thông tin liên hệ mới (ví dụ Zalo)?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/ContactSection.tsx</code> (dòng 106-186)</p>
+<p><strong><strong>Code CŨ</strong> (hiện có 3 cards: Hotline, Email, Address):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 106-186 trong ContactSection.tsx */}
+&lt;div className=&quot;space-y-8&quot;&gt;
+
+    {/* ==================== HOTLINE CARD ==================== */}
+    &lt;div className=&quot;bg-white rounded-3xl p-8 shadow-xl border-l-4 border-indigo-500&quot;&gt;
+        &lt;div className=&quot;flex items-center mb-4&quot;&gt;
+            &lt;div className=&quot;w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-xl mr-4&quot;&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 className=&quot;font-bold text-gray-900 text-lg&quot;&gt;Hotline tư vấn&lt;/h4&gt;
+                &lt;p className=&quot;text-gray-600&quot;&gt;Liên hệ ngay để được tư vấn miễn phí&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;space-y-2 ml-16&quot;&gt;
+            &lt;p className=&quot;text-2xl font-bold text-indigo-600&quot;&gt;1900-1234&lt;/p&gt;
+            &lt;p className=&quot;text-gray-600&quot;&gt;Miễn phí từ 8:00 - 22:00 hàng ngày&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    {/* EMAIL CARD và ADDRESS CARD tương tự... */}
+
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm Zalo card sau Address card):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 106-210 trong ContactSection.tsx - ĐÃ THÊM ZALO CARD */}
+&lt;div className=&quot;space-y-8&quot;&gt;
+
+    {/* HOTLINE CARD - giữ nguyên... */}
+    {/* EMAIL CARD - giữ nguyên... */}
+    {/* ADDRESS CARD - giữ nguyên... */}
+
+    {/* ========== THÊM MỚI: ZALO CARD ========== */}
+    &lt;div className=&quot;bg-white rounded-3xl p-8 shadow-xl border-l-4 border-blue-500&quot;&gt;
+        &lt;div className=&quot;flex items-center mb-4&quot;&gt;
+            {/* Icon Zalo - gradient xanh dương */}
+            &lt;div className=&quot;w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-xl mr-4&quot;&gt;
+                {/* Có thể dùng icon Z hoặc import Zalo icon */}
+                &lt;span className=&quot;font-bold&quot;&gt;Z&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h4 className=&quot;font-bold text-gray-900 text-lg&quot;&gt;Zalo OA&lt;/h4&gt;
+                &lt;p className=&quot;text-gray-600&quot;&gt;Nhắn tin trực tiếp qua Zalo&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;space-y-2 ml-16&quot;&gt;
+            {/* Link đến Zalo OA */}
+            &lt;a 
+                href=&quot;https://zalo.me/your-oa-id&quot; 
+                target=&quot;_blank&quot; 
+                rel=&quot;noopener noreferrer&quot;
+                className=&quot;text-lg font-semibold text-blue-600 hover:underline&quot;
+            &gt;
+                @EngliMaster
+            &lt;/a&gt;
+            &lt;p className=&quot;text-gray-600&quot;&gt;Phản hồi nhanh trong 5 phút&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    {/* ========== KẾT THÚC THÊM MỚI ========== */}
+
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Giải thích</strong> classes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>border-l-4 border-blue-500</code></td>
+<td>Viền trái 4px màu xanh dương (brand color Zalo)</td>
+</tr>
+<tr>
+<td><code>bg-gradient-to-r from-blue-500 to-blue-600</code></td>
+<td>Gradient xanh dương cho icon circle</td>
+</tr>
+<tr>
+<td><code>target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;</code></td>
+<td>Mở link trong tab mới an toàn</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Q2: Làm sao thêm câu hỏi FAQ mới?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/ContactSection.tsx</code> (dòng 31-48)</p>
+<p><strong><strong>Code CŨ</strong> (hiện có 4 FAQs):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 31-48 trong ContactSection.tsx */}
+const faqs = [
+    {
+        question: &quot;Tôi có thể học thử miễn phí không?&quot;,
+        answer: &quot;Có! Chúng tôi cung cấp khóa học thử miễn phí 7 ngày...&quot;
+    },
+    {
+        question: &quot;Thời gian học như thế nào?&quot;,
+        answer: &quot;Bạn có thể học mọi lúc mọi nơi với ứng dụng của chúng tôi...&quot;
+    },
+    {
+        question: &quot;Có giáo viên bản ngữ không?&quot;,
+        answer: &quot;Có! Đội ngũ giáo viên bản ngữ từ Mỹ, Anh, Australia...&quot;
+    },
+    {
+        question: &quot;Học phí như thế nào?&quot;,
+        answer: &quot;Chúng tôi có nhiều gói học phù hợp với ngân sách của bạn...&quot;
+    }
+];
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm 2 FAQs về chứng chỉ và hoàn tiền):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 31-65 trong ContactSection.tsx - ĐÃ THÊM FAQs MỚI */}
+const faqs = [
+    {
+        question: &quot;Tôi có thể học thử miễn phí không?&quot;,
+        answer: &quot;Có! Chúng tôi cung cấp khóa học thử miễn phí 7 ngày...&quot;
+    },
+    {
+        question: &quot;Thời gian học như thế nào?&quot;,
+        answer: &quot;Bạn có thể học mọi lúc mọi nơi với ứng dụng của chúng tôi...&quot;
+    },
+    {
+        question: &quot;Có giáo viên bản ngữ không?&quot;,
+        answer: &quot;Có! Đội ngũ giáo viên bản ngữ từ Mỹ, Anh, Australia...&quot;
+    },
+    {
+        question: &quot;Học phí như thế nào?&quot;,
+        answer: &quot;Chúng tôi có nhiều gói học phù hợp với ngân sách của bạn...&quot;
+    },
+    /* ========== THÊM MỚI: 2 FAQs ========== */
+    {
+        question: &quot;Sau khi hoàn thành khóa học có được cấp chứng chỉ không?&quot;,
+        answer: &quot;Có! Sau khi hoàn thành khóa học và đạt điểm tốt nghiệp, bạn sẽ được cấp chứng chỉ hoàn thành có giá trị từ EngliMaster. Chứng chỉ này có thể được sử dụng trong CV và hồ sơ xin việc.&quot;
+    },
+    {
+        question: &quot;Nếu không hài lòng thì có được hoàn tiền không?&quot;,
+        answer: &quot;Chúng tôi cam kết hoàn tiền 100% trong vòng 7 ngày đầu tiên nếu bạn không hài lòng với chất lượng khóa học. Không cần lý do, thủ tục đơn giản.&quot;
+    }
+    /* ========== KẾT THÚC THÊM MỚI ========== */
+];
+</div></code></pre>
+<p><strong><strong>Lưu ý</strong>:</strong></p>
+<ul>
+<li>Grid hiển thị 2 cột (<code>md:grid-cols-2</code>) nên thêm số chẵn FAQs để đẹp hơn</li>
+<li>Câu trả lời nên ngắn gọn, dễ đọc, tối đa 3-4 dòng</li>
+</ul>
+<hr>
+<p><strong>Q3: Làm sao tích hợp Google Maps?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/ContactSection.tsx</code> (dòng 168-185 - Address Card)</p>
+<p><strong><strong>Code CŨ</strong> (chỉ hiển thị text địa chỉ):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 168-185 trong ContactSection.tsx */}
+&lt;div className=&quot;bg-white rounded-3xl p-8 shadow-xl border-l-4 border-green-500&quot;&gt;
+    &lt;div className=&quot;flex items-center mb-4&quot;&gt;
+        &lt;div className=&quot;w-12 h-12 bg-gradient-to-r from-green-600 to-teal-600 rounded-full flex items-center justify-center text-white text-xl mr-4&quot;&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;h4 className=&quot;font-bold text-gray-900 text-lg&quot;&gt;Địa chỉ văn phòng&lt;/h4&gt;
+            &lt;p className=&quot;text-gray-600&quot;&gt;Ghé thăm chúng tôi&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div className=&quot;space-y-2 ml-16&quot;&gt;
+        &lt;p className=&quot;font-semibold text-gray-900&quot;&gt;Tầng 15, Tòa nhà ABC&lt;/p&gt;
+        &lt;p className=&quot;text-gray-600&quot;&gt;123 Đường Nguyễn Huệ, Quận 1&lt;/p&gt;
+        &lt;p className=&quot;text-gray-600&quot;&gt;TP. Hồ Chí Minh, Việt Nam&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm Google Maps embed):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 168-215 trong ContactSection.tsx - ĐÃ THÊM GOOGLE MAPS */}
+&lt;div className=&quot;bg-white rounded-3xl p-8 shadow-xl border-l-4 border-green-500&quot;&gt;
+    &lt;div className=&quot;flex items-center mb-4&quot;&gt;
+        &lt;div className=&quot;w-12 h-12 bg-gradient-to-r from-green-600 to-teal-600 rounded-full flex items-center justify-center text-white text-xl mr-4&quot;&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;h4 className=&quot;font-bold text-gray-900 text-lg&quot;&gt;Địa chỉ văn phòng&lt;/h4&gt;
+            &lt;p className=&quot;text-gray-600&quot;&gt;Ghé thăm chúng tôi&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div className=&quot;space-y-2 ml-16&quot;&gt;
+        &lt;p className=&quot;font-semibold text-gray-900&quot;&gt;Tầng 15, Tòa nhà ABC&lt;/p&gt;
+        &lt;p className=&quot;text-gray-600&quot;&gt;123 Đường Nguyễn Huệ, Quận 1&lt;/p&gt;
+        &lt;p className=&quot;text-gray-600&quot;&gt;TP. Hồ Chí Minh, Việt Nam&lt;/p&gt;
+    &lt;/div&gt;
+    
+    {/* ========== THÊM MỚI: Google Maps Embed ========== */}
+    &lt;div className=&quot;mt-6&quot;&gt;
+        {/* rounded-xl: bo góc 12px */}
+        {/* overflow-hidden: ẩn phần thừa */}
+        {/* shadow-md: bóng nhẹ */}
+        &lt;iframe 
+            src=&quot;https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4419!2d106.7001!3d10.7768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x...!2sYourLocation!5e0!3m2!1svi!2s!4v...&quot;
+            width=&quot;100%&quot; 
+            height=&quot;200&quot; 
+            style={{ border: 0 }}
+            allowFullScreen
+            loading=&quot;lazy&quot;
+            referrerPolicy=&quot;no-referrer-when-downgrade&quot;
+            className=&quot;rounded-xl overflow-hidden shadow-md&quot;
+        /&gt;
+    &lt;/div&gt;
+    {/* ========== KẾT THÚC THÊM MỚI ========== */}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Hướng dẫn</strong> lấy embed URL:</strong></p>
+<ol>
+<li>Mở <strong>Google Maps</strong> → tìm địa chỉ</li>
+<li>Click <strong>Share</strong> → chọn <strong>Embed a map</strong></li>
+<li>Copy link trong <code>src=&quot;...&quot;</code></li>
+<li>Thay <code>pb=!1m18...</code> bằng link của bạn</li>
+</ol>
+<hr>
+<h3 id="69-ctasection">6.9 CTASection</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/cta_section_1765162023649.png" alt="CTA Section"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Server Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/landing/CTASection.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>3,358 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>64 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Section kêu gọi hành động cuối trang:</p>
+<ul>
+<li>Nền gradient tím</li>
+<li>Tiêu đề lớn + mô tả ngắn</li>
+<li>Nút CTA nổi bật màu vàng-cam</li>
+</ul>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<hr>
+<p><strong>Q1: Làm sao thay đổi nội dung CTA (tiêu đề, mô tả, nút)?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/CTASection.tsx</code> (dòng 29-58)</p>
+<p><strong><strong>Code CŨ</strong>:</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 29-58 trong CTASection.tsx */}
+{/* ==================== CTA HEADING ==================== */}
+&lt;h2 className=&quot;text-4xl lg:text-5xl font-bold mb-6&quot;&gt;
+    Sẵn sàng chinh phục tiếng Anh?
+&lt;/h2&gt;
+
+{/* ==================== CTA DESCRIPTION ==================== */}
+&lt;p className=&quot;text-xl text-white/90 mb-10 leading-relaxed&quot;&gt;
+    Tham gia cùng hàng nghìn học viên đã thành công với EngliMaster
+&lt;/p&gt;
+
+{/* ==================== CTA BUTTON ==================== */}
+&lt;button
+    className=&quot;bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl hover:-translate-y-2 transition-all duration-300&quot;
+    aria-label=&quot;Đăng ký học thử miễn phí&quot;
+&gt;
+    Đăng ký học thử miễn phí
+&lt;/button&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thay đổi nội dung + thêm sub-heading):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 29-65 trong CTASection.tsx - ĐÃ THAY ĐỔI NỘI DUNG */}
+{/* ==================== CTA HEADING ==================== */}
+&lt;h2 className=&quot;text-4xl lg:text-5xl font-bold mb-6&quot;&gt;
+    {/* ========== THAY ĐỔI NỘI DUNG ========== */}
+    Bắt đầu hành trình tiếng Anh ngay hôm nay!
+&lt;/h2&gt;
+
+{/* ========== THÊM MỚI: Sub-heading nổi bật ========== */}
+&lt;div className=&quot;text-2xl font-bold text-yellow-400 mb-4&quot;&gt;
+    🎁 Ưu đãi đặc biệt: Giảm 30% học phí
+&lt;/div&gt;
+{/* ========== KẾT THÚC THÊM MỚI ========== */}
+
+{/* ==================== CTA DESCRIPTION ==================== */}
+&lt;p className=&quot;text-xl text-white/90 mb-10 leading-relaxed&quot;&gt;
+    {/* ========== THAY ĐỔI NỘI DUNG ========== */}
+    Đăng ký ngay để nhận khóa học thử miễn phí 7 ngày + Tài liệu độc quyền
+&lt;/p&gt;
+
+{/* ==================== CTA BUTTON ==================== */}
+&lt;button
+    className=&quot;bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl hover:-translate-y-2 transition-all duration-300&quot;
+    aria-label=&quot;Nhận ưu đãi ngay&quot;
+&gt;
+    {/* ========== THAY ĐỔI NỘI DUNG ========== */}
+    Nhận ưu đãi ngay 🚀
+&lt;/button&gt;
+</div></code></pre>
+<hr>
+<p><strong>Q2: Làm sao thêm countdown timer (đếm ngược thời gian)?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/CTASection.tsx</code></p>
+<p><strong><strong>Code CŨ</strong> (Server Component, không có state):</strong></p>
+<pre class="hljs"><code><div>{/* CTASection.tsx - Server Component */}
+// Không có 'use client'
+
+export default function CTASection() {
+    return (
+        &lt;section className=&quot;py-20 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-700 text-white text-center&quot;&gt;
+            {/* Static content... */}
+        &lt;/section&gt;
+    );
+}
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (Client Component với countdown timer):</strong></p>
+<pre class="hljs"><code><div>{/* CTASection.tsx - ĐÃ CHUYỂN THÀNH CLIENT COMPONENT */}
+'use client';  // ========== THÊM MỚI ==========
+
+import { useState, useEffect } from 'react';
+
+export default function CTASection() {
+    // ========== THÊM MỚI: State cho countdown ==========
+    const [timeLeft, setTimeLeft] = useState({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+    });
+
+    useEffect(() =&gt; {
+        // Set deadline (ví dụ: 7 ngày từ hôm nay)
+        const deadline = new Date();
+        deadline.setDate(deadline.getDate() + 7);
+
+        const timer = setInterval(() =&gt; {
+            const now = new Date().getTime();
+            const distance = deadline.getTime() - now;
+
+            if (distance &lt; 0) {
+                clearInterval(timer);
+                return;
+            }
+
+            setTimeLeft({
+                days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                seconds: Math.floor((distance % (1000 * 60)) / 1000)
+            });
+        }, 1000);
+
+        return () =&gt; clearInterval(timer);
+    }, []);
+    // ========== KẾT THÚC THÊM MỚI ==========
+
+    return (
+        &lt;section className=&quot;py-20 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-700 text-white text-center&quot;&gt;
+            &lt;div className=&quot;max-w-4xl mx-auto px-4 sm:px-6 lg:px-8&quot;&gt;
+                &lt;h2 className=&quot;text-4xl lg:text-5xl font-bold mb-6&quot;&gt;
+                    Ưu đãi kết thúc sau:
+                &lt;/h2&gt;
+
+                {/* ========== THÊM MỚI: Countdown Display ========== */}
+                &lt;div className=&quot;flex justify-center gap-4 mb-8&quot;&gt;
+                    {[
+                        { value: timeLeft.days, label: 'Ngày' },
+                        { value: timeLeft.hours, label: 'Giờ' },
+                        { value: timeLeft.minutes, label: 'Phút' },
+                        { value: timeLeft.seconds, label: 'Giây' }
+                    ].map((item, index) =&gt; (
+                        &lt;div key={index} className=&quot;bg-white/10 backdrop-blur-lg rounded-xl p-4 min-w-[80px]&quot;&gt;
+                            &lt;div className=&quot;text-3xl font-bold text-yellow-400&quot;&gt;
+                                {item.value.toString().padStart(2, '0')}
+                            &lt;/div&gt;
+                            &lt;div className=&quot;text-sm text-white/70&quot;&gt;{item.label}&lt;/div&gt;
+                        &lt;/div&gt;
+                    ))}
+                &lt;/div&gt;
+                {/* ========== KẾT THÚC THÊM MỚI ========== */}
+
+                &lt;button
+                    className=&quot;bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl hover:-translate-y-2 transition-all duration-300&quot;
+                &gt;
+                    Đăng ký ngay
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
+    );
+}
+</div></code></pre>
+<p><strong><strong>Giải thích</strong>:</strong></p>
+<ul>
+<li><code>'use client'</code>: Bắt buộc để dùng hooks (<code>useState</code>, <code>useEffect</code>)</li>
+<li><code>setInterval</code>: Cập nhật countdown mỗi giây</li>
+<li><code>padStart(2, '0')</code>: Format số thành 2 chữ số (ví dụ: &quot;05&quot; thay vì &quot;5&quot;)</li>
+</ul>
+<hr>
+<p><strong>Q3: Làm sao link nút CTA đến trang đăng ký hoặc form?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/CTASection.tsx</code> (dòng 54-59)</p>
+<p><strong><strong>Code CŨ</strong> (button không có link):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 54-59 trong CTASection.tsx */}
+&lt;button
+    className=&quot;bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl hover:-translate-y-2 transition-all duration-300&quot;
+    aria-label=&quot;Đăng ký học thử miễn phí&quot;
+&gt;
+    Đăng ký học thử miễn phí
+&lt;/button&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (dùng Next.js Link đến trang /enroll):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 54-65 trong CTASection.tsx - ĐÃ THÊM LINK */}
+{/* ========== THÊM IMPORT ở đầu file ========== */}
+import Link from 'next/link';
+
+{/* ========== THAY ĐỔI: Button thành Link ========== */}
+&lt;Link 
+    href=&quot;/enroll&quot;
+    className=&quot;inline-block bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl hover:-translate-y-2 transition-all duration-300&quot;
+&gt;
+    Đăng ký học thử miễn phí
+&lt;/Link&gt;
+
+{/* Hoặc link đến anchor #contact */}
+&lt;a 
+    href=&quot;#contact&quot;
+    className=&quot;inline-block bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl hover:-translate-y-2 transition-all duration-300&quot;
+&gt;
+    Liên hệ tư vấn
+&lt;/a&gt;
+</div></code></pre>
+<p><strong><strong>Lưu ý</strong>:</strong></p>
+<ul>
+<li>Thêm <code>inline-block</code> khi dùng <code>&lt;Link&gt;</code> hoặc <code>&lt;a&gt;</code> để giữ style giống button</li>
+<li><code>href=&quot;/enroll&quot;</code>: Link đến trang đăng ký</li>
+<li><code>href=&quot;#contact&quot;</code>: Scroll xuống section Contact Form</li>
+</ul>
+<hr>
+<h3 id="610-footer">6.10 Footer</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/footer_1765162033534.png" alt="Footer"></p>
+<h4 id="th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n">Thông Tin Cơ Bản</h4>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Server Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/landing/Footer.tsx</code></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>5,711 bytes</td>
+</tr>
+<tr>
+<td><strong>Dòng code</strong></td>
+<td>116 dòng</td>
+</tr>
+</tbody>
+</table>
+<h4 id="m%C3%B4-t%E1%BA%A3">Mô Tả</h4>
+<p>Chân trang với:</p>
+<ul>
+<li>Logo + mô tả brand</li>
+<li>Grid 4 cột footer sections từ API</li>
+<li>Copyright</li>
+</ul>
+<h4 id="c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-faq">Câu Hỏi Thường Gặp (FAQ)</h4>
+<hr>
+<p><strong>Q1: Làm sao thêm section mới vào footer?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/lib/api.ts</code> (dòng 588-600 trong function <code>getFallbackData</code>)</p>
+<p><strong><strong>Code CŨ</strong> (hiện có 3 sections):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 588-600 trong api.ts */}
+footerSections: [
+    {
+        title: &quot;Khóa học&quot;,
+        links: [&quot;Tiếng Anh cơ bản&quot;, &quot;Tiếng Anh giao tiếp&quot;, &quot;IELTS/TOEIC&quot;, &quot;Tiếng Anh thương mại&quot;]
+    },
+    {
+        title: &quot;Hỗ trợ&quot;,
+        links: [&quot;Trung tâm trợ giúp&quot;, &quot;Liên hệ&quot;, &quot;FAQ&quot;, &quot;Chính sách bảo mật&quot;]
+    },
+    {
+        title: &quot;Liên hệ&quot;,
+        links: [&quot;📞 1900-1234&quot;, &quot;✉️ support@englimaster.com&quot;, &quot;📍 Hà Nội, Việt Nam&quot;]
+    }
+]
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm section &quot;Về chúng tôi&quot;):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 588-615 trong api.ts - ĐÃ THÊM SECTION MỚI */}
+footerSections: [
+    {
+        title: &quot;Khóa học&quot;,
+        links: [&quot;Tiếng Anh cơ bản&quot;, &quot;Tiếng Anh giao tiếp&quot;, &quot;IELTS/TOEIC&quot;, &quot;Tiếng Anh thương mại&quot;]
+    },
+    /* ========== THÊM MỚI: Section Về chúng tôi ========== */
+    {
+        title: &quot;Về chúng tôi&quot;,
+        links: [&quot;Giới thiệu&quot;, &quot;Đội ngũ giáo viên&quot;, &quot;Blog&quot;, &quot;Tuyển dụng&quot;, &quot;Đối tác&quot;]
+    },
+    /* ========== KẾT THÚC THÊM MỚI ========== */
+    {
+        title: &quot;Hỗ trợ&quot;,
+        links: [&quot;Trung tâm trợ giúp&quot;, &quot;Liên hệ&quot;, &quot;FAQ&quot;, &quot;Chính sách bảo mật&quot;]
+    },
+    {
+        title: &quot;Liên hệ&quot;,
+        links: [&quot;📞 1900-1234&quot;, &quot;✉️ support@englimaster.com&quot;, &quot;📍 Hà Nội, Việt Nam&quot;]
+    }
+]
+</div></code></pre>
+<p><strong><strong>Lưu ý</strong>:</strong></p>
+<ul>
+<li>Grid hiển thị 4 cột (<code>md:grid-cols-4</code>): 1 cột brand + 3 cột sections</li>
+<li>Thêm 1 section = 4 cột sections → cần đổi grid thành <code>md:grid-cols-5</code></li>
+</ul>
+<hr>
+<p><strong>Q2: Làm sao thêm social media icons (Facebook, Instagram, YouTube)?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/Footer.tsx</code> (dòng 50-68 - Brand Column)</p>
+<p><strong><strong>Code CŨ</strong> (chỉ có logo + description):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 50-68 trong Footer.tsx */}
+&lt;div className=&quot;space-y-4&quot;&gt;
+    {/* LOGO */}
+    &lt;div className=&quot;text-2xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent&quot;&gt;
+        EngliMaster
+    &lt;/div&gt;
+
+    {/* BRAND DESCRIPTION */}
+    &lt;p className=&quot;text-gray-400 leading-relaxed&quot;&gt;
+        Nền tảng học tiếng Anh trực tuyến hàng đầu Việt Nam, giúp bạn thành thạo tiếng Anh một cách hiệu quả và thú vị.
+    &lt;/p&gt;
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm social icons):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 50-85 trong Footer.tsx - ĐÃ THÊM SOCIAL ICONS */}
+{/* ========== THÊM IMPORT ở đầu file ========== */}
+import { Facebook, Instagram, Youtube, Twitter } from 'lucide-react';
+
+&lt;div className=&quot;space-y-4&quot;&gt;
+    {/* LOGO */}
+    &lt;div className=&quot;text-2xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent&quot;&gt;
+        EngliMaster
+    &lt;/div&gt;
+
+    {/* BRAND DESCRIPTION */}
+    &lt;p className=&quot;text-gray-400 leading-relaxed&quot;&gt;
+        Nền tảng học tiếng Anh trực tuyến hàng đầu Việt Nam, giúp bạn thành thạo tiếng Anh một cách hiệu quả và thú vị.
+    &lt;/p&gt;
+
+    {/* ========== THÊM MỚI: Social Media Icons ========== */}
+    &lt;div className=&quot;flex space-x-4 pt-4&quot;&gt;
+        &lt;a 
+            href=&quot;https://facebook.com/englimaster&quot; 
+            target=&quot;_blank&quot; 
+            rel=&quot;noopener noreferrer&quot;
+            className=&quot;text-gray-400 hover:text-blue-500 transition-colors&quot;
+            aria-label=&quot;Facebook&quot;
+        &gt;
+            &lt;Facebook className=&quot;w-6 h-6&quot; /&gt;
+        &lt;/a&gt;
+        &lt;a 
+            href=&quot;https://instagram.com/englimaster&quot; 
+            target=&quot;_blank&quot; 
+            rel=&quot;noopener noreferrer&quot;
+            className=&quot;text-gray-400 hover:text-pink-500 transition-colors&quot;
+            aria-label=&quot;Instagram&quot;
+        &gt;
+            &lt;Instagram className=&quot;w-6 h-6&quot; /&gt;
+        &lt;/a&gt;
+        &lt;a 
+            href=&quot;https://youtube.com/englimaster&quot; 
+            target=&quot;_blank&quot; 
+            rel=&quot;noopener noreferrer&quot;
+            className=&quot;text-gray-400 hover:text-red-500 transition-colors&quot;
+            aria-label=&quot;YouTube&quot;
+        &gt;
+            &lt;Youtube className=&quot;w-6 h-6&quot; /&gt;
+        &lt;/a&gt;
+        &lt;a 
+            href=&quot;https://twitter.com/englimaster&quot; 
+            target=&quot;_blank&quot; 
+            rel=&quot;noopener noreferrer&quot;
+            className=&quot;text-gray-400 hover:text-sky-400 transition-colors&quot;
+            aria-label=&quot;Twitter&quot;
+        &gt;
+            &lt;Twitter className=&quot;w-6 h-6&quot; /&gt;
+        &lt;/a&gt;
+    &lt;/div&gt;
+    {/* ========== KẾT THÚC THÊM MỚI ========== */}
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Giải thích</strong> classes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>flex space-x-4</code></td>
+<td>Icons nằm ngang, cách nhau 16px</td>
+</tr>
+<tr>
+<td><code>hover:text-blue-500</code></td>
+<td>Đổi màu xanh dương (Facebook) khi hover</td>
+</tr>
+<tr>
+<td><code>hover:text-pink-500</code></td>
+<td>Đổi màu hồng (Instagram) khi hover</td>
+</tr>
+<tr>
+<td><code>hover:text-red-500</code></td>
+<td>Đổi màu đỏ (YouTube) khi hover</td>
+</tr>
+<tr>
+<td><code>transition-colors</code></td>
+<td>Animation mượt cho đổi màu</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Q3: Làm sao thêm newsletter subscription form?</strong></p>
+<p><strong><strong>Vị trí file:</strong></strong> <code>src/components/landing/Footer.tsx</code> (dòng 100 - trước copyright)</p>
+<p><strong><strong>Code CŨ</strong> (chỉ có footer sections grid + copyright):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 100-111 trong Footer.tsx */}
+{/* FOOTER SECTIONS GRID... */}
+
+{/* ==================== COPYRIGHT SECTION ==================== */}
+&lt;div className=&quot;border-t border-gray-800 pt-8 text-center text-gray-400&quot;&gt;
+    &lt;p&gt;&amp;copy; 2024 EngliMaster. Tất cả quyền được bảo lưu.&lt;/p&gt;
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Code MỚI</strong> (thêm newsletter form trước copyright):</strong></p>
+<pre class="hljs"><code><div>{/* Dòng 100-140 trong Footer.tsx - ĐÃ THÊM NEWSLETTER FORM */}
+{/* FOOTER SECTIONS GRID... */}
+
+{/* ========== THÊM MỚI: Newsletter Section ========== */}
+&lt;div className=&quot;border-t border-gray-800 pt-8 mb-8&quot;&gt;
+    &lt;div className=&quot;max-w-md mx-auto text-center&quot;&gt;
+        {/* Title */}
+        &lt;h3 className=&quot;text-lg font-bold text-yellow-400 mb-4&quot;&gt;
+            📬 Đăng ký nhận tin khuyến mãi
+        &lt;/h3&gt;
+        
+        {/* Description */}
+        &lt;p className=&quot;text-gray-400 mb-4 text-sm&quot;&gt;
+            Nhận thông tin ưu đãi độc quyền và tips học tiếng Anh hàng tuần
+        &lt;/p&gt;
+        
+        {/* Form */}
+        &lt;form className=&quot;flex gap-2&quot;&gt;
+            {/* Email Input */}
+            &lt;input 
+                type=&quot;email&quot; 
+                placeholder=&quot;Email của bạn&quot; 
+                required
+                className=&quot;flex-1 px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-yellow-400 focus:outline-none transition-colors&quot;
+            /&gt;
+            
+            {/* Submit Button */}
+            &lt;button 
+                type=&quot;submit&quot;
+                className=&quot;px-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 rounded-lg font-bold hover:shadow-lg transition-all&quot;
+            &gt;
+                Đăng ký
+            &lt;/button&gt;
+        &lt;/form&gt;
+        
+        {/* Privacy note */}
+        &lt;p className=&quot;text-gray-500 text-xs mt-2&quot;&gt;
+            Chúng tôi cam kết bảo mật thông tin của bạn
+        &lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+{/* ========== KẾT THÚC THÊM MỚI ========== */}
+
+{/* ==================== COPYRIGHT SECTION ==================== */}
+&lt;div className=&quot;border-t border-gray-800 pt-8 text-center text-gray-400&quot;&gt;
+    &lt;p&gt;&amp;copy; 2024 EngliMaster. Tất cả quyền được bảo lưu.&lt;/p&gt;
+&lt;/div&gt;
+</div></code></pre>
+<p><strong><strong>Lưu ý</strong>:</strong></p>
+<ul>
+<li>Form hiện tại chỉ là UI, cần thêm xử lý submit (chuyển thành Client Component)</li>
+<li>Để xử lý form: thêm <code>'use client'</code>, useState cho email, và hàm submit API</li>
+</ul>
+<hr>
+<h2 id="7-shared-components">7. Shared Components</h2>
+<h3 id="71-aiconsultantwidget">7.1 AIConsultantWidget</h3>
+<h4 id="screenshot">Screenshot</h4>
+<p><img src="file:///Users/hiteksofftware/Desktop/KLTN/landing-page/docs/images/ai_widget_open_1765162128093.png" alt="AI Widget"></p>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Client Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/AIConsultantWidget.tsx</code></td>
+</tr>
+</tbody>
+</table>
+<p>Widget chat AI floating ở góc màn hình, sử dụng SSE streaming.</p>
+<h3 id="72-contactform">7.2 ContactForm</h3>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Client Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/ContactForm.tsx</code></td>
+</tr>
+</tbody>
+</table>
+<p>Form liên hệ với validation và API submission.</p>
+<h3 id="73-paymentmodal">7.3 PaymentModal</h3>
+<table>
+<thead>
+<tr>
+<th>Thuộc Tính</th>
+<th>Giá Trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loại</strong></td>
+<td>Client Component</td>
+</tr>
+<tr>
+<td><strong>Đường dẫn</strong></td>
+<td><code>src/components/PaymentModal.tsx</code></td>
+</tr>
+</tbody>
+</table>
+<p>Modal thanh toán multi-step với VNPay integration.</p>
+<hr>
+<h2 id="8-libapi">8. Lib/API</h2>
+<h3 id="apits">api.ts</h3>
+<p>File chứa:</p>
+<ul>
+<li><strong>Interfaces:</strong> LandingPageData, Feature, Stat, Class, Teacher, etc.</li>
+<li><strong>API Functions:</strong> getLandingPageData(), submitContactForm(), getCourses(), etc.</li>
+<li><strong>Fallback Data:</strong> Dữ liệu mặc định khi API fail</li>
+</ul>
+<h3 id="paymentts">payment.ts</h3>
+<p>Utilities cho payment processing.</p>
+<hr>
+<h2 id="9-b%E1%BA%A3ng-tailwind-classes-ph%E1%BB%95-bi%E1%BA%BFn">9. Bảng Tailwind Classes Phổ Biến</h2>
+<h3 id="layout">Layout</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>CSS</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>flex</code></td>
+<td><code>display: flex</code></td>
+<td>Flexbox container</td>
+</tr>
+<tr>
+<td><code>grid</code></td>
+<td><code>display: grid</code></td>
+<td>Grid container</td>
+</tr>
+<tr>
+<td><code>hidden</code></td>
+<td><code>display: none</code></td>
+<td>Ẩn element</td>
+</tr>
+<tr>
+<td><code>block</code></td>
+<td><code>display: block</code></td>
+<td>Hiện element</td>
+</tr>
+</tbody>
+</table>
+<h3 id="spacing">Spacing</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>CSS</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>p-4</code></td>
+<td><code>padding: 1rem</code></td>
+<td>Padding 16px</td>
+</tr>
+<tr>
+<td><code>px-8</code></td>
+<td><code>padding-left: 2rem; padding-right: 2rem</code></td>
+<td>Padding ngang 32px</td>
+</tr>
+<tr>
+<td><code>py-20</code></td>
+<td><code>padding-top: 5rem; padding-bottom: 5rem</code></td>
+<td>Padding dọc 80px</td>
+</tr>
+<tr>
+<td><code>m-4</code></td>
+<td><code>margin: 1rem</code></td>
+<td>Margin 16px</td>
+</tr>
+<tr>
+<td><code>space-x-4</code></td>
+<td><code>margin-left: 1rem</code> (trừ child đầu)</td>
+<td>Khoảng cách ngang 16px</td>
+</tr>
+<tr>
+<td><code>gap-8</code></td>
+<td><code>gap: 2rem</code></td>
+<td>Khoảng cách grid/flex 32px</td>
+</tr>
+</tbody>
+</table>
+<h3 id="typography">Typography</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>CSS</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text-xl</code></td>
+<td><code>font-size: 1.25rem</code></td>
+<td>20px</td>
+</tr>
+<tr>
+<td><code>text-4xl</code></td>
+<td><code>font-size: 2.25rem</code></td>
+<td>36px</td>
+</tr>
+<tr>
+<td><code>font-bold</code></td>
+<td><code>font-weight: 700</code></td>
+<td>Chữ đậm</td>
+</tr>
+<tr>
+<td><code>font-semibold</code></td>
+<td><code>font-weight: 600</code></td>
+<td>Chữ semi-bold</td>
+</tr>
+<tr>
+<td><code>leading-tight</code></td>
+<td><code>line-height: 1.25</code></td>
+<td>Line-height sát nhau</td>
+</tr>
+<tr>
+<td><code>leading-relaxed</code></td>
+<td><code>line-height: 1.625</code></td>
+<td>Line-height thoáng</td>
+</tr>
+</tbody>
+</table>
+<h3 id="colors">Colors</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text-gray-900</code></td>
+<td>Chữ đen (#111827)</td>
+</tr>
+<tr>
+<td><code>text-gray-600</code></td>
+<td>Chữ xám (#4b5563)</td>
+</tr>
+<tr>
+<td><code>text-white</code></td>
+<td>Chữ trắng</td>
+</tr>
+<tr>
+<td><code>text-white/90</code></td>
+<td>Chữ trắng 90% opacity</td>
+</tr>
+<tr>
+<td><code>bg-white</code></td>
+<td>Nền trắng</td>
+</tr>
+<tr>
+<td><code>bg-white/10</code></td>
+<td>Nền trắng 10% opacity</td>
+</tr>
+<tr>
+<td><code>bg-gradient-to-r</code></td>
+<td>Gradient từ trái sang phải</td>
+</tr>
+<tr>
+<td><code>from-indigo-600</code></td>
+<td>Gradient bắt đầu (#4f46e5)</td>
+</tr>
+<tr>
+<td><code>to-purple-600</code></td>
+<td>Gradient kết thúc (#9333ea)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="borders--shadows">Borders &amp; Shadows</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rounded-lg</code></td>
+<td>Border-radius 8px</td>
+</tr>
+<tr>
+<td><code>rounded-full</code></td>
+<td>Border-radius 9999px (tròn)</td>
+</tr>
+<tr>
+<td><code>rounded-3xl</code></td>
+<td>Border-radius 24px</td>
+</tr>
+<tr>
+<td><code>shadow-lg</code></td>
+<td>Box-shadow lớn</td>
+</tr>
+<tr>
+<td><code>shadow-2xl</code></td>
+<td>Box-shadow rất lớn</td>
+</tr>
+<tr>
+<td><code>border</code></td>
+<td>Border 1px</td>
+</tr>
+<tr>
+<td><code>border-t-4</code></td>
+<td>Border top 4px</td>
+</tr>
+</tbody>
+</table>
+<h3 id="effects">Effects</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Mô Tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backdrop-blur-md</code></td>
+<td>Blur background 12px</td>
+</tr>
+<tr>
+<td><code>bg-clip-text</code></td>
+<td>Clip background theo text</td>
+</tr>
+<tr>
+<td><code>transition-all</code></td>
+<td>Transition tất cả properties</td>
+</tr>
+<tr>
+<td><code>duration-300</code></td>
+<td>Transition 300ms</td>
+</tr>
+<tr>
+<td><code>hover:shadow-xl</code></td>
+<td>Shadow khi hover</td>
+</tr>
+<tr>
+<td><code>hover:-translate-y-1</code></td>
+<td>Nâng lên 4px khi hover</td>
+</tr>
+<tr>
+<td><code>animate-pulse</code></td>
+<td>Animation nhấp nháy</td>
+</tr>
+</tbody>
+</table>
+<h3 id="responsive-prefixes">Responsive Prefixes</h3>
+<table>
+<thead>
+<tr>
+<th>Prefix</th>
+<th>Breakpoint</th>
+<th>Màn hình</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(none)</td>
+<td>&lt; 640px</td>
+<td>Mobile</td>
+</tr>
+<tr>
+<td><code>sm:</code></td>
+<td>≥ 640px</td>
+<td>Small tablet</td>
+</tr>
+<tr>
+<td><code>md:</code></td>
+<td>≥ 768px</td>
+<td>Tablet</td>
+</tr>
+<tr>
+<td><code>lg:</code></td>
+<td>≥ 1024px</td>
+<td>Desktop</td>
+</tr>
+<tr>
+<td><code>xl:</code></td>
+<td>≥ 1280px</td>
+<td>Large desktop</td>
+</tr>
+<tr>
+<td><code>2xl:</code></td>
+<td>≥ 1536px</td>
+<td>Ultra-wide</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="ghi-ch%C3%BA-cu%E1%BB%91i">Ghi Chú Cuối</h2>
+<p>Tài liệu này được tạo tự động bởi Gemini AI Assistant. Để cập nhật, hãy chạy lại quá trình generate documentation.</p>
+<p><strong>Ngày tạo:</strong> 08/12/2025</p>
+
+</body>
+</html>

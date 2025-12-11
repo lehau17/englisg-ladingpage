@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Clock, Calendar, UserCheck, Users, Info, GraduationCap } from 'lucide-react';
 import type { LandingPageClass } from '../lib/api';
 import { createGuestEnrollment, type GuestEnrollmentData } from '../lib/api';
 
@@ -151,7 +152,9 @@ export default function PaymentModal({
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-700">Vai trò:</span>
-                  <span className="font-medium text-gray-900">{role === 'student' ? '🎓 Học sinh' : '👨‍👩‍👧 Phụ huynh'}</span>
+                  <span className="font-medium text-gray-900 flex items-center gap-1">
+                    {role === 'student' ? <><GraduationCap className="w-4 h-4" /> Học sinh</> : <><Users className="w-4 h-4" /> Phụ huynh</>}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-700">Số học sinh:</span>
@@ -204,10 +207,10 @@ export default function PaymentModal({
               </h3>
               <div className="space-y-1 text-sm text-gray-600 mb-3">
                 <p> {selectedClass.description}</p>
-                <p>⏱️ Thời lượng: {selectedClass.duration}</p>
-                <p>📅 Lịch học: {selectedClass.schedule}</p>
-                <p>👨‍🏫 Giáo viên: {selectedClass.teacher} {selectedClass.teacherFlag}</p>
-                <p>👥 Số học sinh: {students.length}</p>
+                <p className="flex items-center gap-1"><Clock className="w-4 h-4" /> Thời lượng: {selectedClass.duration}</p>
+                <p className="flex items-center gap-1"><Calendar className="w-4 h-4" /> Lịch học: {selectedClass.schedule}</p>
+                <p className="flex items-center gap-1"><UserCheck className="w-4 h-4" /> Giáo viên: {selectedClass.teacher} {selectedClass.teacherFlag}</p>
+                <p className="flex items-center gap-1"><Users className="w-4 h-4" /> Số học sinh: {students.length}</p>
               </div>
               <div className="space-y-2 pt-3 border-t border-blue-200">
                 <div className="flex justify-between items-center text-sm">
@@ -236,7 +239,7 @@ export default function PaymentModal({
             {/* Notice */}
             <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
               <div className="flex items-start">
-                <span className="text-xl mr-3">ℹ️</span>
+                <Info className="w-5 h-5 mr-3 text-blue-600 flex-shrink-0 mt-0.5" />
                 <div className="text-sm text-blue-800">
                   <p className="font-medium mb-1">Thông tin:</p>
                   <p>
